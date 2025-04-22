@@ -1,0 +1,14 @@
+Metadata-Version: 2.2
+Name: social_sim
+Version: 0.1.0
+Summary: Codebase for social simulation
+Author: Jack Schenkman
+Author-email: schenkmanjack@gmail.com
+Requires-Python: >=3.8
+Requires-Dist: openai
+Requires-Dist: python-dotenv
+Dynamic: author
+Dynamic: author-email
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

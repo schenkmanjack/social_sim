@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Simulation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .result-section {
+            margin-top: 20px;
+        }
+        .loading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Social Simulation</h1>
+        
+        <form id="simulationForm" class="mt-4">
+            <div class="mb-3">
+                <label for="query" class="form-label">Simulation Query</label>
+                <textarea class="form-control" id="query" rows="3" required></textarea>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="steps" class="form-label">Number of Steps</label>
+                        <input type="number" class="form-control" id="steps" value="5" min="1">
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="agentType" class="form-label">Agent Type</label>
+                        <select class="form-select" id="agentType">
+                            <option value="regular">Regular</option>
+                            <option value="timescale_aware">Timescale Aware</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="chunkSize" class="form-label">Chunk Size</label>
+                        <input type="number" class="form-control" id="chunkSize" value="5" min="1">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Run Simulation</button>
+        </form>
+        
+        <div class="loading mt-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <span class="ms-2">Running simulation...</span>
+        </div>
+        
+        <div class="result-section">
+            <h2>Results</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Summary</h3>
+                    <div id="summary" class="mb-4"></div>
+                    
+                    <h3>Detailed History</h3>
+                    <div id="history"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('simulationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const loading = document.querySelector('.loading');
+            const resultSection = document.querySelector('.result-section');
+            
+            // Show loading
+            loading.style.display = 'block';
+            resultSection.style.display = 'none';
+            
+            try {
+                const response = await fetch('/run_simulation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: document.getElementById('query').value,
+                        steps: parseInt(document.getElementById('steps').value),
+                        agent_type: document.getElementById('agentType').value,
+                        chunk_size: parseInt(document.getElementById('chunkSize').value)
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Display results
+                    document.getElementById('summary').textContent = result.summary;
+                    
+                    // Format and display history
+                    const historyHtml = result.history.map(step => `
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                Step ${step.step + 1}
+                            </div>
+                            <div class="card-body">
+                                <h5>Actions</h5>
+                                <ul>
+                                    ${step.actions.map(action => `
+                                        <li>
+                                            <strong>${action.agent}</strong> (${action.identity}):
+                                            ${action.action}
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                <h5>Environment State</h5>
+                                <pre>${JSON.stringify(step.environment, null, 2)}</pre>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    document.getElementById('history').innerHTML = historyHtml;
+                } else {
+                    throw new Error(result.error || 'Failed to run simulation');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                // Hide loading
+                loading.style.display = 'none';
+                resultSection.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
