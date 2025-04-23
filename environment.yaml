@@ -6,6 +6,9 @@ dependencies:
   - python=3.10
   - pip
   - pip:
+    - matplotlib
+    - numpy
+    - wordcloud
     - flask
     - openai
     - python-dotenv

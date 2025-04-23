@@ -7,14 +7,17 @@
         .result-section {
             margin-top: 20px;
         }
-        .loading {
-            display: none;
+        .card {
+            margin-top: 20px;
+        }
+        #summary, #history {
+            white-space: pre-line;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Social Simulation</h1>
+        <h1>Social Simulation v2</h1>
         
         <form id="simulationForm" class="mt-4">
             <div class="mb-3">
@@ -51,22 +54,22 @@
             <button type="submit" class="btn btn-primary">Run Simulation</button>
         </form>
         
-        <div class="loading mt-4">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <span class="ms-2">Running simulation...</span>
+        <div class="progress mt-3" style="display: none;">
+            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
         </div>
-        
-        <div class="result-section">
-            <h2>Results</h2>
+
+        <div class="alert alert-danger mt-3" style="display: none;" id="errorDiv"></div>
+
+        <div class="result-section mt-3" style="display: none;">
             <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Results</h5>
+                </div>
                 <div class="card-body">
-                    <h3>Summary</h3>
-                    <div id="summary" class="mb-4"></div>
-                    
-                    <h3>Detailed History</h3>
-                    <div id="history"></div>
+                    <h6>Summary</h6>
+                    <div id="summary" class="mb-3"></div>
+                    <h6>Detailed History</h6>
+                    <div id="history" class="list-group"></div>
                 </div>
             </div>
         </div>
@@ -76,13 +79,22 @@
         document.getElementById('simulationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const form = e.target;
-            const loading = document.querySelector('.loading');
+            // Get UI elements
             const resultSection = document.querySelector('.result-section');
+            const progressBar = document.querySelector('.progress');
+            const progressBarInner = document.querySelector('.progress-bar');
+            const errorDiv = document.getElementById('errorDiv');
+            const summaryDiv = document.getElementById('summary');
+            const historyDiv = document.getElementById('history');
             
-            // Show loading
-            loading.style.display = 'block';
-            resultSection.style.display = 'none';
+            // Reset UI
+            resultSection.style.display = 'block';
+            errorDiv.style.display = 'none';
+            summaryDiv.textContent = '';
+            historyDiv.innerHTML = '';
+            progressBar.style.display = 'block';
+            progressBarInner.style.width = '0%';
+            progressBarInner.textContent = '0%';
             
             try {
                 const response = await fetch('/run_simulation', {
@@ -93,51 +105,100 @@
                     body: JSON.stringify({
                         query: document.getElementById('query').value,
                         steps: parseInt(document.getElementById('steps').value),
-                        agent_type: document.getElementById('agentType').value,
+                        agent_type: document.getElementById('agentType').value.toLowerCase().replace(' ', '_'),
                         chunk_size: parseInt(document.getElementById('chunkSize').value)
                     })
                 });
                 
-                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
                 
-                if (response.ok) {
-                    // Display results
-                    document.getElementById('summary').textContent = result.summary;
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
                     
-                    // Format and display history
-                    const historyHtml = result.history.map(step => `
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                Step ${step.step + 1}
-                            </div>
-                            <div class="card-body">
-                                <h5>Actions</h5>
-                                <ul>
-                                    ${step.actions.map(action => `
-                                        <li>
-                                            <strong>${action.agent}</strong> (${action.identity}):
-                                            ${action.action}
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                                <h5>Environment State</h5>
-                                <pre>${JSON.stringify(step.environment, null, 2)}</pre>
-                            </div>
-                        </div>
-                    `).join('');
+                    buffer += decoder.decode(value);
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || ''; // Keep the last incomplete line in the buffer
                     
-                    document.getElementById('history').innerHTML = historyHtml;
-                } else {
-                    throw new Error(result.error || 'Failed to run simulation');
+                    for (const line of lines) {
+                        if (!line.startsWith('data: ')) continue;
+                        
+                        try {
+                            const jsonStr = line.slice(6);
+                            const data = JSON.parse(jsonStr);
+                            
+                            if (data.progress) {
+                                const percentage = Math.round(data.progress.percentage);
+                                progressBarInner.style.width = `${percentage}%`;
+                                progressBarInner.textContent = `${percentage}%`;
+                                
+                                if (percentage === 100) {
+                                    setTimeout(() => {
+                                        progressBar.style.display = 'none';
+                                    }, 1000);
+                                }
+                            }
+                            
+                            if (data.final_result) {
+                                const result = data.final_result;
+                                
+                                // Display summary
+                                if (result.summary && result.summary.summary) {
+                                    summaryDiv.textContent = result.summary.summary.replace(/\\n/g, '\n');
+                                }
+                                
+                                // Display history
+                                if (result.history && result.history.length > 0) {
+                                    historyDiv.innerHTML = '';
+                                    result.history.forEach((item, index) => {
+                                        const historyItem = document.createElement('div');
+                                        historyItem.className = 'list-group-item';
+                                        
+                                        let content = `<h5>Step ${index + 1}</h5>`;
+                                        
+                                        if (item.actions && Array.isArray(item.actions)) {
+                                            item.actions.forEach(action => {
+                                                if (typeof action === 'object' && action.agent && action.action) {
+                                                    content += `<p><strong>${action.agent}:</strong> ${action.action}</p>`;
+                                                } else {
+                                                    content += `<p>${action}</p>`;
+                                                }
+                                            });
+                                        }
+                                        
+                                        if (item.environment && Array.isArray(item.environment)) {
+                                            content += '<h6>Environment:</h6>';
+                                            item.environment.forEach(env => {
+                                                content += `<p>${env}</p>`;
+                                            });
+                                        }
+                                        
+                                        historyItem.innerHTML = content;
+                                        historyDiv.appendChild(historyItem);
+                                    });
+                                }
+                            }
+                        } catch (parseError) {
+                            console.error('Error parsing JSON:', parseError);
+                            console.error('Problematic line:', line);
+                            continue;
+                        }
+                    }
                 }
             } catch (error) {
-                alert('Error: ' + error.message);
-            } finally {
-                // Hide loading
-                loading.style.display = 'none';
-                resultSection.style.display = 'block';
+                console.error('Error:', error);
+                errorDiv.textContent = `Error: ${error.message}`;
+                errorDiv.style.display = 'block';
+                progressBar.style.display = 'none';
             }
         });
     </script>
 </body>
 </html>
+

@@ -9,6 +9,8 @@ social_sim.egg-info/top_level.txt
 social_sim/agents/__init__.py
 social_sim/agents/agent.py
 social_sim/agents/timescale_aware_agent.py
+social_sim/experiment/__init__.py
+social_sim/experiment/experiment.py
 social_sim/interactions/__init__.py
 social_sim/interactions/connectivity.py
 social_sim/interactions/environment.py

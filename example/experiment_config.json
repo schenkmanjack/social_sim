@@ -1,0 +1,32 @@
+{
+    "name": "prisoners_dilemma_experiment",
+    "query": "Two prisoners, Alice and Bob, are arrested for a crime. They are held in separate cells and cannot communicate. Each prisoner must decide whether to cooperate with the other by remaining silent or defect by betraying the other. If both cooperate, they each serve 1 year. If both defect, they each serve 2 years. If one defects and the other cooperates, the defector goes free and the cooperator serves 3 years. Simulate this scenario.",
+    "steps": 5,
+    "num_simulations": 3,
+    "results_folder": "results_prisoners_dilemma",
+    "agent_type": "timescale_aware",
+    "chunk_size": 1200,
+    "plot_results": true,
+    "outcomes": [
+        {
+            "name": "both_cooperate",
+            "condition": "Both prisoners choose to cooperate and remain silent, resulting in equal outcomes of 1 year each",
+            "description": "Both prisoners serve 1 year in prison"
+        },
+        {
+            "name": "both_defect",
+            "condition": "Both prisoners choose to defect and betray each other, resulting in equal outcomes of 2 years each",
+            "description": "Both prisoners serve 2 years in prison"
+        },
+        {
+            "name": "alice_defects_bob_cooperates",
+            "condition": "Alice defects while Bob cooperates, resulting in Alice going free and Bob serving 3 years",
+            "description": "Alice goes free while Bob serves 3 years"
+        },
+        {
+            "name": "bob_defects_alice_cooperates",
+            "condition": "Bob defects while Alice cooperates, resulting in Bob going free and Alice serving 3 years",
+            "description": "Bob goes free while Alice serves 3 years"
+        }
+    ]
+} 
