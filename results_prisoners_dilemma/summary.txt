@@ -1,0 +1,24 @@
+Experiment: prisoners_dilemma_experiment
+Number of simulations: 8
+
+Outcome Statistics:
+
+both_cooperate:
+  Count: 3/8
+  Percentage: 37.5%
+  Description: Both prisoners serve 1 year in prison
+
+both_defect:
+  Count: 0/8
+  Percentage: 0.0%
+  Description: Both prisoners serve 2 years in prison
+
+alice_defects_bob_cooperates:
+  Count: 2/8
+  Percentage: 25.0%
+  Description: Alice goes free while Bob serves 3 years
+
+bob_defects_alice_cooperates:
+  Count: 3/8
+  Percentage: 37.5%
+  Description: Bob goes free while Alice serves 3 years

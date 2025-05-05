@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Generator, Tuple
 import json
 import os
 from datetime import datetime
@@ -16,7 +16,7 @@ class Experiment:
         """
         self.simulations = simulations
         self.name = name or f"experiment_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        self.results = []
+        self.results = None
         self.outcome_definitions = {}
         
     def define_outcome(self, name: str, condition: str, description: str):
@@ -37,269 +37,422 @@ class Experiment:
     def analyze_outcome(self, history: List[Dict]) -> Dict[str, bool]:
         """
         Analyze a simulation run to determine which defined outcomes occurred.
+        Uses the outcome definitions from the configuration to determine results.
         """
         if not self.outcome_definitions:
             print("Warning: No outcomes defined for analysis")
             return {}
             
+        # Extract the final state from the history
+        final_state = {}
+        for step in reversed(history):  # Look at the most recent steps first
+            if "actions" in step:
+                final_state["actions"] = step["actions"]
+                print(f"\nFound actions in step: {step['actions']}")
+            if "environment_state" in step:
+                final_state["environment"] = step["environment_state"]
+                print(f"Found environment state: {step['environment_state']}")
+            if "agent_states" in step:
+                final_state["agent_states"] = step["agent_states"]
+                print(f"Found agent states: {step['agent_states']}")
+            if final_state:  # If we found any state information
+                break
+        
+        if not final_state:
+            print("Warning: No final state found in history")
+            return {name: False for name in self.outcome_definitions}
+        
+        print(f"\nFinal state for analysis: {json.dumps(final_state, indent=2)}")
+        
         # Use the first simulation's orchestrator for analysis
         orchestrator = self.simulations[0].orchestrator
         
+        # Create a more detailed prompt for the LLM
         prompt = f"""
-        Analyze this simulation history to determine which outcomes occurred.
+        Analyze this simulation state to determine which outcomes occurred.
+        
+        Final state:
+        {json.dumps(final_state, indent=2)}
         
         Outcomes to check:
         {json.dumps(self.outcome_definitions, indent=2)}
         
-        Simulation history:
-        {json.dumps(history, indent=2)}
+        For each outcome, determine if its condition was met based on the final state.
+        Pay special attention to the actions taken by the agents in the final state.
         
-        Instructions:
-        1. Review the entire simulation history, not just the final state
-        2. Look for key decisions and actions throughout the transcript
-        3. Pay attention to:
-           - What each agent decided to do
-           - When they made their decisions
-           - How their decisions affected the outcome
-        4. Compare the sequence of events to the defined conditions
-        5. For each outcome:
-           - If the condition matches exactly, mark as true
-           - If the condition doesn't match, mark as false
-        6. Ensure exactly one outcome is marked as true
-        7. If you cannot determine the outcome from the history, mark the most likely outcome as true
-        
-        Respond with a JSON object where keys are outcome names and values are booleans.
-        Example response format (for Prisoner's Dilemma):
+        Return a JSON object with the outcome names as keys and boolean values indicating if they occurred.
+        Example format:
         {{
-            "both_cooperate": false,
-            "both_defect": false,
-            "alice_defects_bob_cooperates": true,
-            "bob_defects_alice_cooperates": false
+            "outcome1": true,
+            "outcome2": false,
+            "outcome3": false,
+            "outcome4": false
         }}
+        
+        Important: 
+        1. Carefully analyze the actions and environment state to determine which outcome occurred.
+        2. Apply each outcome's condition exactly as specified in the configuration.
+        3. Return exactly one true outcome based on the conditions.
+        4. If you're unsure, make your best judgment based on the final state.
         """
         
         try:
-            response = orchestrator._call_llm_with_retry(prompt)
-            match = re.search(r'\{.*\}', response, re.DOTALL)
-            if match:
-                result = json.loads(match.group(0))
-                
-                # Print debug info
-                print(f"\nRaw outcome analysis: {result}")
-                print(f"Number of true outcomes: {sum(result.values())}")
-                
-                # If all outcomes are false, mark the most likely outcome as true
-                if not any(result.values()):
-                    print("Warning: No outcomes were marked as true. Marking most likely outcome...")
-                    # For Prisoner's Dilemma, if all false, assume both defect
-                    result["both_defect"] = True
-                    return result
-                    
-                if sum(result.values()) > 1:
-                    print("Warning: Multiple outcomes were marked as true. Using first true outcome...")
-                    # Keep only the first true outcome
-                    first_true = next(k for k, v in result.items() if v)
-                    return {k: (k == first_true) for k in result}
-                    
-                return result
-            return {}
-        except Exception as e:
-            print(f"Warning: Error analyzing outcomes: {str(e)}")
-            return {}
+            # Get the LLM's analysis using _call_llm_with_retry instead of analyze
+            analysis = orchestrator._call_llm_with_retry(prompt)
+            print(f"\nRaw analysis from LLM: {analysis}")
             
-    def run(self, query: str, steps: int = 5) -> Dict[str, Any]:
+            try:
+                outcome = json.loads(analysis)
+            except json.JSONDecodeError:
+                print(f"Warning: Failed to parse LLM response as JSON: {analysis}")
+                # Try to extract JSON from the response
+                match = re.search(r'\{.*\}', analysis, re.DOTALL)
+                if match:
+                    try:
+                        outcome = json.loads(match.group(0))
+                    except json.JSONDecodeError:
+                        print("Warning: Could not extract valid JSON from response")
+                        return {name: False for name in self.outcome_definitions}
+                else:
+                    print("Warning: No JSON found in response")
+                    return {name: False for name in self.outcome_definitions}
+            
+            # Validate that all defined outcomes are present in the result
+            for outcome_name in self.outcome_definitions:
+                if outcome_name not in outcome:
+                    print(f"Warning: Outcome '{outcome_name}' not found in analysis")
+                    outcome[outcome_name] = False
+            
+            # Ensure exactly one outcome is true
+            true_outcomes = [name for name, value in outcome.items() if value]
+            if len(true_outcomes) != 1:
+                print(f"Warning: Expected exactly one true outcome, but found {len(true_outcomes)}")
+                print(f"True outcomes: {true_outcomes}")
+                print(f"Full outcome analysis: {outcome}")
+                # If we have multiple true outcomes, keep the first one
+                if true_outcomes:
+                    outcome = {name: (name == true_outcomes[0]) for name in self.outcome_definitions}
+                else:
+                    # If no outcomes are true, make a best guess based on the final state
+                    print("No outcomes were true, making best guess based on final state")
+                    print(f"Final state: {json.dumps(final_state, indent=2)}")
+                    # Default to the first outcome if we can't determine
+                    outcome = {name: (name == list(self.outcome_definitions.keys())[0]) 
+                             for name in self.outcome_definitions}
+            
+            print(f"Final determined outcome: {outcome}")
+            return outcome
+            
+        except Exception as e:
+            print(f"Error analyzing outcome: {e}")
+            print(f"Error details: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return {name: False for name in self.outcome_definitions}
+            
+    def run(self, query: str, steps: int = 5) -> Generator[Tuple[Dict, Dict], None, None]:
         """
-        Run the experiment with the given query.
+        Run the experiment with multiple simulations.
         
         Args:
-            query: The query to use for the experiment
-            steps: Number of steps to run each simulation for
+            query: The initial query or scenario
+            steps: Number of steps per simulation
             
-        Returns:
-            Dictionary containing experiment results
+        Yields:
+            Tuple of (progress, data) for each step
         """
-        self.results = []
+        total_simulations = len(self.simulations)
+        all_results = []
+        simulation_histories = []  # Store complete histories for each simulation
         
-        for i in range(len(self.simulations)):
-            print(f"\nRunning simulation {i+1}/{len(self.simulations)}...")
-            try:
-                # Add debug print to see what's happening
-                print(f"Starting simulation {i+1} with query: {query[:50]}...")
-                result = self.simulations[i].run(query, steps=steps)
-                print(f"Simulation {i+1} completed successfully")
-                self.results.append(result)
-            except Exception as e:
-                print(f"Detailed error in simulation {i+1}:")
-                print(f"Error type: {type(e).__name__}")
-                print(f"Error message: {str(e)}")
-                print(f"Error traceback: {e.__traceback__}")
-                raise  # Re-raise the exception to be caught by the caller
+        for sim_idx, simulation in enumerate(self.simulations, 1):
+            print(f"\nRunning simulation {sim_idx}/{total_simulations}")
+            sim_results = []
+            sim_history = []  # Store history for this simulation
             
-        # Calculate statistics with error handling
-        try:
-            print("Calculating statistics...")
-            statistics = self._calculate_statistics(self.results)
-            print("Statistics calculated successfully")
-        except Exception as e:
-            print(f"Error calculating statistics:")
-            print(f"Error type: {type(e).__name__}")
-            print(f"Error message: {str(e)}")
-            print(f"Error traceback: {e.__traceback__}")
-            raise
+            # Run the simulation
+            for step_idx, result in enumerate(simulation.run(query, steps), 1):
+                progress = {
+                    'current_sim': sim_idx,
+                    'total_sims': total_simulations,
+                    'current_sim_step': step_idx,
+                    'total_steps': steps,
+                    'percentage': ((sim_idx - 1) * steps + step_idx) / (total_simulations * steps) * 100
+                }
+                
+                # Store the result and history
+                sim_results.append(result)
+                sim_history.append(result)
+                
+                # Print the current step's actions for debugging
+                if "actions" in result:
+                    print(f"Step {step_idx} actions: {result['actions']}")
+                
+                # Yield progress and current data
+                yield progress, result
             
-        # Store results for saving later
+            # After simulation completes, analyze its outcome
+            if sim_results:
+                print(f"\nAnalyzing simulation {sim_idx} results:")
+                print(f"Number of steps: {len(sim_results)}")
+                print(f"Final step result: {json.dumps(sim_results[-1], indent=2)}")
+                
+                outcome = self.analyze_outcome(sim_history)
+                print(f"Simulation {sim_idx} outcome: {outcome}")
+                
+                # Create a complete simulation result
+                sim_result = {
+                    'steps': sim_history,
+                    'outcome_analysis': outcome,
+                    'environment': sim_results[-1].get('environment_state', []),
+                    'agent_states': sim_results[-1].get('agent_states', {}),
+                    'actions': [step.get('actions', []) for step in sim_results if 'actions' in step]
+                }
+                
+                all_results.append(sim_result)
+                simulation_histories.append(sim_history)
+            else:
+                print(f"Warning: No results for simulation {sim_idx}")
+        
+        # After all simulations complete, calculate final statistics
+        if all_results:
+            print("\nCalculating final statistics...")
+            statistics = self._calculate_statistics([r['outcome_analysis'] for r in all_results])
+            final_result = {
+                "runs": all_results,
+                "statistics": statistics,
+                "histories": simulation_histories
+            }
+            self.experiment_results = final_result
+            yield {'percentage': 100}, final_result
+        else:
+            print("Warning: No results were generated from the experiment")
+
+    def _process_results(self, results):
+        """Process and analyze the results"""
+        # Group results by simulation
+        simulation_results = []
+        current_sim_results = []
+        
+        for result in results:
+            if isinstance(result, tuple) and len(result) == 2:
+                progress, data = result
+                if progress.get('current_sim_step', 0) == 1:  # Start of new simulation
+                    if current_sim_results:
+                        simulation_results.append(current_sim_results)
+                    current_sim_results = []
+                current_sim_results.append(data)
+        
+        if current_sim_results:
+            simulation_results.append(current_sim_results)
+            
+        # Analyze outcomes for each simulation
+        outcome_results = []
+        for sim_results in simulation_results:
+            # Extract the history from the simulation results
+            history = []
+            for step in sim_results:
+                if isinstance(step, dict) and "history" in step:
+                    history.extend(step["history"])
+                elif isinstance(step, dict):
+                    history.append(step)
+            
+            # Analyze the outcome based on the complete history
+            outcome_analysis = self.analyze_outcome(history)
+            outcome_results.append(outcome_analysis)
+            
+            # Print debug info for each run
+            print(f"\nRun outcomes: {outcome_analysis}")
+            
+        # Calculate statistics
+        statistics = self._calculate_statistics(outcome_results)
+        
+        # Store results for later use
         self.experiment_results = {
-            "runs": self.results,
+            "runs": simulation_results,
             "statistics": statistics
         }
         
         return self.experiment_results
         
-    def _calculate_statistics(self, outcome_results: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def _calculate_statistics(self, outcome_results: List[Dict[str, bool]]) -> Dict[str, Dict]:
         """
-        Calculate statistics from all simulation runs.
+        Calculate statistics for each outcome across all simulations.
         """
-        stats = {}
+        statistics = {}
+        num_simulations = len(outcome_results)
         
+        if num_simulations == 0:
+            print("Warning: No simulation results to analyze")
+            return {}
+            
         # Initialize statistics for each outcome
         for outcome_name in self.outcome_definitions:
-            stats[outcome_name] = {
+            statistics[outcome_name] = {
                 "count": 0,
                 "percentage": 0.0,
                 "description": self.outcome_definitions[outcome_name]["description"]
             }
-            
-        # Calculate statistics
-        total_runs = len(outcome_results)
-        if total_runs == 0:
-            return stats
-            
-        # Count outcomes for each run
+        
+        # Count occurrences of each outcome
         for result in outcome_results:
-            # Analyze the outcome using the orchestrator
-            outcome_analysis = self.analyze_outcome(result.get("history", []))
-            
-            # Update statistics based on the analysis
-            for outcome_name, occurred in outcome_analysis.items():
+            if not result:  # Skip empty results
+                continue
+            print(f"\nAnalyzing outcome result: {result}")  # Debug print
+            for outcome_name, occurred in result.items():
                 if occurred:
-                    stats[outcome_name]["count"] += 1
-            
-            # Print debug info for each run
-            print(f"\nRun outcomes: {outcome_analysis}")
-            
+                    statistics[outcome_name]["count"] += 1
+        
         # Calculate percentages
-        for outcome_name in stats:
-            stats[outcome_name]["percentage"] = (stats[outcome_name]["count"] / total_runs) * 100
+        for outcome_name in statistics:
+            count = statistics[outcome_name]["count"]
+            statistics[outcome_name]["percentage"] = (count / num_simulations) * 100 if num_simulations > 0 else 0.0
             
-        return stats
+        # Print debug information
+        print("\nOutcome counts:")
+        for outcome_name, stats in statistics.items():
+            print(f"{outcome_name}: {stats['count']}/{num_simulations}")
+            
+        return statistics
         
-    def save_results(self, output_dir: str = None, plot_results: bool = True):
+    def _generate_plot(self, output_dir: str):
         """
-        Save experiment results to disk.
+        Generate a plot of the experiment results.
         
         Args:
-            output_dir: Directory to save results in. If None, uses experiment name.
-            plot_results: Whether to generate and save plots
+            output_dir: Directory to save the plot in
         """
-        if output_dir is None:
-            output_dir = self.name
+        if not hasattr(self, 'experiment_results') or not self.experiment_results:
+            print("Warning: No results to plot")
+            return
             
-        os.makedirs(output_dir, exist_ok=True)
+        # Create a bar plot of outcome frequencies
+        outcomes = list(self.outcome_definitions.keys())
+        counts = [self.experiment_results['statistics'][outcome]['count'] 
+                 for outcome in outcomes]
         
-        # Use stored results if available
-        if not hasattr(self, 'experiment_results'):
-            raise ValueError("Experiment must be run before saving results")
+        plt.figure(figsize=(10, 6))
+        bars = plt.bar(outcomes, counts)
         
-        # Save overall statistics
-        with open(os.path.join(output_dir, "statistics.json"), 'w') as f:
-            json.dump(self.experiment_results["statistics"], f, indent=2)
-            
-        # Save each run's trace
-        for i, result in enumerate(self.experiment_results["runs"]):
-            run_dir = os.path.join(output_dir, f"run_{i+1}")
-            os.makedirs(run_dir, exist_ok=True)
-            
-            # Save trace
-            with open(os.path.join(run_dir, "trace.json"), 'w') as f:
-                json.dump(result, f, indent=2)
-                
-            # Save summary
-            with open(os.path.join(run_dir, "summary.txt"), 'w') as f:
-                f.write(str(result.get("summary", "No summary available")))
-        
-        # Generate and save the plot if enabled
-        if plot_results:
-            self.plot_results(output_dir)
-        
-    def plot_results(self, output_dir: str = None):
-        """
-        Create a bar chart of experiment outcomes and save it to disk.
-        
-        Args:
-            output_dir: Directory to save the plot in. If None, uses experiment name.
-        """
-        if output_dir is None:
-            output_dir = self.name
-            
-        if not hasattr(self, 'experiment_results'):
-            raise ValueError("Experiment must be run before plotting results")
-            
-        # Extract data for plotting
-        outcome_names = []
-        counts = []
-        percentages = []
-        
-        for outcome_name, stats in self.experiment_results["statistics"].items():
-            outcome_names.append(outcome_name)
-            counts.append(stats["count"])
-            percentages.append(stats["percentage"])
-        
-        # Generate colors dynamically using a colormap
-        num_outcomes = len(outcome_names)
-        if num_outcomes <= 7:
-            # Use distinct colors for small numbers of outcomes
-            colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#c2c2f0', '#ffb3e6', '#c2f0c2']
-            colors = colors[:num_outcomes]
-        else:
-            # Use a continuous colormap for larger numbers of outcomes
-            cmap = plt.cm.get_cmap('viridis', num_outcomes)
-            colors = [cmap(i) for i in range(num_outcomes)]
-        
-        # Create bar chart
-        plt.figure(figsize=(12, 6))
-        bars = plt.bar(outcome_names, counts, color=colors)
-        
-        # Add count labels on top of bars
+        # Add value labels on top of each bar
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{int(height)}/{len(self.simulations)}',
+                    f'{int(height)}',
                     ha='center', va='bottom')
         
-        # Add percentage labels inside bars
-        for i, bar in enumerate(bars):
-            height = bar.get_height()
-            plt.text(bar.get_x() + bar.get_width()/2., height/2,
-                    f'{percentages[i]:.1f}%',
-                    ha='center', va='center', color='white')
-        
-        # Customize the plot
-        plt.title('Experiment Outcomes Distribution', pad=20)
-        plt.xlabel('Outcomes')
+        plt.title(f'Outcome Distribution: {self.name}')
+        plt.xlabel('Outcome')
         plt.ylabel('Count')
-        plt.ylim(0, len(self.simulations))
-        plt.grid(axis='y', linestyle='--', alpha=0.7)
-        
-        # Rotate x-axis labels if they're long
-        if any(len(name) > 10 for name in outcome_names):
-            plt.xticks(rotation=45, ha='right')
-        
-        # Adjust layout to prevent label cutoff
+        plt.xticks(rotation=45)
         plt.tight_layout()
         
-        # Save plot
-        plot_path = os.path.join(output_dir, "outcomes_bar_chart.png")
+        # Save the plot
+        plot_path = os.path.join(output_dir, 'outcome_distribution.png')
         plt.savefig(plot_path)
         plt.close()
         
-        print(f"Plot saved to {plot_path}") 
+        print(f"Plot saved to {plot_path}")
+
+    def save_results(self, output_dir: str, plot_results: bool = True, results: List[Dict] = None):
+        """
+        Save experiment results to the specified directory.
+        
+        Args:
+            output_dir: Directory to save results in
+            plot_results: Whether to generate and save plots
+            results: List of simulation results
+        """
+        if results is None:
+            results = []
+        
+        # Create output directory if it doesn't exist
+        os.makedirs(output_dir, exist_ok=True)
+        print(f"Created results directory at: {os.path.abspath(output_dir)}")
+        
+        # Save individual simulation traces with complete histories
+        for i, (result, history) in enumerate(zip(results, self.experiment_results.get('histories', []))):
+            sim_dir = os.path.join(output_dir, f"run_{i+1}")
+            os.makedirs(sim_dir, exist_ok=True)
+            
+            # Create a complete trace for this run
+            trace = {
+                'steps': history,
+                'outcome_analysis': result,
+                'statistics': self.experiment_results['statistics']
+            }
+            
+            with open(os.path.join(sim_dir, "trace.json"), 'w') as f:
+                json.dump(trace, f, indent=2)
+            print(f"Saved trace for run {i+1}")
+        
+        # Save summary
+        summary_path = os.path.join(output_dir, "summary.txt")
+        with open(summary_path, 'w') as f:
+            f.write(f"Experiment: {self.name}\n")
+            f.write(f"Number of simulations: {len(results)}\n\n")
+            
+            f.write("Outcome Statistics:\n")
+            for outcome_name, stats in self.experiment_results["statistics"].items():
+                f.write(f"\n{outcome_name}:\n")
+                f.write(f"  Count: {stats['count']}/{len(results)}\n")
+                f.write(f"  Percentage: {stats['percentage']:.1f}%\n")
+                f.write(f"  Description: {stats['description']}\n")
+        
+        print(f"Summary saved to {summary_path}")
+        
+        if plot_results:
+            # Generate and save plot
+            self._generate_plot(output_dir)
+
+    def _calculate_outcome_probability(self, outcome_name: str, history: List[Dict]) -> float:
+        """
+        Calculate the probability of a specific outcome based on the simulation history.
+        
+        Args:
+            outcome_name: Name of the outcome to calculate probability for
+            history: List of simulation steps
+            
+        Returns:
+            float: Probability of the outcome (0.0 to 1.0)
+        """
+        # Count occurrences of key actions or states that indicate this outcome
+        outcome_indicators = 0
+        total_steps = len(history)
+        
+        if total_steps == 0:
+            return 0.0
+            
+        # Look for indicators in each step
+        for step in history:
+            if isinstance(step, dict):
+                # Check agent actions
+                if "actions" in step:
+                    for action in step["actions"]:
+                        if isinstance(action, str) and outcome_name.lower() in action.lower():
+                            outcome_indicators += 1
+                
+                # Check agent states
+                if "agent_states" in step:
+                    for agent_state in step["agent_states"].values():
+                        if isinstance(agent_state, str) and outcome_name.lower() in agent_state.lower():
+                            outcome_indicators += 1
+                        elif isinstance(agent_state, dict):
+                            # Handle nested dictionaries
+                            for value in agent_state.values():
+                                if isinstance(value, str) and outcome_name.lower() in value.lower():
+                                    outcome_indicators += 1
+                
+                # Check environment state
+                if "environment_state" in step:
+                    env_state = step["environment_state"]
+                    if isinstance(env_state, str) and outcome_name.lower() in env_state.lower():
+                        outcome_indicators += 1
+                    elif isinstance(env_state, list):
+                        for item in env_state:
+                            if isinstance(item, str) and outcome_name.lower() in item.lower():
+                                outcome_indicators += 1
+        
+        # Calculate probability based on indicators
+        probability = outcome_indicators / total_steps if total_steps > 0 else 0.0
+        return probability 

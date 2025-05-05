@@ -1,0 +1,91 @@
+<div class="container">
+    <h2>Experiment Configuration</h2>
+    
+    <form id="experimentForm">
+        <!-- Basic experiment settings -->
+        <div class="mb-3">
+            <label for="experimentName" class="form-label">Experiment Name</label>
+            <input type="text" class="form-control" id="experimentName" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="experimentQuery" class="form-label">Query</label>
+            <textarea class="form-control" id="experimentQuery" rows="3" required></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label for="experimentSteps" class="form-label">Steps</label>
+            <input type="number" class="form-control" id="experimentSteps" min="1" value="10" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="numSimulations" class="form-label">Number of Simulations</label>
+            <input type="number" class="form-control" id="numSimulations" min="1" value="3" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="experimentAgentType" class="form-label">Agent Type</label>
+            <select class="form-select" id="experimentAgentType">
+                <option value="regular">Regular</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="chunkSize" class="form-label">Chunk Size</label>
+            <input type="number" class="form-control" id="chunkSize" min="1" value="1200">
+        </div>
+        
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="plotResults">
+            <label class="form-check-label" for="plotResults">
+                Plot Results
+            </label>
+        </div>
+        
+        <!-- Outcomes section -->
+        <div class="mb-3">
+            <label class="form-label">Outcomes</label>
+            <div id="outcomesContainer">
+                <!-- Initial outcome item -->
+                <div class="outcome-item mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">Name</span>
+                        <input type="text" class="form-control" placeholder="Outcome name">
+                        <span class="input-group-text">Condition</span>
+                        <input type="text" class="form-control" placeholder="Condition">
+                        <span class="input-group-text">Description</span>
+                        <input type="text" class="form-control" placeholder="Description">
+                        <button class="btn btn-outline-danger remove-outcome" type="button">×</button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addOutcome" class="btn btn-secondary mt-2">Add Outcome</button>
+        </div>
+        
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary">Run Experiment</button>
+    </form>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Experiment Progress</h5>
+    </div>
+    <div class="card-body">
+        <div id="experimentStatus" class="mb-3">
+            <p class="mb-2">Status: <span id="currentStatus">Ready</span></p>
+            <p class="mb-2">Current Experiment: <span id="currentExperiment">-</span></p>
+        </div>
+        <div class="progress mb-3">
+            <div id="overallProgress" class="progress-bar" role="progressbar" style="width: 0%">0%</div>
+        </div>
+        <div id="simulationProgress" class="mb-3">
+            <p class="mb-2">Current Simulation: <span id="currentSimulation">-</span></p>
+            <div class="progress">
+                <div id="simulationProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                     role="progressbar" style="width: 0%">0%</div>
+            </div>
+        </div>
+    </div>
+</div> 

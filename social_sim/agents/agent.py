@@ -12,6 +12,7 @@ class Agent:
         self.llm = llm
         self.last_message = None
         self.memory = []  # Initialize empty memory
+        self.state = {}  # Generic state dictionary
 
     def act(self, visible_state, messages):
         """
@@ -26,12 +27,15 @@ class Agent:
         Messages from others:
         {messages}
         
-        What action do you take? Respond with a single sentence describing your action.
+        Your previous actions:
+        {self.memory}
+        
+        What action do you take? Respond with a clear description of your action.
         """
         
         action = self.llm.generate(prompt)
         self.last_message = action
-        self.memory.append(action)  # Add action to memory
+        self.memory.append(action)
         return action
 
     def get_last_message(self):
@@ -39,3 +43,15 @@ class Agent:
         Get the last message sent by this agent
         """
         return self.last_message
+
+    def update_state(self, key, value):
+        """
+        Update the agent's state with a key-value pair
+        """
+        self.state[key] = value
+
+    def get_state(self):
+        """
+        Get the agent's current state
+        """
+        return self.state.copy()

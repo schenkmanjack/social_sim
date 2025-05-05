@@ -1,0 +1,1273 @@
+{
+  "steps": [
+    {
+      "step": 1,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            null
+          ],
+          "action": "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+          ],
+          "action": "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+        }
+      ],
+      "environment": [
+        "Both prisoners are charged with the same crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will determine their sentence lengths.",
+        "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+        "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+        "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+        "Bob chooses to cooperate with Alice.",
+        "Alice chooses to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 2,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+          ],
+          "action": "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+          ],
+          "action": "Bob chooses to cooperate with Alice."
+        }
+      ],
+      "environment": [
+        "Both prisoners are charged with the same crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will determine their sentence lengths.",
+        "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+        "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+        "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+        "Bob chooses to cooperate with Alice.",
+        "Alice chooses to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 3,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "Bob chooses to cooperate with Alice."
+          ],
+          "action": "Alice chooses to cooperate with Bob."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "Alice chooses to cooperate with Bob."
+          ],
+          "action": "I choose to cooperate with Alice."
+        }
+      ],
+      "environment": [
+        "Both prisoners are charged with the same crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will determine their sentence lengths.",
+        "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+        "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+        "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+        "Bob chooses to cooperate with Alice.",
+        "Alice chooses to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 4,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Alice."
+          ],
+          "action": "I choose to cooperate with Bob."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Bob."
+          ],
+          "action": "I choose to cooperate with Alice."
+        }
+      ],
+      "environment": [
+        "Both prisoners are charged with the same crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will determine their sentence lengths.",
+        "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+        "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+        "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+        "Bob chooses to cooperate with Alice.",
+        "Alice chooses to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 5,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Alice."
+          ],
+          "action": "I choose to cooperate with Bob."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Bob."
+          ],
+          "action": "I choose to cooperate with Alice."
+        }
+      ],
+      "environment": [
+        "Both prisoners are charged with the same crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will determine their sentence lengths.",
+        "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+        "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+        "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+        "Bob chooses to cooperate with Alice.",
+        "Alice chooses to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "summary": {
+        "summary": "In this scenario, both Alice and Bob are prisoners charged with the same crime and are held in separate cells with no means of communication. They have the opportunity to either cooperate with each other or betray each other, with the outcome of their decisions impacting their sentence lengths.\n\nIn each step of the scenario, both Alice and Bob choose to cooperate with each other in the hope of achieving a better outcome for both of them. Despite not being able to communicate with each other, they both trust that cooperating is the best course of action.\n\nUltimately, both Alice and Bob consistently choose to cooperate with each other throughout the scenario, showing a level of trust and cooperation that leads to a potential positive outcome for both of them.",
+        "metrics_analysis": null
+      },
+      "history": [
+        {
+          "step": 1,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                null
+              ],
+              "action": "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+              ],
+              "action": "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+            }
+          ],
+          "environment": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths.",
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+            "Bob chooses to cooperate with Alice.",
+            "Alice chooses to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 2,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+              ],
+              "action": "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+              ],
+              "action": "Bob chooses to cooperate with Alice."
+            }
+          ],
+          "environment": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths.",
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+            "Bob chooses to cooperate with Alice.",
+            "Alice chooses to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 3,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "Bob chooses to cooperate with Alice."
+              ],
+              "action": "Alice chooses to cooperate with Bob."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "Alice chooses to cooperate with Bob."
+              ],
+              "action": "I choose to cooperate with Alice."
+            }
+          ],
+          "environment": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths.",
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+            "Bob chooses to cooperate with Alice.",
+            "Alice chooses to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 4,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I choose to cooperate with Alice."
+              ],
+              "action": "I choose to cooperate with Bob."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I choose to cooperate with Bob."
+              ],
+              "action": "I choose to cooperate with Alice."
+            }
+          ],
+          "environment": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths.",
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+            "Bob chooses to cooperate with Alice.",
+            "Alice chooses to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 5,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I choose to cooperate with Alice."
+              ],
+              "action": "I choose to cooperate with Bob."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+              "visible_state": [
+                "Both prisoners are charged with the same crime.",
+                "They are held in separate cells and cannot communicate.",
+                "The outcome of their decisions will determine their sentence lengths."
+              ],
+              "received_messages": [
+                "I choose to cooperate with Bob."
+              ],
+              "action": "I choose to cooperate with Alice."
+            }
+          ],
+          "environment": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths.",
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+            "Bob chooses to cooperate with Alice.",
+            "Alice chooses to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice.",
+            "I choose to cooperate with Bob.",
+            "I choose to cooperate with Alice."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        }
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      },
+      "environment_state": [
+        "Both prisoners are charged with the same crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will determine their sentence lengths.",
+        "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+        "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+        "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+        "Bob chooses to cooperate with Alice.",
+        "Alice chooses to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice.",
+        "I choose to cooperate with Bob.",
+        "I choose to cooperate with Alice."
+      ]
+    }
+  ],
+  "outcome_analysis": {
+    "steps": [
+      {
+        "step": 1,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              null
+            ],
+            "action": "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+            ],
+            "action": "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+          }
+        ],
+        "environment": [
+          "Both prisoners are charged with the same crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will determine their sentence lengths.",
+          "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+          "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+          "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+          "Bob chooses to cooperate with Alice.",
+          "Alice chooses to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 2,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+            ],
+            "action": "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+            ],
+            "action": "Bob chooses to cooperate with Alice."
+          }
+        ],
+        "environment": [
+          "Both prisoners are charged with the same crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will determine their sentence lengths.",
+          "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+          "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+          "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+          "Bob chooses to cooperate with Alice.",
+          "Alice chooses to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 3,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "Bob chooses to cooperate with Alice."
+            ],
+            "action": "Alice chooses to cooperate with Bob."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "Alice chooses to cooperate with Bob."
+            ],
+            "action": "I choose to cooperate with Alice."
+          }
+        ],
+        "environment": [
+          "Both prisoners are charged with the same crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will determine their sentence lengths.",
+          "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+          "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+          "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+          "Bob chooses to cooperate with Alice.",
+          "Alice chooses to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 4,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I choose to cooperate with Alice."
+            ],
+            "action": "I choose to cooperate with Bob."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I choose to cooperate with Bob."
+            ],
+            "action": "I choose to cooperate with Alice."
+          }
+        ],
+        "environment": [
+          "Both prisoners are charged with the same crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will determine their sentence lengths.",
+          "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+          "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+          "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+          "Bob chooses to cooperate with Alice.",
+          "Alice chooses to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 5,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I choose to cooperate with Alice."
+            ],
+            "action": "I choose to cooperate with Bob."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+            "visible_state": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths."
+            ],
+            "received_messages": [
+              "I choose to cooperate with Bob."
+            ],
+            "action": "I choose to cooperate with Alice."
+          }
+        ],
+        "environment": [
+          "Both prisoners are charged with the same crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will determine their sentence lengths.",
+          "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+          "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+          "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+          "Bob chooses to cooperate with Alice.",
+          "Alice chooses to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "summary": {
+          "summary": "In this scenario, both Alice and Bob are prisoners charged with the same crime and are held in separate cells with no means of communication. They have the opportunity to either cooperate with each other or betray each other, with the outcome of their decisions impacting their sentence lengths.\n\nIn each step of the scenario, both Alice and Bob choose to cooperate with each other in the hope of achieving a better outcome for both of them. Despite not being able to communicate with each other, they both trust that cooperating is the best course of action.\n\nUltimately, both Alice and Bob consistently choose to cooperate with each other throughout the scenario, showing a level of trust and cooperation that leads to a potential positive outcome for both of them.",
+          "metrics_analysis": null
+        },
+        "history": [
+          {
+            "step": 1,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  null
+                ],
+                "action": "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+                ],
+                "action": "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+              }
+            ],
+            "environment": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths.",
+              "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+              "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+              "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+              "Bob chooses to cooperate with Alice.",
+              "Alice chooses to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 2,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+                ],
+                "action": "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+                ],
+                "action": "Bob chooses to cooperate with Alice."
+              }
+            ],
+            "environment": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths.",
+              "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+              "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+              "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+              "Bob chooses to cooperate with Alice.",
+              "Alice chooses to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 3,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "Bob chooses to cooperate with Alice."
+                ],
+                "action": "Alice chooses to cooperate with Bob."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "Alice chooses to cooperate with Bob."
+                ],
+                "action": "I choose to cooperate with Alice."
+              }
+            ],
+            "environment": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths.",
+              "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+              "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+              "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+              "Bob chooses to cooperate with Alice.",
+              "Alice chooses to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 4,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I choose to cooperate with Alice."
+                ],
+                "action": "I choose to cooperate with Bob."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I choose to cooperate with Bob."
+                ],
+                "action": "I choose to cooperate with Alice."
+              }
+            ],
+            "environment": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths.",
+              "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+              "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+              "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+              "Bob chooses to cooperate with Alice.",
+              "Alice chooses to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 5,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I choose to cooperate with Alice."
+                ],
+                "action": "I choose to cooperate with Bob."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+                "visible_state": [
+                  "Both prisoners are charged with the same crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "The outcome of their decisions will determine their sentence lengths."
+                ],
+                "received_messages": [
+                  "I choose to cooperate with Bob."
+                ],
+                "action": "I choose to cooperate with Alice."
+              }
+            ],
+            "environment": [
+              "Both prisoners are charged with the same crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will determine their sentence lengths.",
+              "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+              "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+              "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+              "Bob chooses to cooperate with Alice.",
+              "Alice chooses to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice.",
+              "I choose to cooperate with Bob.",
+              "I choose to cooperate with Alice."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          }
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        },
+        "environment_state": [
+          "Both prisoners are charged with the same crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will determine their sentence lengths.",
+          "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+          "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+          "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+          "Bob chooses to cooperate with Alice.",
+          "Alice chooses to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice.",
+          "I choose to cooperate with Bob.",
+          "I choose to cooperate with Alice."
+        ]
+      }
+    ],
+    "outcome_analysis": {
+      "both_cooperate": false,
+      "both_defect": false,
+      "alice_defects_bob_cooperates": false,
+      "bob_defects_alice_cooperates": true
+    },
+    "environment": [
+      "Both prisoners are charged with the same crime.",
+      "They are held in separate cells and cannot communicate.",
+      "The outcome of their decisions will determine their sentence lengths.",
+      "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us.",
+      "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us.",
+      "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us.",
+      "Bob chooses to cooperate with Alice.",
+      "Alice chooses to cooperate with Bob.",
+      "I choose to cooperate with Alice.",
+      "I choose to cooperate with Bob.",
+      "I choose to cooperate with Alice.",
+      "I choose to cooperate with Bob.",
+      "I choose to cooperate with Alice."
+    ],
+    "agent_states": {
+      "Alice": {},
+      "Bob": {}
+    },
+    "actions": [
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            null
+          ],
+          "action": "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I will cooperate with Bob in the hope that it will lead to a better outcome for both of us."
+          ],
+          "action": "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with Alice in the hope of achieving a better outcome for both of us."
+          ],
+          "action": "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with Bob in the hope of achieving a better outcome for both of us."
+          ],
+          "action": "Bob chooses to cooperate with Alice."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "Bob chooses to cooperate with Alice."
+          ],
+          "action": "Alice chooses to cooperate with Bob."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "Alice chooses to cooperate with Bob."
+          ],
+          "action": "I choose to cooperate with Alice."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Alice."
+          ],
+          "action": "I choose to cooperate with Bob."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Bob."
+          ],
+          "action": "I choose to cooperate with Alice."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a prisoner who has been arrested for a crime and is currently held in a separate cell from Bob. She must decide whether to cooperate with Bob or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Alice."
+          ],
+          "action": "I choose to cooperate with Bob."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a prisoner who has been arrested for a crime and is currently held in a separate cell from Alice. He must decide whether to cooperate with Alice or defect.",
+          "visible_state": [
+            "Both prisoners are charged with the same crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will determine their sentence lengths."
+          ],
+          "received_messages": [
+            "I choose to cooperate with Bob."
+          ],
+          "action": "I choose to cooperate with Alice."
+        }
+      ]
+    ],
+    "statistics": {
+      "both_cooperate": {
+        "count": 3,
+        "percentage": 37.5,
+        "description": "Both prisoners serve 1 year in prison"
+      },
+      "both_defect": {
+        "count": 0,
+        "percentage": 0.0,
+        "description": "Both prisoners serve 2 years in prison"
+      },
+      "alice_defects_bob_cooperates": {
+        "count": 2,
+        "percentage": 25.0,
+        "description": "Alice goes free while Bob serves 3 years"
+      },
+      "bob_defects_alice_cooperates": {
+        "count": 3,
+        "percentage": 37.5,
+        "description": "Bob goes free while Alice serves 3 years"
+      }
+    }
+  },
+  "statistics": {
+    "both_cooperate": {
+      "count": 3,
+      "percentage": 37.5,
+      "description": "Both prisoners serve 1 year in prison"
+    },
+    "both_defect": {
+      "count": 0,
+      "percentage": 0.0,
+      "description": "Both prisoners serve 2 years in prison"
+    },
+    "alice_defects_bob_cooperates": {
+      "count": 2,
+      "percentage": 25.0,
+      "description": "Alice goes free while Bob serves 3 years"
+    },
+    "bob_defects_alice_cooperates": {
+      "count": 3,
+      "percentage": 37.5,
+      "description": "Bob goes free while Alice serves 3 years"
+    }
+  }
+}

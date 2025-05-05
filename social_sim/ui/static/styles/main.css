@@ -1,0 +1,20 @@
+.result-section {
+    margin-top: 20px;
+}
+
+.card {
+    margin-top: 20px;
+}
+
+#summary, #history {
+    white-space: pre-line;
+}
+
+.outcome-item {
+    margin-bottom: 1rem;
+}
+
+#outcomesContainer {
+    max-height: 400px;
+    overflow-y: auto;
+} 

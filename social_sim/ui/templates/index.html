@@ -3,6 +3,8 @@
 <head>
     <title>Social Simulation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <style>
         .result-section {
             margin-top: 20px;
@@ -19,186 +21,48 @@
     <div class="container mt-5">
         <h1>Social Simulation v2</h1>
         
-        <form id="simulationForm" class="mt-4">
-            <div class="mb-3">
-                <label for="query" class="form-label">Simulation Query</label>
-                <textarea class="form-control" id="query" rows="3" required></textarea>
+        <!-- Include navigation -->
+        {% include 'components/navigation.html' %}
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="simulationTabsContent">
+            <!-- Basic Simulation Tab -->
+            <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                {% include 'components/basic_simulation.html' %}
             </div>
-            
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="mb-3">
-                        <label for="steps" class="form-label">Number of Steps</label>
-                        <input type="number" class="form-control" id="steps" value="5" min="1">
-                    </div>
-                </div>
-                
-                <div class="col-md-3">
-                    <div class="mb-3">
-                        <label for="agentType" class="form-label">Agent Type</label>
-                        <select class="form-select" id="agentType">
-                            <option value="regular">Regular</option>
-                            <option value="timescale_aware">Timescale Aware</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="col-md-3">
-                    <div class="mb-3">
-                        <label for="chunkSize" class="form-label">Chunk Size</label>
-                        <input type="number" class="form-control" id="chunkSize" value="5" min="1">
-                    </div>
-                </div>
+
+            <!-- Experiment Tab -->
+            <div class="tab-pane fade" id="experiment" role="tabpanel">
+                {% include 'components/experiment.html' %}
             </div>
-            
-            <button type="submit" class="btn btn-primary">Run Simulation</button>
-        </form>
-        
-        <div class="progress mt-3" style="display: none;">
-            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
         </div>
 
-        <div class="alert alert-danger mt-3" style="display: none;" id="errorDiv"></div>
-
-        <div class="result-section mt-3" style="display: none;">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Results</h5>
-                </div>
-                <div class="card-body">
-                    <h6>Summary</h6>
-                    <div id="summary" class="mb-3"></div>
-                    <h6>Detailed History</h6>
-                    <div id="history" class="list-group"></div>
-                </div>
-            </div>
-        </div>
+        <!-- Results Section -->
+        {% include 'components/results.html' %}
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('simulationForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // Initialize debug logging
+        console.log('Page loaded');
+        
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded');
             
-            // Get UI elements
-            const resultSection = document.querySelector('.result-section');
-            const progressBar = document.querySelector('.progress');
-            const progressBarInner = document.querySelector('.progress-bar');
-            const errorDiv = document.getElementById('errorDiv');
-            const summaryDiv = document.getElementById('summary');
-            const historyDiv = document.getElementById('history');
-            
-            // Reset UI
-            resultSection.style.display = 'block';
-            errorDiv.style.display = 'none';
-            summaryDiv.textContent = '';
-            historyDiv.innerHTML = '';
-            progressBar.style.display = 'block';
-            progressBarInner.style.width = '0%';
-            progressBarInner.textContent = '0%';
-            
-            try {
-                const response = await fetch('/run_simulation', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        query: document.getElementById('query').value,
-                        steps: parseInt(document.getElementById('steps').value),
-                        agent_type: document.getElementById('agentType').value.toLowerCase().replace(' ', '_'),
-                        chunk_size: parseInt(document.getElementById('chunkSize').value)
-                    })
+            // Initialize Bootstrap tabs
+            const tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabEls.forEach(tabEl => {
+                tabEl.addEventListener('shown.bs.tab', function (event) {
+                    console.log('Tab shown:', event.target.id);
                 });
-                
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-                
-                while (true) {
-                    const { value, done } = await reader.read();
-                    if (done) break;
-                    
-                    buffer += decoder.decode(value);
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop() || ''; // Keep the last incomplete line in the buffer
-                    
-                    for (const line of lines) {
-                        if (!line.startsWith('data: ')) continue;
-                        
-                        try {
-                            const jsonStr = line.slice(6);
-                            const data = JSON.parse(jsonStr);
-                            
-                            if (data.progress) {
-                                const percentage = Math.round(data.progress.percentage);
-                                progressBarInner.style.width = `${percentage}%`;
-                                progressBarInner.textContent = `${percentage}%`;
-                                
-                                if (percentage === 100) {
-                                    setTimeout(() => {
-                                        progressBar.style.display = 'none';
-                                    }, 1000);
-                                }
-                            }
-                            
-                            if (data.final_result) {
-                                const result = data.final_result;
-                                
-                                // Display summary
-                                if (result.summary && result.summary.summary) {
-                                    summaryDiv.textContent = result.summary.summary.replace(/\\n/g, '\n');
-                                }
-                                
-                                // Display history
-                                if (result.history && result.history.length > 0) {
-                                    historyDiv.innerHTML = '';
-                                    result.history.forEach((item, index) => {
-                                        const historyItem = document.createElement('div');
-                                        historyItem.className = 'list-group-item';
-                                        
-                                        let content = `<h5>Step ${index + 1}</h5>`;
-                                        
-                                        if (item.actions && Array.isArray(item.actions)) {
-                                            item.actions.forEach(action => {
-                                                if (typeof action === 'object' && action.agent && action.action) {
-                                                    content += `<p><strong>${action.agent}:</strong> ${action.action}</p>`;
-                                                } else {
-                                                    content += `<p>${action}</p>`;
-                                                }
-                                            });
-                                        }
-                                        
-                                        if (item.environment && Array.isArray(item.environment)) {
-                                            content += '<h6>Environment:</h6>';
-                                            item.environment.forEach(env => {
-                                                content += `<p>${env}</p>`;
-                                            });
-                                        }
-                                        
-                                        historyItem.innerHTML = content;
-                                        historyDiv.appendChild(historyItem);
-                                    });
-                                }
-                            }
-                        } catch (parseError) {
-                            console.error('Error parsing JSON:', parseError);
-                            console.error('Problematic line:', line);
-                            continue;
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                errorDiv.textContent = `Error: ${error.message}`;
-                errorDiv.style.display = 'block';
-                progressBar.style.display = 'none';
-            }
+            });
         });
     </script>
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/basic_simulation.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/experiment.js') }}"></script>
 </body>
 </html>
 

@@ -1,6 +1,7 @@
 from social_sim.orchestrator import Orchestrator
 from social_sim.interactions import Environment, ConnectivityGraph
 from social_sim.agents import Agent, TimescaleAwareAgent
+from typing import Generator, Dict
 
 class Simulation:
     def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000):
@@ -37,18 +38,13 @@ class Simulation:
             print(f"Warning: Error combining chunk summaries: {str(e)}")
             return "Final summary generation failed."
 
-    def run(self, query: str, steps: int = 5) -> dict:
+    def run(self, query: str, steps: int = 5) -> Generator[Dict, None, None]:
         """
-        Run the simulation for the given number of steps
-        Args:
-            query: The initial query to simulate
-            steps: Number of simulation steps to run
-        Returns:
-            Dictionary containing both detailed history and summary
+        Run the simulation for a given number of steps.
         """
         # Setup the simulation world
         setup = self.orchestrator.setup_simulation(query)
-        print("Setup data:", setup)  # Debug print
+        print("Setup data:", setup)
         
         # Initialize environment
         self.env = Environment(setup["environment"]["facts"])
@@ -58,7 +54,7 @@ class Simulation:
         
         # Initialize agents
         for agent_data in setup["agents"]:
-            print("Agent data:", agent_data)  # Debug print
+            print("Agent data:", agent_data)
             agent_id = agent_data["id"]
             if self.agent_type == "timescale_aware":
                 self.agents[agent_id] = TimescaleAwareAgent(
@@ -76,7 +72,7 @@ class Simulation:
         # Run simulation steps
         history = []
         for step in range(steps):
-            print(f"\nRunning step {step + 1}/{steps}...")  # Added print statement
+            print(f"\nRunning step {step + 1}/{steps}...")
             step_actions = []
             
             # Each agent takes their turn
@@ -95,7 +91,7 @@ class Simulation:
                 action = agent.act(visible_state, messages)
                 step_actions.append({
                     "agent": agent_id,
-                    "identity": self.agents[agent_id].identity,
+                    "identity": agent.identity,
                     "visible_state": visible_state,
                     "received_messages": messages,
                     "action": action
@@ -104,15 +100,21 @@ class Simulation:
                 # Update environment with action
                 self.env.update(action)
             
-            history.append({
-                "step": step,
+            # Record step results
+            step_result = {
+                "step": step + 1,
                 "actions": step_actions,
-                "environment": self.env.get_state()
-            })
+                "environment": self.env.get_state(),
+                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()}
+            }
+            history.append(step_result)
+            
+            # Yield step result
+            yield step_result
 
-        # Generate final summary using chunked approach
+        # Generate final summary
         try:
-            # Split history into chunks using instance variable
+            # Split history into chunks
             chunks = []
             for i in range(0, len(history), self.chunk_size):
                 chunks.append(history[i:i + self.chunk_size])
@@ -131,41 +133,23 @@ class Simulation:
             else:
                 summary = chunk_summaries[0]
                 
+            # Yield final result
+            final_result = {
+                "summary": summary,
+                "history": history,
+                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
+                "environment_state": self.env.get_state()
+            }
+            yield final_result
+            
         except Exception as e:
             print(f"Warning: Could not generate summary due to error: {str(e)}")
-            summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
-        
-        # Convert metrics to the expected format using chunked approach
-        try:
-            metrics = []
-            # Process history in chunks for metric determination
-            for i, chunk in enumerate(chunks):
-                print(f"Analyzing metrics for chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
-                try:
-                    chunk_metrics = self.orchestrator.determine_plot_metrics(query, chunk)
-                    for name, keywords in chunk_metrics:
-                        # Only add if not already present
-                        if not any(m["metric_name"] == name for m in metrics):
-                            metrics.append({
-                                "question": f"How did {name.lower()} change over time?",
-                                "metric_name": name,
-                                "keywords": keywords,
-                                "visualization": "line",  # Default to line chart for time series
-                                "data_type": "trend"
-                            })
-                except Exception as e:
-                    print(f"Warning: Could not determine metrics for chunk {i+1}: {str(e)}")
-                    continue
-        except Exception as e:
-            print(f"Warning: Could not format metrics: {str(e)}")
-            metrics = []
-        
-        return {
-            "setup": setup,  # Initial configuration
-            "history": history,  # Detailed step-by-step history
-            "summary": summary,  # Final summary
-            "metrics": metrics  # Formatted metrics for plotting
-        }
+            yield {
+                "summary": "Summary generation failed",
+                "history": history,
+                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
+                "environment_state": self.env.get_state()
+            }
 
     def should_activate(self, agent_id):
         return True
@@ -231,7 +215,7 @@ class Simulation:
                 action = agent.act(visible_state, messages)
                 step_actions.append({
                     "agent": agent_id,
-                    "identity": self.agents[agent_id].identity,
+                    "identity": agent.identity,
                     "visible_state": visible_state,
                     "received_messages": messages,
                     "action": action

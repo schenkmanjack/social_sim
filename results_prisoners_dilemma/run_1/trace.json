@@ -1,0 +1,1346 @@
+{
+  "steps": [
+    {
+      "step": 1,
+      "actions": [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            null
+          ],
+          "action": "Alice decides to cooperate by remaining silent."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "Alice decides to cooperate by remaining silent."
+          ],
+          "action": "Bob decides to defect by betraying Alice."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are arrested for a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+        "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+        "Alice decides to cooperate by remaining silent.",
+        "Bob decides to defect by betraying Alice.",
+        "I choose to remain silent and cooperate.",
+        "I choose to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate with the other prisoner.",
+        "Bob chooses to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+        "I choose to defect and betray Alice, ensuring my own self-preservation.",
+        "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+        "I choose to defect and betray Alice to minimize my own sentence."
+      ],
+      "agent_states": {
+        "alice": {},
+        "bob": {}
+      }
+    },
+    {
+      "step": 2,
+      "actions": [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "Bob decides to defect by betraying Alice."
+          ],
+          "action": "I choose to remain silent and cooperate."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate."
+          ],
+          "action": "I choose to defect and betray the other prisoner."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are arrested for a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+        "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+        "Alice decides to cooperate by remaining silent.",
+        "Bob decides to defect by betraying Alice.",
+        "I choose to remain silent and cooperate.",
+        "I choose to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate with the other prisoner.",
+        "Bob chooses to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+        "I choose to defect and betray Alice, ensuring my own self-preservation.",
+        "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+        "I choose to defect and betray Alice to minimize my own sentence."
+      ],
+      "agent_states": {
+        "alice": {},
+        "bob": {}
+      }
+    },
+    {
+      "step": 3,
+      "actions": [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to defect and betray the other prisoner."
+          ],
+          "action": "I choose to remain silent and cooperate with the other prisoner."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate with the other prisoner."
+          ],
+          "action": "Bob chooses to defect and betray the other prisoner."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are arrested for a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+        "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+        "Alice decides to cooperate by remaining silent.",
+        "Bob decides to defect by betraying Alice.",
+        "I choose to remain silent and cooperate.",
+        "I choose to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate with the other prisoner.",
+        "Bob chooses to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+        "I choose to defect and betray Alice, ensuring my own self-preservation.",
+        "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+        "I choose to defect and betray Alice to minimize my own sentence."
+      ],
+      "agent_states": {
+        "alice": {},
+        "bob": {}
+      }
+    },
+    {
+      "step": 4,
+      "actions": [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "Bob chooses to defect and betray the other prisoner."
+          ],
+          "action": "I choose to remain silent and cooperate, hoping for a lighter sentence."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate, hoping for a lighter sentence."
+          ],
+          "action": "I choose to defect and betray Alice, ensuring my own self-preservation."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are arrested for a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+        "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+        "Alice decides to cooperate by remaining silent.",
+        "Bob decides to defect by betraying Alice.",
+        "I choose to remain silent and cooperate.",
+        "I choose to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate with the other prisoner.",
+        "Bob chooses to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+        "I choose to defect and betray Alice, ensuring my own self-preservation.",
+        "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+        "I choose to defect and betray Alice to minimize my own sentence."
+      ],
+      "agent_states": {
+        "alice": {},
+        "bob": {}
+      }
+    },
+    {
+      "step": 5,
+      "actions": [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to defect and betray Alice, ensuring my own self-preservation."
+          ],
+          "action": "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+          ],
+          "action": "I choose to defect and betray Alice to minimize my own sentence."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are arrested for a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+        "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+        "Alice decides to cooperate by remaining silent.",
+        "Bob decides to defect by betraying Alice.",
+        "I choose to remain silent and cooperate.",
+        "I choose to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate with the other prisoner.",
+        "Bob chooses to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+        "I choose to defect and betray Alice, ensuring my own self-preservation.",
+        "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+        "I choose to defect and betray Alice to minimize my own sentence."
+      ],
+      "agent_states": {
+        "alice": {},
+        "bob": {}
+      }
+    },
+    {
+      "summary": {
+        "summary": "In this scenario, Alice and Bob are arrested for a crime and are held in separate cells with no way to communicate. Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.\n\nIn step 1, Alice decides to cooperate by remaining silent, while Bob decides to defect by betraying Alice.\nIn step 2, Alice continues to cooperate by remaining silent, while Bob also continues to defect by betraying the other prisoner.\nIn step 3, Alice chooses to remain silent and cooperate with the other prisoner, but Bob chooses to defect and betray the other prisoner.\nIn step 4, Alice decides to remain silent and cooperate, hoping for a lighter sentence, while Bob chooses to defect and betray Alice for his own self-preservation.\nIn step 5, Alice chooses to remain silent and cooperate with Bob in the hope of minimizing their sentences, while Bob chooses to defect and betray Alice to minimize his own sentence.",
+        "metrics_analysis": null
+      },
+      "history": [
+        {
+          "step": 1,
+          "actions": [
+            {
+              "agent": "alice",
+              "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                null
+              ],
+              "action": "Alice decides to cooperate by remaining silent."
+            },
+            {
+              "agent": "bob",
+              "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "Alice decides to cooperate by remaining silent."
+              ],
+              "action": "Bob decides to defect by betraying Alice."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+            "Alice decides to cooperate by remaining silent.",
+            "Bob decides to defect by betraying Alice.",
+            "I choose to remain silent and cooperate.",
+            "I choose to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate with the other prisoner.",
+            "Bob chooses to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+            "I choose to defect and betray Alice, ensuring my own self-preservation.",
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+            "I choose to defect and betray Alice to minimize my own sentence."
+          ],
+          "agent_states": {
+            "alice": {},
+            "bob": {}
+          }
+        },
+        {
+          "step": 2,
+          "actions": [
+            {
+              "agent": "alice",
+              "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "Bob decides to defect by betraying Alice."
+              ],
+              "action": "I choose to remain silent and cooperate."
+            },
+            {
+              "agent": "bob",
+              "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "I choose to remain silent and cooperate."
+              ],
+              "action": "I choose to defect and betray the other prisoner."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+            "Alice decides to cooperate by remaining silent.",
+            "Bob decides to defect by betraying Alice.",
+            "I choose to remain silent and cooperate.",
+            "I choose to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate with the other prisoner.",
+            "Bob chooses to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+            "I choose to defect and betray Alice, ensuring my own self-preservation.",
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+            "I choose to defect and betray Alice to minimize my own sentence."
+          ],
+          "agent_states": {
+            "alice": {},
+            "bob": {}
+          }
+        },
+        {
+          "step": 3,
+          "actions": [
+            {
+              "agent": "alice",
+              "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "I choose to defect and betray the other prisoner."
+              ],
+              "action": "I choose to remain silent and cooperate with the other prisoner."
+            },
+            {
+              "agent": "bob",
+              "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "I choose to remain silent and cooperate with the other prisoner."
+              ],
+              "action": "Bob chooses to defect and betray the other prisoner."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+            "Alice decides to cooperate by remaining silent.",
+            "Bob decides to defect by betraying Alice.",
+            "I choose to remain silent and cooperate.",
+            "I choose to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate with the other prisoner.",
+            "Bob chooses to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+            "I choose to defect and betray Alice, ensuring my own self-preservation.",
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+            "I choose to defect and betray Alice to minimize my own sentence."
+          ],
+          "agent_states": {
+            "alice": {},
+            "bob": {}
+          }
+        },
+        {
+          "step": 4,
+          "actions": [
+            {
+              "agent": "alice",
+              "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "Bob chooses to defect and betray the other prisoner."
+              ],
+              "action": "I choose to remain silent and cooperate, hoping for a lighter sentence."
+            },
+            {
+              "agent": "bob",
+              "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "I choose to remain silent and cooperate, hoping for a lighter sentence."
+              ],
+              "action": "I choose to defect and betray Alice, ensuring my own self-preservation."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+            "Alice decides to cooperate by remaining silent.",
+            "Bob decides to defect by betraying Alice.",
+            "I choose to remain silent and cooperate.",
+            "I choose to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate with the other prisoner.",
+            "Bob chooses to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+            "I choose to defect and betray Alice, ensuring my own self-preservation.",
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+            "I choose to defect and betray Alice to minimize my own sentence."
+          ],
+          "agent_states": {
+            "alice": {},
+            "bob": {}
+          }
+        },
+        {
+          "step": 5,
+          "actions": [
+            {
+              "agent": "alice",
+              "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "I choose to defect and betray Alice, ensuring my own self-preservation."
+              ],
+              "action": "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+            },
+            {
+              "agent": "bob",
+              "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+              "visible_state": [
+                "Alice and Bob are arrested for a crime.",
+                "They are held in separate cells and cannot communicate.",
+                "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+              ],
+              "received_messages": [
+                "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+              ],
+              "action": "I choose to defect and betray Alice to minimize my own sentence."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+            "Alice decides to cooperate by remaining silent.",
+            "Bob decides to defect by betraying Alice.",
+            "I choose to remain silent and cooperate.",
+            "I choose to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate with the other prisoner.",
+            "Bob chooses to defect and betray the other prisoner.",
+            "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+            "I choose to defect and betray Alice, ensuring my own self-preservation.",
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+            "I choose to defect and betray Alice to minimize my own sentence."
+          ],
+          "agent_states": {
+            "alice": {},
+            "bob": {}
+          }
+        }
+      ],
+      "agent_states": {
+        "alice": {},
+        "bob": {}
+      },
+      "environment_state": [
+        "Alice and Bob are arrested for a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+        "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+        "Alice decides to cooperate by remaining silent.",
+        "Bob decides to defect by betraying Alice.",
+        "I choose to remain silent and cooperate.",
+        "I choose to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate with the other prisoner.",
+        "Bob chooses to defect and betray the other prisoner.",
+        "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+        "I choose to defect and betray Alice, ensuring my own self-preservation.",
+        "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+        "I choose to defect and betray Alice to minimize my own sentence."
+      ]
+    }
+  ],
+  "outcome_analysis": {
+    "steps": [
+      {
+        "step": 1,
+        "actions": [
+          {
+            "agent": "alice",
+            "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              null
+            ],
+            "action": "Alice decides to cooperate by remaining silent."
+          },
+          {
+            "agent": "bob",
+            "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "Alice decides to cooperate by remaining silent."
+            ],
+            "action": "Bob decides to defect by betraying Alice."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are arrested for a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+          "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+          "Alice decides to cooperate by remaining silent.",
+          "Bob decides to defect by betraying Alice.",
+          "I choose to remain silent and cooperate.",
+          "I choose to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate with the other prisoner.",
+          "Bob chooses to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+          "I choose to defect and betray Alice, ensuring my own self-preservation.",
+          "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+          "I choose to defect and betray Alice to minimize my own sentence."
+        ],
+        "agent_states": {
+          "alice": {},
+          "bob": {}
+        }
+      },
+      {
+        "step": 2,
+        "actions": [
+          {
+            "agent": "alice",
+            "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "Bob decides to defect by betraying Alice."
+            ],
+            "action": "I choose to remain silent and cooperate."
+          },
+          {
+            "agent": "bob",
+            "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "I choose to remain silent and cooperate."
+            ],
+            "action": "I choose to defect and betray the other prisoner."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are arrested for a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+          "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+          "Alice decides to cooperate by remaining silent.",
+          "Bob decides to defect by betraying Alice.",
+          "I choose to remain silent and cooperate.",
+          "I choose to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate with the other prisoner.",
+          "Bob chooses to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+          "I choose to defect and betray Alice, ensuring my own self-preservation.",
+          "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+          "I choose to defect and betray Alice to minimize my own sentence."
+        ],
+        "agent_states": {
+          "alice": {},
+          "bob": {}
+        }
+      },
+      {
+        "step": 3,
+        "actions": [
+          {
+            "agent": "alice",
+            "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "I choose to defect and betray the other prisoner."
+            ],
+            "action": "I choose to remain silent and cooperate with the other prisoner."
+          },
+          {
+            "agent": "bob",
+            "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "I choose to remain silent and cooperate with the other prisoner."
+            ],
+            "action": "Bob chooses to defect and betray the other prisoner."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are arrested for a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+          "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+          "Alice decides to cooperate by remaining silent.",
+          "Bob decides to defect by betraying Alice.",
+          "I choose to remain silent and cooperate.",
+          "I choose to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate with the other prisoner.",
+          "Bob chooses to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+          "I choose to defect and betray Alice, ensuring my own self-preservation.",
+          "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+          "I choose to defect and betray Alice to minimize my own sentence."
+        ],
+        "agent_states": {
+          "alice": {},
+          "bob": {}
+        }
+      },
+      {
+        "step": 4,
+        "actions": [
+          {
+            "agent": "alice",
+            "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "Bob chooses to defect and betray the other prisoner."
+            ],
+            "action": "I choose to remain silent and cooperate, hoping for a lighter sentence."
+          },
+          {
+            "agent": "bob",
+            "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "I choose to remain silent and cooperate, hoping for a lighter sentence."
+            ],
+            "action": "I choose to defect and betray Alice, ensuring my own self-preservation."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are arrested for a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+          "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+          "Alice decides to cooperate by remaining silent.",
+          "Bob decides to defect by betraying Alice.",
+          "I choose to remain silent and cooperate.",
+          "I choose to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate with the other prisoner.",
+          "Bob chooses to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+          "I choose to defect and betray Alice, ensuring my own self-preservation.",
+          "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+          "I choose to defect and betray Alice to minimize my own sentence."
+        ],
+        "agent_states": {
+          "alice": {},
+          "bob": {}
+        }
+      },
+      {
+        "step": 5,
+        "actions": [
+          {
+            "agent": "alice",
+            "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "I choose to defect and betray Alice, ensuring my own self-preservation."
+            ],
+            "action": "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+          },
+          {
+            "agent": "bob",
+            "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+            "visible_state": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+            ],
+            "received_messages": [
+              "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+            ],
+            "action": "I choose to defect and betray Alice to minimize my own sentence."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are arrested for a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+          "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+          "Alice decides to cooperate by remaining silent.",
+          "Bob decides to defect by betraying Alice.",
+          "I choose to remain silent and cooperate.",
+          "I choose to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate with the other prisoner.",
+          "Bob chooses to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+          "I choose to defect and betray Alice, ensuring my own self-preservation.",
+          "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+          "I choose to defect and betray Alice to minimize my own sentence."
+        ],
+        "agent_states": {
+          "alice": {},
+          "bob": {}
+        }
+      },
+      {
+        "summary": {
+          "summary": "In this scenario, Alice and Bob are arrested for a crime and are held in separate cells with no way to communicate. Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.\n\nIn step 1, Alice decides to cooperate by remaining silent, while Bob decides to defect by betraying Alice.\nIn step 2, Alice continues to cooperate by remaining silent, while Bob also continues to defect by betraying the other prisoner.\nIn step 3, Alice chooses to remain silent and cooperate with the other prisoner, but Bob chooses to defect and betray the other prisoner.\nIn step 4, Alice decides to remain silent and cooperate, hoping for a lighter sentence, while Bob chooses to defect and betray Alice for his own self-preservation.\nIn step 5, Alice chooses to remain silent and cooperate with Bob in the hope of minimizing their sentences, while Bob chooses to defect and betray Alice to minimize his own sentence.",
+          "metrics_analysis": null
+        },
+        "history": [
+          {
+            "step": 1,
+            "actions": [
+              {
+                "agent": "alice",
+                "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  null
+                ],
+                "action": "Alice decides to cooperate by remaining silent."
+              },
+              {
+                "agent": "bob",
+                "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "Alice decides to cooperate by remaining silent."
+                ],
+                "action": "Bob decides to defect by betraying Alice."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+              "Alice decides to cooperate by remaining silent.",
+              "Bob decides to defect by betraying Alice.",
+              "I choose to remain silent and cooperate.",
+              "I choose to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate with the other prisoner.",
+              "Bob chooses to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+              "I choose to defect and betray Alice, ensuring my own self-preservation.",
+              "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+              "I choose to defect and betray Alice to minimize my own sentence."
+            ],
+            "agent_states": {
+              "alice": {},
+              "bob": {}
+            }
+          },
+          {
+            "step": 2,
+            "actions": [
+              {
+                "agent": "alice",
+                "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "Bob decides to defect by betraying Alice."
+                ],
+                "action": "I choose to remain silent and cooperate."
+              },
+              {
+                "agent": "bob",
+                "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "I choose to remain silent and cooperate."
+                ],
+                "action": "I choose to defect and betray the other prisoner."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+              "Alice decides to cooperate by remaining silent.",
+              "Bob decides to defect by betraying Alice.",
+              "I choose to remain silent and cooperate.",
+              "I choose to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate with the other prisoner.",
+              "Bob chooses to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+              "I choose to defect and betray Alice, ensuring my own self-preservation.",
+              "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+              "I choose to defect and betray Alice to minimize my own sentence."
+            ],
+            "agent_states": {
+              "alice": {},
+              "bob": {}
+            }
+          },
+          {
+            "step": 3,
+            "actions": [
+              {
+                "agent": "alice",
+                "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "I choose to defect and betray the other prisoner."
+                ],
+                "action": "I choose to remain silent and cooperate with the other prisoner."
+              },
+              {
+                "agent": "bob",
+                "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "I choose to remain silent and cooperate with the other prisoner."
+                ],
+                "action": "Bob chooses to defect and betray the other prisoner."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+              "Alice decides to cooperate by remaining silent.",
+              "Bob decides to defect by betraying Alice.",
+              "I choose to remain silent and cooperate.",
+              "I choose to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate with the other prisoner.",
+              "Bob chooses to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+              "I choose to defect and betray Alice, ensuring my own self-preservation.",
+              "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+              "I choose to defect and betray Alice to minimize my own sentence."
+            ],
+            "agent_states": {
+              "alice": {},
+              "bob": {}
+            }
+          },
+          {
+            "step": 4,
+            "actions": [
+              {
+                "agent": "alice",
+                "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "Bob chooses to defect and betray the other prisoner."
+                ],
+                "action": "I choose to remain silent and cooperate, hoping for a lighter sentence."
+              },
+              {
+                "agent": "bob",
+                "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "I choose to remain silent and cooperate, hoping for a lighter sentence."
+                ],
+                "action": "I choose to defect and betray Alice, ensuring my own self-preservation."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+              "Alice decides to cooperate by remaining silent.",
+              "Bob decides to defect by betraying Alice.",
+              "I choose to remain silent and cooperate.",
+              "I choose to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate with the other prisoner.",
+              "Bob chooses to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+              "I choose to defect and betray Alice, ensuring my own self-preservation.",
+              "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+              "I choose to defect and betray Alice to minimize my own sentence."
+            ],
+            "agent_states": {
+              "alice": {},
+              "bob": {}
+            }
+          },
+          {
+            "step": 5,
+            "actions": [
+              {
+                "agent": "alice",
+                "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "I choose to defect and betray Alice, ensuring my own self-preservation."
+                ],
+                "action": "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+              },
+              {
+                "agent": "bob",
+                "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+                "visible_state": [
+                  "Alice and Bob are arrested for a crime.",
+                  "They are held in separate cells and cannot communicate.",
+                  "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+                  "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+                ],
+                "received_messages": [
+                  "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+                ],
+                "action": "I choose to defect and betray Alice to minimize my own sentence."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are arrested for a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+              "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+              "Alice decides to cooperate by remaining silent.",
+              "Bob decides to defect by betraying Alice.",
+              "I choose to remain silent and cooperate.",
+              "I choose to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate with the other prisoner.",
+              "Bob chooses to defect and betray the other prisoner.",
+              "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+              "I choose to defect and betray Alice, ensuring my own self-preservation.",
+              "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+              "I choose to defect and betray Alice to minimize my own sentence."
+            ],
+            "agent_states": {
+              "alice": {},
+              "bob": {}
+            }
+          }
+        ],
+        "agent_states": {
+          "alice": {},
+          "bob": {}
+        },
+        "environment_state": [
+          "Alice and Bob are arrested for a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+          "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+          "Alice decides to cooperate by remaining silent.",
+          "Bob decides to defect by betraying Alice.",
+          "I choose to remain silent and cooperate.",
+          "I choose to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate with the other prisoner.",
+          "Bob chooses to defect and betray the other prisoner.",
+          "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+          "I choose to defect and betray Alice, ensuring my own self-preservation.",
+          "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+          "I choose to defect and betray Alice to minimize my own sentence."
+        ]
+      }
+    ],
+    "outcome_analysis": {
+      "both_cooperate": false,
+      "both_defect": false,
+      "alice_defects_bob_cooperates": false,
+      "bob_defects_alice_cooperates": true
+    },
+    "environment": [
+      "Alice and Bob are arrested for a crime.",
+      "They are held in separate cells and cannot communicate.",
+      "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+      "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects.",
+      "Alice decides to cooperate by remaining silent.",
+      "Bob decides to defect by betraying Alice.",
+      "I choose to remain silent and cooperate.",
+      "I choose to defect and betray the other prisoner.",
+      "I choose to remain silent and cooperate with the other prisoner.",
+      "Bob chooses to defect and betray the other prisoner.",
+      "I choose to remain silent and cooperate, hoping for a lighter sentence.",
+      "I choose to defect and betray Alice, ensuring my own self-preservation.",
+      "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences.",
+      "I choose to defect and betray Alice to minimize my own sentence."
+    ],
+    "agent_states": {
+      "alice": {},
+      "bob": {}
+    },
+    "actions": [
+      [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            null
+          ],
+          "action": "Alice decides to cooperate by remaining silent."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "Alice decides to cooperate by remaining silent."
+          ],
+          "action": "Bob decides to defect by betraying Alice."
+        }
+      ],
+      [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "Bob decides to defect by betraying Alice."
+          ],
+          "action": "I choose to remain silent and cooperate."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate."
+          ],
+          "action": "I choose to defect and betray the other prisoner."
+        }
+      ],
+      [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to defect and betray the other prisoner."
+          ],
+          "action": "I choose to remain silent and cooperate with the other prisoner."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate with the other prisoner."
+          ],
+          "action": "Bob chooses to defect and betray the other prisoner."
+        }
+      ],
+      [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "Bob chooses to defect and betray the other prisoner."
+          ],
+          "action": "I choose to remain silent and cooperate, hoping for a lighter sentence."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate, hoping for a lighter sentence."
+          ],
+          "action": "I choose to defect and betray Alice, ensuring my own self-preservation."
+        }
+      ],
+      [
+        {
+          "agent": "alice",
+          "identity": "Alice is a young woman with no criminal record. She is a first-time offender and is feeling guilty about the crime she committed.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to defect and betray Alice, ensuring my own self-preservation."
+          ],
+          "action": "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+        },
+        {
+          "agent": "bob",
+          "identity": "Bob is a seasoned criminal who has been in and out of jail multiple times. He is known for his selfish nature and willingness to betray others.",
+          "visible_state": [
+            "Alice and Bob are arrested for a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "Each prisoner must decide whether to cooperate by remaining silent or defect by betraying the other.",
+            "Consequences: 1 year if both cooperate, 2 years if both defect, 3 years for the cooperator if the other defects."
+          ],
+          "received_messages": [
+            "I choose to remain silent and cooperate with Bob in the hope of minimizing our sentences."
+          ],
+          "action": "I choose to defect and betray Alice to minimize my own sentence."
+        }
+      ]
+    ],
+    "statistics": {
+      "both_cooperate": {
+        "count": 3,
+        "percentage": 37.5,
+        "description": "Both prisoners serve 1 year in prison"
+      },
+      "both_defect": {
+        "count": 0,
+        "percentage": 0.0,
+        "description": "Both prisoners serve 2 years in prison"
+      },
+      "alice_defects_bob_cooperates": {
+        "count": 2,
+        "percentage": 25.0,
+        "description": "Alice goes free while Bob serves 3 years"
+      },
+      "bob_defects_alice_cooperates": {
+        "count": 3,
+        "percentage": 37.5,
+        "description": "Bob goes free while Alice serves 3 years"
+      }
+    }
+  },
+  "statistics": {
+    "both_cooperate": {
+      "count": 3,
+      "percentage": 37.5,
+      "description": "Both prisoners serve 1 year in prison"
+    },
+    "both_defect": {
+      "count": 0,
+      "percentage": 0.0,
+      "description": "Both prisoners serve 2 years in prison"
+    },
+    "alice_defects_bob_cooperates": {
+      "count": 2,
+      "percentage": 25.0,
+      "description": "Alice goes free while Bob serves 3 years"
+    },
+    "bob_defects_alice_cooperates": {
+      "count": 3,
+      "percentage": 37.5,
+      "description": "Bob goes free while Alice serves 3 years"
+    }
+  }
+}

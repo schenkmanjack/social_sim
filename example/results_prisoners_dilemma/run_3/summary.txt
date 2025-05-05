@@ -1,1 +1,0 @@
-{'summary': 'The simulation shows that both Alice and Bob chose to cooperate in each step, resulting in both of them serving 1 year each. This indicates that they both followed a strategy of mutual cooperation in order to minimize their individual serving time.', 'metrics_analysis': None}

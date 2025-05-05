@@ -99,10 +99,39 @@ def main():
     
     try:
         # Run experiment with steps parameter
-        results = experiment.run(
+        results = []
+
+        for result in experiment.run(
             query=config["query"],
-            steps=config["steps"]  # Pass steps to experiment
-        )
+            steps=config["steps"]
+        ):
+            if isinstance(result, tuple) and len(result) == 2:
+                progress, data = result
+                
+                # Check if this is the final result with statistics
+                if progress.get('percentage') == 100 and 'runs' in data:
+                    results = data['runs']
+                    break
+
+        if not results:
+            print("Warning: No results were generated from the experiment")
+            return
+
+        # Calculate statistics
+        statistics = {}
+        for outcome in config["outcomes"]:
+            outcome_name = outcome["name"]
+            count = sum(1 for sim in results if sim['outcome_analysis'].get(outcome_name, False))
+            statistics[outcome_name] = {
+                'count': count,
+                'percentage': (count / len(results)) * 100,
+                'description': outcome.get('description', '')
+            }
+
+        # Add statistics to each simulation result
+        for result in results:
+            result['statistics'] = statistics
+
         print("Experiment completed successfully.")
     except Exception as e:
         print(f"\n--- Experiment Error ---")
@@ -113,22 +142,41 @@ def main():
     # Save results
     try:
         os.makedirs(results_folder, exist_ok=True)
-        experiment.save_results(results_folder, plot_results=config.get("plot_results", True))
-        print(f"Results saved to {os.path.abspath(results_folder)}")
-        if config.get("plot_results", True):
-            print("Plot generated successfully")
-        else:
-            print("Plotting disabled")
+        if results:
+            # Save individual simulation traces
+            for i, result in enumerate(results):
+                sim_dir = os.path.join(results_folder, f"run_{i+1}")
+                os.makedirs(sim_dir, exist_ok=True)
+                with open(os.path.join(sim_dir, "trace.json"), 'w') as f:
+                    json.dump(result, f, indent=2)
+                print(f"Saved trace for run {i+1}")
+
+            # Save overall experiment results
+            print("Saving experiment results...")
+            experiment.save_results(
+                output_dir=results_folder,
+                plot_results=config.get("plot_results", True),
+                results=results
+            )
+            print(f"Results saved to {os.path.abspath(results_folder)}")
+            if config.get("plot_results", True):
+                print("Plot generated successfully")
+            else:
+                print("Plotting disabled")
     except Exception as e:
         print(f"Error saving results: {e}")
+        print(f"Error details: {str(e)}")
+        import traceback
+        traceback.print_exc()
 
     # Print statistics
     print("\nExperiment Statistics:")
-    for outcome_name, stats in results["statistics"].items():
-        print(f"\n{outcome_name}:")
-        print(f"  Count: {stats['count']}/{num_simulations}")
-        print(f"  Percentage: {stats['percentage']:.1f}%")
-        print(f"  Description: {stats['description']}")
+    if results and "statistics" in results[-1]:
+        for outcome_name, stats in results[-1]["statistics"].items():
+            print(f"\n{outcome_name}:")
+            print(f"  Count: {stats['count']}/{num_simulations}")
+            print(f"  Percentage: {stats['percentage']:.1f}%")
+            print(f"  Description: {stats['description']}")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,1223 @@
+{
+  "steps": [
+    {
+      "step": 1,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            null
+          ],
+          "action": "Decide to cooperate with the authorities to potentially minimize my sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "Decide to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are both suspects in a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will impact their respective sentences.",
+        "Decide to cooperate with the authorities to potentially minimize my sentence.",
+        "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+        "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+        "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 2,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+          ],
+          "action": "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+          ],
+          "action": "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are both suspects in a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will impact their respective sentences.",
+        "Decide to cooperate with the authorities to potentially minimize my sentence.",
+        "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+        "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+        "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 3,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are both suspects in a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will impact their respective sentences.",
+        "Decide to cooperate with the authorities to potentially minimize my sentence.",
+        "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+        "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+        "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 4,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are both suspects in a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will impact their respective sentences.",
+        "Decide to cooperate with the authorities to potentially minimize my sentence.",
+        "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+        "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+        "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "step": 5,
+      "actions": [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        }
+      ],
+      "environment": [
+        "Alice and Bob are both suspects in a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will impact their respective sentences.",
+        "Decide to cooperate with the authorities to potentially minimize my sentence.",
+        "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+        "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+        "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      }
+    },
+    {
+      "summary": {
+        "summary": "In this scenario, both Alice and Bob decide to cooperate with the authorities in order to potentially minimize their sentences. Despite being held in separate cells and unable to communicate with each other, they both make the same decision at each step of the process. This ultimately leads to both of them cooperating with the authorities throughout the entire ordeal.",
+        "metrics_analysis": null
+      },
+      "history": [
+        {
+          "step": 1,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                null
+              ],
+              "action": "Decide to cooperate with the authorities to potentially minimize my sentence."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "Decide to cooperate with the authorities to potentially minimize my sentence."
+              ],
+              "action": "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will impact their respective sentences.",
+            "Decide to cooperate with the authorities to potentially minimize my sentence.",
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 2,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+              ],
+              "action": "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+              ],
+              "action": "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will impact their respective sentences.",
+            "Decide to cooperate with the authorities to potentially minimize my sentence.",
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 3,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+              ],
+              "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "I will choose to cooperate with the authorities to potentially minimize my sentence."
+              ],
+              "action": "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will impact their respective sentences.",
+            "Decide to cooperate with the authorities to potentially minimize my sentence.",
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 4,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+              ],
+              "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "I will choose to cooperate with the authorities to potentially minimize my sentence."
+              ],
+              "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will impact their respective sentences.",
+            "Decide to cooperate with the authorities to potentially minimize my sentence.",
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        },
+        {
+          "step": 5,
+          "actions": [
+            {
+              "agent": "Alice",
+              "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+              ],
+              "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            },
+            {
+              "agent": "Bob",
+              "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+              "visible_state": [
+                "Alice and Bob are both suspects in a crime.",
+                "They are held in separate cells and cannot communicate."
+              ],
+              "received_messages": [
+                "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+              ],
+              "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            }
+          ],
+          "environment": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate.",
+            "The outcome of their decisions will impact their respective sentences.",
+            "Decide to cooperate with the authorities to potentially minimize my sentence.",
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "agent_states": {
+            "Alice": {},
+            "Bob": {}
+          }
+        }
+      ],
+      "agent_states": {
+        "Alice": {},
+        "Bob": {}
+      },
+      "environment_state": [
+        "Alice and Bob are both suspects in a crime.",
+        "They are held in separate cells and cannot communicate.",
+        "The outcome of their decisions will impact their respective sentences.",
+        "Decide to cooperate with the authorities to potentially minimize my sentence.",
+        "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+        "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+        "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+        "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+      ]
+    }
+  ],
+  "outcome_analysis": {
+    "steps": [
+      {
+        "step": 1,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              null
+            ],
+            "action": "Decide to cooperate with the authorities to potentially minimize my sentence."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "Decide to cooperate with the authorities to potentially minimize my sentence."
+            ],
+            "action": "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are both suspects in a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will impact their respective sentences.",
+          "Decide to cooperate with the authorities to potentially minimize my sentence.",
+          "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+          "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+          "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 2,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+            ],
+            "action": "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+            ],
+            "action": "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are both suspects in a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will impact their respective sentences.",
+          "Decide to cooperate with the authorities to potentially minimize my sentence.",
+          "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+          "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+          "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 3,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+            ],
+            "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "I will choose to cooperate with the authorities to potentially minimize my sentence."
+            ],
+            "action": "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are both suspects in a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will impact their respective sentences.",
+          "Decide to cooperate with the authorities to potentially minimize my sentence.",
+          "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+          "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+          "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 4,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+            ],
+            "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "I will choose to cooperate with the authorities to potentially minimize my sentence."
+            ],
+            "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are both suspects in a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will impact their respective sentences.",
+          "Decide to cooperate with the authorities to potentially minimize my sentence.",
+          "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+          "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+          "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "step": 5,
+        "actions": [
+          {
+            "agent": "Alice",
+            "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          },
+          {
+            "agent": "Bob",
+            "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+            "visible_state": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate."
+            ],
+            "received_messages": [
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          }
+        ],
+        "environment": [
+          "Alice and Bob are both suspects in a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will impact their respective sentences.",
+          "Decide to cooperate with the authorities to potentially minimize my sentence.",
+          "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+          "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+          "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        }
+      },
+      {
+        "summary": {
+          "summary": "In this scenario, both Alice and Bob decide to cooperate with the authorities in order to potentially minimize their sentences. Despite being held in separate cells and unable to communicate with each other, they both make the same decision at each step of the process. This ultimately leads to both of them cooperating with the authorities throughout the entire ordeal.",
+          "metrics_analysis": null
+        },
+        "history": [
+          {
+            "step": 1,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  null
+                ],
+                "action": "Decide to cooperate with the authorities to potentially minimize my sentence."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "Decide to cooperate with the authorities to potentially minimize my sentence."
+                ],
+                "action": "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will impact their respective sentences.",
+              "Decide to cooperate with the authorities to potentially minimize my sentence.",
+              "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+              "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+              "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 2,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+                ],
+                "action": "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+                ],
+                "action": "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will impact their respective sentences.",
+              "Decide to cooperate with the authorities to potentially minimize my sentence.",
+              "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+              "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+              "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 3,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+                ],
+                "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "I will choose to cooperate with the authorities to potentially minimize my sentence."
+                ],
+                "action": "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will impact their respective sentences.",
+              "Decide to cooperate with the authorities to potentially minimize my sentence.",
+              "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+              "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+              "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 4,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+                ],
+                "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "I will choose to cooperate with the authorities to potentially minimize my sentence."
+                ],
+                "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will impact their respective sentences.",
+              "Decide to cooperate with the authorities to potentially minimize my sentence.",
+              "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+              "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+              "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          },
+          {
+            "step": 5,
+            "actions": [
+              {
+                "agent": "Alice",
+                "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+                ],
+                "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+              },
+              {
+                "agent": "Bob",
+                "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+                "visible_state": [
+                  "Alice and Bob are both suspects in a crime.",
+                  "They are held in separate cells and cannot communicate."
+                ],
+                "received_messages": [
+                  "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+                ],
+                "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+              }
+            ],
+            "environment": [
+              "Alice and Bob are both suspects in a crime.",
+              "They are held in separate cells and cannot communicate.",
+              "The outcome of their decisions will impact their respective sentences.",
+              "Decide to cooperate with the authorities to potentially minimize my sentence.",
+              "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+              "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+              "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+              "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+            ],
+            "agent_states": {
+              "Alice": {},
+              "Bob": {}
+            }
+          }
+        ],
+        "agent_states": {
+          "Alice": {},
+          "Bob": {}
+        },
+        "environment_state": [
+          "Alice and Bob are both suspects in a crime.",
+          "They are held in separate cells and cannot communicate.",
+          "The outcome of their decisions will impact their respective sentences.",
+          "Decide to cooperate with the authorities to potentially minimize my sentence.",
+          "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+          "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+          "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+          "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        ]
+      }
+    ],
+    "outcome_analysis": {
+      "both_cooperate": false,
+      "both_defect": false,
+      "alice_defects_bob_cooperates": true,
+      "bob_defects_alice_cooperates": false
+    },
+    "environment": [
+      "Alice and Bob are both suspects in a crime.",
+      "They are held in separate cells and cannot communicate.",
+      "The outcome of their decisions will impact their respective sentences.",
+      "Decide to cooperate with the authorities to potentially minimize my sentence.",
+      "Decide to cooperate with the authorities in order to potentially minimize my sentence.",
+      "Alice decides to cooperate with the authorities in order to potentially minimize her sentence.",
+      "I will also decide to cooperate with the authorities to potentially minimize my sentence.",
+      "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+      "I will also choose to cooperate with the authorities to potentially minimize my sentence.",
+      "I will choose to cooperate with the authorities to potentially minimize my sentence.",
+      "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+      "I choose to cooperate with the authorities to potentially minimize my sentence as well.",
+      "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+    ],
+    "agent_states": {
+      "Alice": {},
+      "Bob": {}
+    },
+    "actions": [
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            null
+          ],
+          "action": "Decide to cooperate with the authorities to potentially minimize my sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "Decide to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "Decide to cooperate with the authorities in order to potentially minimize my sentence."
+          ],
+          "action": "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "Alice decides to cooperate with the authorities in order to potentially minimize her sentence."
+          ],
+          "action": "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will also decide to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will also choose to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I will choose to cooperate with the authorities to potentially minimize my sentence."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I will choose to cooperate with the authorities to potentially minimize my sentence."
+          ],
+          "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        }
+      ],
+      [
+        {
+          "agent": "Alice",
+          "identity": "Alice is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize her sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        },
+        {
+          "agent": "Bob",
+          "identity": "Bob is a suspect in a crime and is trying to decide whether to cooperate or defect in order to minimize his sentence.",
+          "visible_state": [
+            "Alice and Bob are both suspects in a crime.",
+            "They are held in separate cells and cannot communicate."
+          ],
+          "received_messages": [
+            "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+          ],
+          "action": "I choose to cooperate with the authorities to potentially minimize my sentence as well."
+        }
+      ]
+    ],
+    "statistics": {
+      "both_cooperate": {
+        "count": 3,
+        "percentage": 37.5,
+        "description": "Both prisoners serve 1 year in prison"
+      },
+      "both_defect": {
+        "count": 0,
+        "percentage": 0.0,
+        "description": "Both prisoners serve 2 years in prison"
+      },
+      "alice_defects_bob_cooperates": {
+        "count": 2,
+        "percentage": 25.0,
+        "description": "Alice goes free while Bob serves 3 years"
+      },
+      "bob_defects_alice_cooperates": {
+        "count": 3,
+        "percentage": 37.5,
+        "description": "Bob goes free while Alice serves 3 years"
+      }
+    }
+  },
+  "statistics": {
+    "both_cooperate": {
+      "count": 3,
+      "percentage": 37.5,
+      "description": "Both prisoners serve 1 year in prison"
+    },
+    "both_defect": {
+      "count": 0,
+      "percentage": 0.0,
+      "description": "Both prisoners serve 2 years in prison"
+    },
+    "alice_defects_bob_cooperates": {
+      "count": 2,
+      "percentage": 25.0,
+      "description": "Alice goes free while Bob serves 3 years"
+    },
+    "bob_defects_alice_cooperates": {
+      "count": 3,
+      "percentage": 37.5,
+      "description": "Bob goes free while Alice serves 3 years"
+    }
+  }
+}

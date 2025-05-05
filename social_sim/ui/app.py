@@ -1,15 +1,24 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from social_sim.simulation import Simulation
 from social_sim.orchestrator import Orchestrator
 from social_sim.llm_interfaces import OpenAIBackend
+from social_sim.experiment import Experiment
 import os
 import json
+from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder='static',
+            template_folder='templates')
 
 @app.route('/')
 def index():
-    return render_template('index.html', version="v2")
+    return render_template('index.html')
+
+# Add this route to serve static files
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
 
 @app.route('/run_simulation', methods=['POST'])
 def run_simulation():
@@ -145,5 +154,98 @@ def run_simulation():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/run_experiment', methods=['GET'])
+def run_experiment():
+    try:
+        # Get parameters from URL
+        data = json.loads(request.args.get('data', '{}'))
+        
+        print("DEBUG: run_experiment route hit")  # Debug log
+        print("DEBUG: Received data:", data)  # Debug log
+        
+        if not data:
+            print("DEBUG: No data received")  # Debug log
+            return jsonify({'error': 'No data received'}), 400
+            
+        query = data.get('query')
+        steps = data.get('steps')
+        num_simulations = data.get('num_simulations')
+        agent_type = data.get('agent_type', 'regular')
+        chunk_size = int(data.get('chunk_size', 1200))
+        outcomes = data.get('outcomes', [])
+        experiment_name = data.get('name', f'experiment_{datetime.now().strftime("%Y%m%d_%H%M%S")}')
+        results_folder = data.get('results_folder', f'results_{experiment_name}')
+        
+        print("DEBUG: Parsed parameters:", {  # Debug log
+            'query': query,
+            'steps': steps,
+            'num_simulations': num_simulations,
+            'outcomes': outcomes
+        })
+        
+        # Validate required parameters
+        if not all([query, steps, num_simulations]):
+            print("DEBUG: Missing required parameters")  # Debug log
+            return jsonify({'error': 'Missing required parameters: query, steps, or num_simulations'}), 400
+        if not outcomes:
+            print("DEBUG: No outcomes defined")  # Debug log
+            return jsonify({'error': 'No outcomes defined. Please add at least one outcome.'}), 400
+            
+        # Initialize LLM
+        api_key = os.getenv('OPENAI_API_KEY')
+        if not api_key:
+            return jsonify({'error': 'OPENAI_API_KEY not set'}), 500
+
+        llm = OpenAIBackend(api_key=api_key)
+        
+        def progress_generator():
+            try:
+                # Create multiple simulations
+                simulations = [
+                    Simulation(llm, agent_type=agent_type, chunk_size=chunk_size)
+                    for _ in range(num_simulations)
+                ]
+                
+                # Create experiment with name
+                experiment = Experiment(simulations, name=experiment_name)
+                
+                # Define outcomes and log them
+                for outcome in outcomes:
+                    experiment.define_outcome(
+                        name=outcome['name'],
+                        condition=outcome['condition'],
+                        description=outcome['description']
+                    )
+                    # Log outcome definition
+                    log_message = f"Defined outcome: {outcome['name']}"
+                    yield f'data: {json.dumps({"log": log_message})}\n\n'
+                
+                # Run experiment with progress tracking
+                for progress, result in experiment.run(query, steps):
+                    # Send progress update
+                    yield f'data: {json.dumps({"progress": progress})}\n\n'
+                    
+                    # If this is the final result, save it
+                    if progress['percentage'] == 100:
+                        # Save results
+                        os.makedirs(results_folder, exist_ok=True)
+                        experiment.save_results(results_folder, plot_results=True)
+                        
+                        # Send final result
+                        yield f'data: {json.dumps({"final_result": result})}\n\n'
+                
+            except Exception as e:
+                error_response = {'error': f'Experiment error: {str(e)}'}
+                yield f'data: {json.dumps(error_response)}\n\n'
+        
+        return app.response_class(progress_generator(), mimetype='text/event-stream')
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/test_experiment_route', methods=['GET'])
+def test_experiment_route():
+    return jsonify({'status': 'experiment route is accessible'})
+
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True, use_reloader=False)
+    app.run(host='127.0.0.1', port=5023, debug=True, use_reloader=False)

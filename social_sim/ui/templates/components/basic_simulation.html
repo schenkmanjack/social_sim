@@ -1,0 +1,45 @@
+<form id="simulationForm" class="mt-4">
+    <div class="mb-3">
+        <label for="query" class="form-label">Simulation Query</label>
+        <textarea class="form-control" id="query" rows="3" required></textarea>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="steps" class="form-label">Number of Steps</label>
+                <input type="number" class="form-control" id="steps" value="5" min="1">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="agentType" class="form-label">Agent Type</label>
+                <select class="form-select" id="agentType">
+                    <option value="regular">Regular</option>
+                    <option value="timescale_aware">Timescale Aware</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="chunkSize" class="form-label">Chunk Size</label>
+                <input type="number" class="form-control" id="chunkSize" value="1200" min="1">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="mb-3">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="plotResults" checked>
+                    <label class="form-check-label" for="plotResults">
+                        Generate Plots
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Run Simulation</button>
+</form> 
