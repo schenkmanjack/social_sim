@@ -1,0 +1,9 @@
+{
+  "positive_sentiment": [
+    "agent_1"
+  ],
+  "negative_sentiment": [],
+  "neutral_sentiment": [
+    "agent_1"
+  ]
+}

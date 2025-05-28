@@ -41,13 +41,13 @@ class Orchestrator:
         Given the query: '{query}'
         Define a list of agents with identities and roles,
         a synthetic environment state,
-        and a connectivity graph (who sees what and can talk to whom).
+        and a connectivity graph (who sees what and can talk to whom). The agent ids should be of the form agent_1, agent_2, agent_3, ...
 
         Output the result as JSON with the following structure:
         {{
             "agents": [
                 {{
-                    "id": "unique_agent_id",
+                    "id": "agent_1",
                     "identity": "detailed description of who they are and their role"
                 }},
                 ...
@@ -60,21 +60,22 @@ class Orchestrator:
                 ]
             }},
             "connectivity": {{
-                "agent_id": {{
-                    "visible_facts": [0, 2, 3],  // indices of facts this agent can see
-                    "neighbors": ["agent2", "agent3"]  // IDs of agents they can communicate with
+                "agent_1": {{
+                    "visible_facts": [0, 2, 3],  // indices of facts this agent can see (can be empty)
+                    "neighbors": ["agent_2", "agent_3"]  // IDs of agents they can communicate with (can be empty)
                 }},
                 ...
             }}
         }}
 
         For the connectivity graph:
-        - visible_facts should be indices into the environment facts array
-        - neighbors should be IDs of other agents they can communicate with
+        - visible_facts should be indices into the environment facts array (can be empty)
+        - neighbors should be IDs of other agents they can communicate with (can be empty)
         - Make sure the connectivity is realistic based on the agents' roles
         """
 
         response = self._call_llm_with_retry(prompt)
+        print(f"Orchestrator: LLM response: {response}")
         try:
             # Attempt to find JSON within potential markdown/text
             match = re.search(r'\{.*\}', response, re.DOTALL)
@@ -93,40 +94,10 @@ class Orchestrator:
             if not isinstance(setup["connectivity"], dict):
                  raise ValueError("'connectivity' must be a dict")
 
-
-            # Validate connectivity graph
-            agent_ids = {agent["id"] for agent in setup["agents"]}
-            env_facts_len = len(setup["environment"]["facts"])
-
-            for agent_id, conn in setup["connectivity"].items():
-                 if agent_id not in agent_ids:
-                     print(f"Warning: Connectivity info found for non-existent agent ID '{agent_id}'. Ignoring.")
-                     continue # Or raise ValueError if strict validation needed
-
-                 if not isinstance(conn, dict) or not all(key in conn for key in ["visible_facts", "neighbors"]):
-                    raise ValueError(f"Invalid connectivity structure for agent {agent_id}")
-
-                 if not isinstance(conn["visible_facts"], list):
-                     raise ValueError(f"'visible_facts' for agent {agent_id} must be a list")
-                 for fact_idx in conn["visible_facts"]:
-                    if not isinstance(fact_idx, int) or fact_idx < 0:
-                        raise ValueError(f"Invalid fact index '{fact_idx}' for agent {agent_id}")
-                    if fact_idx >= env_facts_len:
-                        # Allow flexibility, maybe facts are added later? Or raise error?
-                        print(f"Warning: Fact index {fact_idx} for agent {agent_id} is out of bounds (max index {env_facts_len - 1}).")
-                        # raise ValueError(f"Fact index {fact_idx} out of bounds for agent {agent_id}")
-
-                 if not isinstance(conn["neighbors"], list):
-                     raise ValueError(f"'neighbors' for agent {agent_id} must be a list")
-                 for neighbor_id in conn["neighbors"]:
-                    if neighbor_id not in agent_ids:
-                        raise ValueError(f"Invalid neighbor ID '{neighbor_id}' for agent {agent_id}")
-
             # Ensure all agents defined in 'agents' list have connectivity info
             for agent in setup["agents"]:
                 if agent["id"] not in setup["connectivity"]:
                      raise ValueError(f"Missing connectivity info for agent {agent['id']}")
-
 
             return setup
 

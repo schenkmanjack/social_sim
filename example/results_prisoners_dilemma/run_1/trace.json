@@ -1,0 +1,1714 @@
+{
+  "steps": [
+    {
+      "step": 1,
+      "actions": [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            null,
+            null
+          ],
+          "action": "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            null
+          ],
+          "action": "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+          ],
+          "action": "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+        }
+      ],
+      "environment": [
+        "The main server has been compromised",
+        "A valuable artifact has gone missing",
+        "A new virus is spreading in the city",
+        "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+        "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+        "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+        "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+        "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+        "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+        "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+        "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+        "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+        "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+        "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+        "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+        "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+        "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+        "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+      ],
+      "agent_states": {
+        "agent1": {},
+        "agent2": {},
+        "agent3": {}
+      }
+    },
+    {
+      "step": 2,
+      "actions": [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+          ],
+          "action": "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+          ],
+          "action": "I begin investigating any potential connections between the main server compromise and the missing artifact."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact."
+          ],
+          "action": "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+        }
+      ],
+      "environment": [
+        "The main server has been compromised",
+        "A valuable artifact has gone missing",
+        "A new virus is spreading in the city",
+        "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+        "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+        "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+        "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+        "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+        "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+        "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+        "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+        "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+        "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+        "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+        "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+        "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+        "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+        "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+      ],
+      "agent_states": {
+        "agent1": {},
+        "agent2": {},
+        "agent3": {}
+      }
+    },
+    {
+      "step": 3,
+      "actions": [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+          ],
+          "action": "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+          ],
+          "action": "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+          ],
+          "action": "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+        }
+      ],
+      "environment": [
+        "The main server has been compromised",
+        "A valuable artifact has gone missing",
+        "A new virus is spreading in the city",
+        "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+        "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+        "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+        "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+        "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+        "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+        "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+        "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+        "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+        "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+        "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+        "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+        "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+        "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+        "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+      ],
+      "agent_states": {
+        "agent1": {},
+        "agent2": {},
+        "agent3": {}
+      }
+    },
+    {
+      "step": 4,
+      "actions": [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+          ],
+          "action": "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+          ],
+          "action": "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+          ],
+          "action": "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+        }
+      ],
+      "environment": [
+        "The main server has been compromised",
+        "A valuable artifact has gone missing",
+        "A new virus is spreading in the city",
+        "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+        "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+        "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+        "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+        "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+        "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+        "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+        "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+        "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+        "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+        "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+        "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+        "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+        "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+        "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+      ],
+      "agent_states": {
+        "agent1": {},
+        "agent2": {},
+        "agent3": {}
+      }
+    },
+    {
+      "step": 5,
+      "actions": [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+          ],
+          "action": "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+          ],
+          "action": "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+          ],
+          "action": "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        }
+      ],
+      "environment": [
+        "The main server has been compromised",
+        "A valuable artifact has gone missing",
+        "A new virus is spreading in the city",
+        "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+        "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+        "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+        "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+        "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+        "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+        "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+        "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+        "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+        "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+        "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+        "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+        "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+        "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+        "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+      ],
+      "agent_states": {
+        "agent1": {},
+        "agent2": {},
+        "agent3": {}
+      }
+    },
+    {
+      "summary": {
+        "summary": "In a city where the main server has been compromised and a new virus is spreading, three agents take on different roles to investigate and resolve the issues at hand.\n\nIn the first step, agent1 isolates the main server to prevent further spread of the virus and begins investigating its source. Agent2 searches for clues to find a missing artifact, while agent3 coordinates with authorities to gather information on both the missing artifact and the virus outbreak.\n\nIn the second step, agent1 analyzes the main server breach, agent2 looks for connections between the server compromise and the missing artifact, and agent3 investigates potential links between the artifact and the virus.\n\nIn the third step, agent1 launches a full-scale investigation into the server compromise and the virus outbreak, while agent2 infiltrates the black market for information on the missing artifact. Agent3 analyzes data to uncover connections between the artifact, server breach, and virus.\n\nIn the fourth step, agent1 conducts a deep dive investigation into the compromised server, agent2 tracks down the missing artifact, and agent3 looks for correlations between the artifact and the virus spread.\n\nIn the fifth step, agent1 conducts a forensic analysis on the main server, agent2 questions staff and reviews footage for more information, and agent3 coordinates with health authorities to contain the virus spread.\n\nTogether, these agents work to identify the source of the issues, contain the spread of the virus, and recover the missing artifact in the city.",
+        "metrics_analysis": null
+      },
+      "history": [
+        {
+          "step": 1,
+          "actions": [
+            {
+              "agent": "agent1",
+              "identity": "Agent Smith, cybersecurity specialist",
+              "visible_state": [
+                "The main server has been compromised",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                null,
+                null
+              ],
+              "action": "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city."
+            },
+            {
+              "agent": "agent2",
+              "identity": "Alice Johnson, undercover agent",
+              "visible_state": [
+                "The main server has been compromised",
+                "A valuable artifact has gone missing"
+              ],
+              "received_messages": [
+                "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+                null
+              ],
+              "action": "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+            },
+            {
+              "agent": "agent3",
+              "identity": "Dr. Samantha Lee, scientist",
+              "visible_state": [
+                "A valuable artifact has gone missing",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+                "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+              ],
+              "action": "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+            }
+          ],
+          "environment": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city",
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+            "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+          ],
+          "agent_states": {
+            "agent1": {},
+            "agent2": {},
+            "agent3": {}
+          }
+        },
+        {
+          "step": 2,
+          "actions": [
+            {
+              "agent": "agent1",
+              "identity": "Agent Smith, cybersecurity specialist",
+              "visible_state": [
+                "The main server has been compromised",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+                "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+              ],
+              "action": "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise."
+            },
+            {
+              "agent": "agent2",
+              "identity": "Alice Johnson, undercover agent",
+              "visible_state": [
+                "The main server has been compromised",
+                "A valuable artifact has gone missing"
+              ],
+              "received_messages": [
+                "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+                "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+              ],
+              "action": "I begin investigating any potential connections between the main server compromise and the missing artifact."
+            },
+            {
+              "agent": "agent3",
+              "identity": "Dr. Samantha Lee, scientist",
+              "visible_state": [
+                "A valuable artifact has gone missing",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+                "I begin investigating any potential connections between the main server compromise and the missing artifact."
+              ],
+              "action": "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+            }
+          ],
+          "environment": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city",
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+            "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+          ],
+          "agent_states": {
+            "agent1": {},
+            "agent2": {},
+            "agent3": {}
+          }
+        },
+        {
+          "step": 3,
+          "actions": [
+            {
+              "agent": "agent1",
+              "identity": "Agent Smith, cybersecurity specialist",
+              "visible_state": [
+                "The main server has been compromised",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+                "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+              ],
+              "action": "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities."
+            },
+            {
+              "agent": "agent2",
+              "identity": "Alice Johnson, undercover agent",
+              "visible_state": [
+                "The main server has been compromised",
+                "A valuable artifact has gone missing"
+              ],
+              "received_messages": [
+                "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+                "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+              ],
+              "action": "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+            },
+            {
+              "agent": "agent3",
+              "identity": "Dr. Samantha Lee, scientist",
+              "visible_state": [
+                "A valuable artifact has gone missing",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+                "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+              ],
+              "action": "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+            }
+          ],
+          "environment": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city",
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+            "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+          ],
+          "agent_states": {
+            "agent1": {},
+            "agent2": {},
+            "agent3": {}
+          }
+        },
+        {
+          "step": 4,
+          "actions": [
+            {
+              "agent": "agent1",
+              "identity": "Agent Smith, cybersecurity specialist",
+              "visible_state": [
+                "The main server has been compromised",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+                "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+              ],
+              "action": "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus."
+            },
+            {
+              "agent": "agent2",
+              "identity": "Alice Johnson, undercover agent",
+              "visible_state": [
+                "The main server has been compromised",
+                "A valuable artifact has gone missing"
+              ],
+              "received_messages": [
+                "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+                "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+              ],
+              "action": "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+            },
+            {
+              "agent": "agent3",
+              "identity": "Dr. Samantha Lee, scientist",
+              "visible_state": [
+                "A valuable artifact has gone missing",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+                "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+              ],
+              "action": "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+            }
+          ],
+          "environment": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city",
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+            "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+          ],
+          "agent_states": {
+            "agent1": {},
+            "agent2": {},
+            "agent3": {}
+          }
+        },
+        {
+          "step": 5,
+          "actions": [
+            {
+              "agent": "agent1",
+              "identity": "Agent Smith, cybersecurity specialist",
+              "visible_state": [
+                "The main server has been compromised",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+                "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+              ],
+              "action": "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited."
+            },
+            {
+              "agent": "agent2",
+              "identity": "Alice Johnson, undercover agent",
+              "visible_state": [
+                "The main server has been compromised",
+                "A valuable artifact has gone missing"
+              ],
+              "received_messages": [
+                "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+                "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+              ],
+              "action": "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+            },
+            {
+              "agent": "agent3",
+              "identity": "Dr. Samantha Lee, scientist",
+              "visible_state": [
+                "A valuable artifact has gone missing",
+                "A new virus is spreading in the city"
+              ],
+              "received_messages": [
+                "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+                "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+              ],
+              "action": "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+            }
+          ],
+          "environment": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city",
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+            "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+          ],
+          "agent_states": {
+            "agent1": {},
+            "agent2": {},
+            "agent3": {}
+          }
+        }
+      ],
+      "agent_states": {
+        "agent1": {},
+        "agent2": {},
+        "agent3": {}
+      },
+      "environment_state": [
+        "The main server has been compromised",
+        "A valuable artifact has gone missing",
+        "A new virus is spreading in the city",
+        "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+        "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+        "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+        "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+        "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+        "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+        "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+        "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+        "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+        "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+        "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+        "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+        "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+        "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+        "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+      ]
+    }
+  ],
+  "outcome_analysis": {
+    "steps": [
+      {
+        "step": 1,
+        "actions": [
+          {
+            "agent": "agent1",
+            "identity": "Agent Smith, cybersecurity specialist",
+            "visible_state": [
+              "The main server has been compromised",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              null,
+              null
+            ],
+            "action": "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city."
+          },
+          {
+            "agent": "agent2",
+            "identity": "Alice Johnson, undercover agent",
+            "visible_state": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing"
+            ],
+            "received_messages": [
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              null
+            ],
+            "action": "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+          },
+          {
+            "agent": "agent3",
+            "identity": "Dr. Samantha Lee, scientist",
+            "visible_state": [
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+            ],
+            "action": "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+          }
+        ],
+        "environment": [
+          "The main server has been compromised",
+          "A valuable artifact has gone missing",
+          "A new virus is spreading in the city",
+          "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+          "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+          "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+          "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+          "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+          "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+          "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+          "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+          "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+          "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+          "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+          "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+          "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+          "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+          "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        ],
+        "agent_states": {
+          "agent1": {},
+          "agent2": {},
+          "agent3": {}
+        }
+      },
+      {
+        "step": 2,
+        "actions": [
+          {
+            "agent": "agent1",
+            "identity": "Agent Smith, cybersecurity specialist",
+            "visible_state": [
+              "The main server has been compromised",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+            ],
+            "action": "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise."
+          },
+          {
+            "agent": "agent2",
+            "identity": "Alice Johnson, undercover agent",
+            "visible_state": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing"
+            ],
+            "received_messages": [
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+            ],
+            "action": "I begin investigating any potential connections between the main server compromise and the missing artifact."
+          },
+          {
+            "agent": "agent3",
+            "identity": "Dr. Samantha Lee, scientist",
+            "visible_state": [
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I begin investigating any potential connections between the main server compromise and the missing artifact."
+            ],
+            "action": "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+          }
+        ],
+        "environment": [
+          "The main server has been compromised",
+          "A valuable artifact has gone missing",
+          "A new virus is spreading in the city",
+          "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+          "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+          "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+          "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+          "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+          "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+          "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+          "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+          "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+          "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+          "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+          "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+          "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+          "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+          "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        ],
+        "agent_states": {
+          "agent1": {},
+          "agent2": {},
+          "agent3": {}
+        }
+      },
+      {
+        "step": 3,
+        "actions": [
+          {
+            "agent": "agent1",
+            "identity": "Agent Smith, cybersecurity specialist",
+            "visible_state": [
+              "The main server has been compromised",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+            ],
+            "action": "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities."
+          },
+          {
+            "agent": "agent2",
+            "identity": "Alice Johnson, undercover agent",
+            "visible_state": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing"
+            ],
+            "received_messages": [
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+            ],
+            "action": "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+          },
+          {
+            "agent": "agent3",
+            "identity": "Dr. Samantha Lee, scientist",
+            "visible_state": [
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+            ],
+            "action": "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+          }
+        ],
+        "environment": [
+          "The main server has been compromised",
+          "A valuable artifact has gone missing",
+          "A new virus is spreading in the city",
+          "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+          "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+          "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+          "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+          "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+          "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+          "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+          "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+          "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+          "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+          "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+          "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+          "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+          "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+          "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        ],
+        "agent_states": {
+          "agent1": {},
+          "agent2": {},
+          "agent3": {}
+        }
+      },
+      {
+        "step": 4,
+        "actions": [
+          {
+            "agent": "agent1",
+            "identity": "Agent Smith, cybersecurity specialist",
+            "visible_state": [
+              "The main server has been compromised",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+            ],
+            "action": "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus."
+          },
+          {
+            "agent": "agent2",
+            "identity": "Alice Johnson, undercover agent",
+            "visible_state": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing"
+            ],
+            "received_messages": [
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+            ],
+            "action": "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+          },
+          {
+            "agent": "agent3",
+            "identity": "Dr. Samantha Lee, scientist",
+            "visible_state": [
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+            ],
+            "action": "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+          }
+        ],
+        "environment": [
+          "The main server has been compromised",
+          "A valuable artifact has gone missing",
+          "A new virus is spreading in the city",
+          "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+          "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+          "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+          "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+          "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+          "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+          "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+          "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+          "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+          "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+          "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+          "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+          "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+          "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+          "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        ],
+        "agent_states": {
+          "agent1": {},
+          "agent2": {},
+          "agent3": {}
+        }
+      },
+      {
+        "step": 5,
+        "actions": [
+          {
+            "agent": "agent1",
+            "identity": "Agent Smith, cybersecurity specialist",
+            "visible_state": [
+              "The main server has been compromised",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+            ],
+            "action": "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited."
+          },
+          {
+            "agent": "agent2",
+            "identity": "Alice Johnson, undercover agent",
+            "visible_state": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing"
+            ],
+            "received_messages": [
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+            ],
+            "action": "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+          },
+          {
+            "agent": "agent3",
+            "identity": "Dr. Samantha Lee, scientist",
+            "visible_state": [
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city"
+            ],
+            "received_messages": [
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+            ],
+            "action": "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+          }
+        ],
+        "environment": [
+          "The main server has been compromised",
+          "A valuable artifact has gone missing",
+          "A new virus is spreading in the city",
+          "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+          "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+          "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+          "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+          "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+          "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+          "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+          "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+          "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+          "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+          "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+          "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+          "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+          "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+          "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        ],
+        "agent_states": {
+          "agent1": {},
+          "agent2": {},
+          "agent3": {}
+        }
+      },
+      {
+        "summary": {
+          "summary": "In a city where the main server has been compromised and a new virus is spreading, three agents take on different roles to investigate and resolve the issues at hand.\n\nIn the first step, agent1 isolates the main server to prevent further spread of the virus and begins investigating its source. Agent2 searches for clues to find a missing artifact, while agent3 coordinates with authorities to gather information on both the missing artifact and the virus outbreak.\n\nIn the second step, agent1 analyzes the main server breach, agent2 looks for connections between the server compromise and the missing artifact, and agent3 investigates potential links between the artifact and the virus.\n\nIn the third step, agent1 launches a full-scale investigation into the server compromise and the virus outbreak, while agent2 infiltrates the black market for information on the missing artifact. Agent3 analyzes data to uncover connections between the artifact, server breach, and virus.\n\nIn the fourth step, agent1 conducts a deep dive investigation into the compromised server, agent2 tracks down the missing artifact, and agent3 looks for correlations between the artifact and the virus spread.\n\nIn the fifth step, agent1 conducts a forensic analysis on the main server, agent2 questions staff and reviews footage for more information, and agent3 coordinates with health authorities to contain the virus spread.\n\nTogether, these agents work to identify the source of the issues, contain the spread of the virus, and recover the missing artifact in the city.",
+          "metrics_analysis": null
+        },
+        "history": [
+          {
+            "step": 1,
+            "actions": [
+              {
+                "agent": "agent1",
+                "identity": "Agent Smith, cybersecurity specialist",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  null,
+                  null
+                ],
+                "action": "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city."
+              },
+              {
+                "agent": "agent2",
+                "identity": "Alice Johnson, undercover agent",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A valuable artifact has gone missing"
+                ],
+                "received_messages": [
+                  "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+                  null
+                ],
+                "action": "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+              },
+              {
+                "agent": "agent3",
+                "identity": "Dr. Samantha Lee, scientist",
+                "visible_state": [
+                  "A valuable artifact has gone missing",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+                  "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+                ],
+                "action": "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+              }
+            ],
+            "environment": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city",
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+              "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+            ],
+            "agent_states": {
+              "agent1": {},
+              "agent2": {},
+              "agent3": {}
+            }
+          },
+          {
+            "step": 2,
+            "actions": [
+              {
+                "agent": "agent1",
+                "identity": "Agent Smith, cybersecurity specialist",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+                  "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+                ],
+                "action": "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise."
+              },
+              {
+                "agent": "agent2",
+                "identity": "Alice Johnson, undercover agent",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A valuable artifact has gone missing"
+                ],
+                "received_messages": [
+                  "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+                  "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+                ],
+                "action": "I begin investigating any potential connections between the main server compromise and the missing artifact."
+              },
+              {
+                "agent": "agent3",
+                "identity": "Dr. Samantha Lee, scientist",
+                "visible_state": [
+                  "A valuable artifact has gone missing",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+                  "I begin investigating any potential connections between the main server compromise and the missing artifact."
+                ],
+                "action": "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+              }
+            ],
+            "environment": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city",
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+              "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+            ],
+            "agent_states": {
+              "agent1": {},
+              "agent2": {},
+              "agent3": {}
+            }
+          },
+          {
+            "step": 3,
+            "actions": [
+              {
+                "agent": "agent1",
+                "identity": "Agent Smith, cybersecurity specialist",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+                  "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+                ],
+                "action": "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities."
+              },
+              {
+                "agent": "agent2",
+                "identity": "Alice Johnson, undercover agent",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A valuable artifact has gone missing"
+                ],
+                "received_messages": [
+                  "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+                  "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+                ],
+                "action": "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+              },
+              {
+                "agent": "agent3",
+                "identity": "Dr. Samantha Lee, scientist",
+                "visible_state": [
+                  "A valuable artifact has gone missing",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+                  "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+                ],
+                "action": "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+              }
+            ],
+            "environment": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city",
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+              "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+            ],
+            "agent_states": {
+              "agent1": {},
+              "agent2": {},
+              "agent3": {}
+            }
+          },
+          {
+            "step": 4,
+            "actions": [
+              {
+                "agent": "agent1",
+                "identity": "Agent Smith, cybersecurity specialist",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+                  "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+                ],
+                "action": "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus."
+              },
+              {
+                "agent": "agent2",
+                "identity": "Alice Johnson, undercover agent",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A valuable artifact has gone missing"
+                ],
+                "received_messages": [
+                  "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+                  "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+                ],
+                "action": "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+              },
+              {
+                "agent": "agent3",
+                "identity": "Dr. Samantha Lee, scientist",
+                "visible_state": [
+                  "A valuable artifact has gone missing",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+                  "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+                ],
+                "action": "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+              }
+            ],
+            "environment": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city",
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+              "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+            ],
+            "agent_states": {
+              "agent1": {},
+              "agent2": {},
+              "agent3": {}
+            }
+          },
+          {
+            "step": 5,
+            "actions": [
+              {
+                "agent": "agent1",
+                "identity": "Agent Smith, cybersecurity specialist",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+                  "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+                ],
+                "action": "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited."
+              },
+              {
+                "agent": "agent2",
+                "identity": "Alice Johnson, undercover agent",
+                "visible_state": [
+                  "The main server has been compromised",
+                  "A valuable artifact has gone missing"
+                ],
+                "received_messages": [
+                  "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+                  "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+                ],
+                "action": "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+              },
+              {
+                "agent": "agent3",
+                "identity": "Dr. Samantha Lee, scientist",
+                "visible_state": [
+                  "A valuable artifact has gone missing",
+                  "A new virus is spreading in the city"
+                ],
+                "received_messages": [
+                  "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+                  "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+                ],
+                "action": "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+              }
+            ],
+            "environment": [
+              "The main server has been compromised",
+              "A valuable artifact has gone missing",
+              "A new virus is spreading in the city",
+              "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+              "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+              "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+              "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+              "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+              "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+              "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+              "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+              "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+              "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+              "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+              "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+              "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+              "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+              "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+            ],
+            "agent_states": {
+              "agent1": {},
+              "agent2": {},
+              "agent3": {}
+            }
+          }
+        ],
+        "agent_states": {
+          "agent1": {},
+          "agent2": {},
+          "agent3": {}
+        },
+        "environment_state": [
+          "The main server has been compromised",
+          "A valuable artifact has gone missing",
+          "A new virus is spreading in the city",
+          "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+          "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+          "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+          "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+          "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+          "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+          "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+          "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+          "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+          "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+          "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+          "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+          "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+          "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+          "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        ]
+      }
+    ],
+    "outcome_analysis": {
+      "both_cooperate": true,
+      "both_defect": false,
+      "alice_defects_bob_cooperates": false,
+      "bob_defects_alice_cooperates": false
+    },
+    "environment": [
+      "The main server has been compromised",
+      "A valuable artifact has gone missing",
+      "A new virus is spreading in the city",
+      "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+      "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+      "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents.",
+      "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+      "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+      "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis.",
+      "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+      "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+      "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus.",
+      "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+      "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+      "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation.",
+      "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+      "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise.",
+      "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+    ],
+    "agent_states": {
+      "agent1": {},
+      "agent2": {},
+      "agent3": {}
+    },
+    "actions": [
+      [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            null,
+            null
+          ],
+          "action": "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            null
+          ],
+          "action": "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I begin isolating the main server from the network to prevent further spread of the virus and start investigating the source of the new virus in the city.",
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server."
+          ],
+          "action": "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+        }
+      ],
+      [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I start searching for clues to find the missing artifact while keeping an eye out for any possible connections to the compromised main server.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+          ],
+          "action": "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I coordinate with the authorities to gather information on the missing artifact and the virus outbreak, looking for any potential links between the two incidents."
+          ],
+          "action": "I begin investigating any potential connections between the main server compromise and the missing artifact."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I conduct a thorough analysis of the main server breach to determine the scope and impact of the compromise.",
+            "I begin investigating any potential connections between the main server compromise and the missing artifact."
+          ],
+          "action": "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+        }
+      ],
+      [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I begin investigating any potential connections between the main server compromise and the missing artifact.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+          ],
+          "action": "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I prioritize investigating the origins and potential connections between the missing artifact and the new virus spreading in the city for further analysis."
+          ],
+          "action": "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I launch a full-scale investigation into the main server compromise and the new virus spreading in the city to identify any potential connections or vulnerabilities.",
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server."
+          ],
+          "action": "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+        }
+      ],
+      [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I infiltrate the black market network to gather information on any potential connections between the missing artifact and the compromised main server.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+          ],
+          "action": "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I analyze the data gathered from the investigations to uncover any patterns or connections between the missing artifact, the compromised main server, and the spreading virus."
+          ],
+          "action": "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I conduct a deep dive investigation into the compromised main server to identify the source of the breach and contain the spread of the new virus.",
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location."
+          ],
+          "action": "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+        }
+      ],
+      [
+        {
+          "agent": "agent1",
+          "identity": "Agent Smith, cybersecurity specialist",
+          "visible_state": [
+            "The main server has been compromised",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I infiltrate the black market to gather information on the missing artifact and track down its current location.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+          ],
+          "action": "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited."
+        },
+        {
+          "agent": "agent2",
+          "identity": "Alice Johnson, undercover agent",
+          "visible_state": [
+            "The main server has been compromised",
+            "A valuable artifact has gone missing"
+          ],
+          "received_messages": [
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I analyze the possible connection between the missing artifact and the spread of the new virus to identify any correlation."
+          ],
+          "action": "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+        },
+        {
+          "agent": "agent3",
+          "identity": "Dr. Samantha Lee, scientist",
+          "visible_state": [
+            "A valuable artifact has gone missing",
+            "A new virus is spreading in the city"
+          ],
+          "received_messages": [
+            "I begin conducting a comprehensive forensic analysis on the main server to identify the source of the compromise and any vulnerabilities that were exploited.",
+            "I start questioning the staff members and reviewing security footage to gather more information on the missing artifact and the server compromise."
+          ],
+          "action": "I coordinate with local health authorities to develop a strategy for containing and controlling the spread of the new virus in the city."
+        }
+      ]
+    ]
+  },
+  "statistics": {
+    "both_cooperate": {
+      "count": 1,
+      "percentage": 100.0,
+      "description": "Both prisoners serve 1 year in prison"
+    },
+    "both_defect": {
+      "count": 0,
+      "percentage": 0.0,
+      "description": "Both prisoners serve 2 years in prison"
+    },
+    "alice_defects_bob_cooperates": {
+      "count": 0,
+      "percentage": 0.0,
+      "description": "Alice goes free while Bob serves 3 years"
+    },
+    "bob_defects_alice_cooperates": {
+      "count": 0,
+      "percentage": 0.0,
+      "description": "Bob goes free while Alice serves 3 years"
+    }
+  }
+}

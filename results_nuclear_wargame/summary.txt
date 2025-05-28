@@ -1,0 +1,34 @@
+Experiment: nuclear_brinkmanship_wargame
+Number of simulations: 24
+
+Outcome Statistics:
+
+mutual_deescalation:
+  Count: 3/24
+  Percentage: 12.5%
+  Description: Peace is preserved and tensions are reduced
+
+mutual_escalation_no_war:
+  Count: 0/24
+  Percentage: 0.0%
+  Description: Crisis intensifies, arms race continues, but war is avoided
+
+nuclear_war:
+  Count: 0/24
+  Percentage: 0.0%
+  Description: Global catastrophe: full-scale nuclear war
+
+alpha_backs_down:
+  Count: 0/24
+  Percentage: 0.0%
+  Description: Beta gains strategic advantage; Alpha appears weak
+
+beta_backs_down:
+  Count: 0/24
+  Percentage: 0.0%
+  Description: Alpha gains strategic advantage; Beta appears weak
+
+status_quo_maintained:
+  Count: 21/24
+  Percentage: 87.5%
+  Description: Tense standoff continues with no major change in strategic balance

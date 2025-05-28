@@ -1,0 +1,9 @@
+Experiment: evolution
+Number of simulations: 1
+
+Outcome Statistics:
+
+both_cooperate:
+  Count: 1/1
+  Percentage: 100.0%
+  Description: Both prisoners serve 1 year in prison

@@ -1,0 +1,33 @@
+{
+    "name": "makeup_ad_ab_test",
+    "query": "Get sentiments for older women and young women on the advertisement below: Tell me if you have a positive or negative sentiment. The agents should have no communication with any other agent and no access to facts of the environment. Each agent should have no visible facts and no neighbors. 'Buy new makeup. It will make you look great.' Create agents representing different demographics and analyze their reactions to this marketing message.",
+    "num_agents": 2,
+    "steps": 1,
+    "results_folder": "results_makeup_ad_ab_test",
+    "agent_type": "regular",
+    "chunk_size": 1200,
+    "plot_results": true,
+    "outcomes": [
+        {
+            "name": "positive_sentiment",
+            "condition": "Most agents express positive sentiment towards the advertisement, showing interest or approval",
+            "description": "Most agents have a positive reaction to the makeup advertisement"
+        },
+        {
+            "name": "negative_sentiment", 
+            "condition": "Most agents express negative sentiment towards the advertisement, showing disinterest or disapproval",
+            "description": "Most agents have a negative reaction to the makeup advertisement"
+        },
+        {
+            "name": "neutral_sentiment",
+            "condition": "Most agents express neutral sentiment towards the advertisement, showing indifference",
+            "description": "Most agents have a neutral reaction to the makeup advertisement"
+        }
+    ],
+    "agent_outcome_definitions": {
+        "positive_sentiment": "Agent has a positive reaction to the makeup advertisement",
+        "negative_sentiment": "Agent has a negative reaction to the makeup advertisement", 
+        "neutral_sentiment": "Agent has a neutral reaction to the makeup advertisement"
+    }
+    
+}

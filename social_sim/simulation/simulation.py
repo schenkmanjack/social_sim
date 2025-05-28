@@ -1,16 +1,18 @@
 from social_sim.orchestrator import Orchestrator
 from social_sim.interactions import Environment, ConnectivityGraph
 from social_sim.agents import Agent, TimescaleAwareAgent
-from typing import Generator, Dict
+from typing import Generator, Dict, List
+import json
 
 class Simulation:
-    def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000):
+    def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000, agent_outcome_definitions=None):
         """
         Initialize the simulation with an LLM wrapper
         Args:
             llm_wrapper: An instance of LLMWrapper for generating responses
             agent_type: Type of agent to use ("regular" or "timescale_aware")
             chunk_size: Number of steps to include in each summary chunk
+            agent_outcome_definitions: Definitions for agent-specific outcomes
         """
         self.orchestrator = Orchestrator(llm_wrapper)
         self.agents = {}
@@ -18,6 +20,7 @@ class Simulation:
         self.graph = None
         self.agent_type = agent_type
         self.chunk_size = chunk_size
+        self.agent_outcome_definitions = agent_outcome_definitions or []
 
     def _summarize_chunk(self, chunk):
         """Summarize a chunk of simulation steps"""
@@ -133,22 +136,30 @@ class Simulation:
             else:
                 summary = chunk_summaries[0]
                 
+            # Analyze agent outcomes
+            agent_outcomes = self.analyze_agent_outcomes()
+            print(f"Agent outcomes: {agent_outcomes}")
+            
             # Yield final result
             final_result = {
                 "summary": summary,
                 "history": history,
                 "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
-                "environment_state": self.env.get_state()
+                "environment_state": self.env.get_state(),
+                "agent_outcomes": agent_outcomes
             }
             yield final_result
             
         except Exception as e:
             print(f"Warning: Could not generate summary due to error: {str(e)}")
-            yield {
-                "summary": "Summary generation failed",
+            summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
+            agent_outcomes = {}
+            yield steps, {
+                "setup": setup,
                 "history": history,
-                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
-                "environment_state": self.env.get_state()
+                "summary": summary,
+                "metrics": [],
+                "agent_outcomes": agent_outcomes
             }
 
     def should_activate(self, agent_id):
@@ -288,10 +299,76 @@ class Simulation:
             print(f"Warning: Could not format metrics: {str(e)}")
             metrics = []
         
+        # Analyze agent outcomes
+        agent_outcomes = self.analyze_agent_outcomes()
+        print(f"Agent outcomes: {agent_outcomes}")
+        
         # Yield final result
         yield steps, {
             "setup": setup,
             "history": history,
             "summary": summary,
-            "metrics": metrics
+            "metrics": metrics,
+            "agent_outcomes": agent_outcomes
         }
+
+    def analyze_agent_outcomes(self) -> Dict[str, List[str]]:
+        """
+        Analyze which agents match each agent-specific outcome based on their final states.
+        Updates each agent's agent_outcomes property with a dict mapping outcome conditions to analysis results.
+        
+        Returns:
+            Dict mapping outcome names to lists of agent IDs that matched
+        """
+        agent_outcomes = {name: [] for name in self.agent_outcome_definitions}
+        
+        if not self.agent_outcome_definitions:
+            print("No agent outcome definitions provided.")
+            return agent_outcomes
+        
+        # Initialize agent_outcomes dictionary for each agent
+        for agent in self.agents.values():
+            agent.agent_outcomes = {}
+        
+        # Process each agent
+        for agent_id, agent in self.agents.items():
+            # Process each outcome definition for this agent
+            for outcome_name, outcome_definition in self.agent_outcome_definitions.items():
+                # Create a prompt for the LLM
+                prompt = f"""
+                Analyze if this agent matches this specific outcome condition.
+                
+                Agent ID: {agent_id}
+                Agent Memory: {agent.memory}
+                
+                Outcome Name: {outcome_name}
+                Outcome Definition: {json.dumps(outcome_definition, indent=2)}
+                
+                Provide a detailed analysis of whether and why this agent matches this outcome.
+                Return a JSON string containing the analysis.
+                Example format:
+                "Agent matches because they achieved X and Y"
+                or
+                "Agent does not match because they failed to achieve Z"
+                """
+                
+                try:
+                    # Get the LLM's analysis for this agent and outcome
+                    analysis = self.orchestrator._call_llm_with_retry(prompt)
+                    analysis_result = json.loads(analysis)["analysis"]
+                    print(f"Analysis result: {analysis_result}")
+                    
+                    # Update agent's agent_outcomes with their analysis for this outcome
+                    agent.agent_outcomes[outcome_name] = analysis_result
+                    
+                    # If agent matches this outcome, add them to the overall results
+                    if "matches" in analysis_result.lower():
+                        agent_outcomes[outcome_name].append(agent_id)
+                
+                except Exception as e:
+                    print(f"Error analyzing outcome {outcome_name} for agent {agent_id}: {e}")
+                    agent.agent_outcomes[outcome_name] = "Analysis failed"
+                    continue
+        
+        self.agent_outcomes = agent_outcomes
+        return agent_outcomes

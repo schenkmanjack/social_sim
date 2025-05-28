@@ -202,11 +202,12 @@ class Experiment:
                 
                 # Create a complete simulation result
                 sim_result = {
-                    'steps': sim_history,
-                    'outcome_analysis': outcome,
-                    'environment': sim_results[-1].get('environment_state', []),
-                    'agent_states': sim_results[-1].get('agent_states', {}),
-                    'actions': [step.get('actions', []) for step in sim_results if 'actions' in step]
+                    "steps": sim_history,
+                    "outcome_analysis": outcome,
+                    "environment": sim_results[-1].get("environment_state", []),
+                    "agent_states": sim_results[-1].get("agent_states", {}),
+                    "actions": [step.get("actions", []) for step in sim_results if "actions" in step],
+                    "agent_outcomes": sim_results[-1].get("agent_outcomes", {})
                 }
                 
                 all_results.append(sim_result)
@@ -354,55 +355,72 @@ class Experiment:
         
         print(f"Plot saved to {plot_path}")
 
-    def save_results(self, output_dir: str, plot_results: bool = True, results: List[Dict] = None):
+    def save_results(self,
+                     output_dir: str,
+                     plot_results: bool = True,
+                     results: List[Dict] = None):
         """
-        Save experiment results to the specified directory.
-        
-        Args:
-            output_dir: Directory to save results in
-            plot_results: Whether to generate and save plots
-            results: List of simulation results
+        Save experiment results to the specified directory, including a new
+        sub-folder that stores per-simulation agent_outcomes.
         """
         if results is None:
             results = []
-        
-        # Create output directory if it doesn't exist
+
+        # Ensure root results directory exists
         os.makedirs(output_dir, exist_ok=True)
         print(f"Created results directory at: {os.path.abspath(output_dir)}")
-        
-        # Save individual simulation traces with complete histories
-        for i, (result, history) in enumerate(zip(results, self.experiment_results.get('histories', []))):
+
+        # ------------------------------------------------------------------ #
+        # 1.  Save the detailed trace for every run (existing behaviour + AO)
+        # ------------------------------------------------------------------ #
+        for i, (result, history) in enumerate(
+            zip(results, self.experiment_results.get("histories", []))
+        ):
             sim_dir = os.path.join(output_dir, f"run_{i+1}")
             os.makedirs(sim_dir, exist_ok=True)
-            
-            # Create a complete trace for this run
+
             trace = {
-                'steps': history,
-                'outcome_analysis': result,
-                'statistics': self.experiment_results['statistics']
+                "steps": history,
+                "outcome_analysis": result.get("outcome_analysis", {}),
+                "statistics": self.experiment_results["statistics"],
+                # include agent outcomes in the trace for completeness
+                "agent_outcomes": result.get("agent_outcomes", {})
             }
-            
-            with open(os.path.join(sim_dir, "trace.json"), 'w') as f:
+
+            with open(os.path.join(sim_dir, "trace.json"), "w") as f:
                 json.dump(trace, f, indent=2)
             print(f"Saved trace for run {i+1}")
-        
-        # Save summary
+
+        # ------------------------------------------------------------------ #
+        # 2.  NEW: write agent_outcomes for each run into a dedicated folder
+        # ------------------------------------------------------------------ #
+        agent_outcomes_dir = os.path.join(output_dir, "agent_outcomes")
+        os.makedirs(agent_outcomes_dir, exist_ok=True)
+
+        for i, result in enumerate(results):
+            ao_path = os.path.join(
+                agent_outcomes_dir, f"run_{i+1}_agent_outcomes.json"
+            )
+            with open(ao_path, "w") as f:
+                json.dump(result.get("agent_outcomes", {}), f, indent=2)
+            print(f"Saved agent outcomes for run {i+1} to {ao_path}")
+
+        # ------------------------------------------------------------------ #
+        # 3.  Summary & optional plot (unchanged)
+        # ------------------------------------------------------------------ #
         summary_path = os.path.join(output_dir, "summary.txt")
-        with open(summary_path, 'w') as f:
+        with open(summary_path, "w") as f:
             f.write(f"Experiment: {self.name}\n")
             f.write(f"Number of simulations: {len(results)}\n\n")
-            
             f.write("Outcome Statistics:\n")
             for outcome_name, stats in self.experiment_results["statistics"].items():
                 f.write(f"\n{outcome_name}:\n")
                 f.write(f"  Count: {stats['count']}/{len(results)}\n")
                 f.write(f"  Percentage: {stats['percentage']:.1f}%\n")
                 f.write(f"  Description: {stats['description']}\n")
-        
         print(f"Summary saved to {summary_path}")
-        
+
         if plot_results:
-            # Generate and save plot
             self._generate_plot(output_dir)
 
     def _calculate_outcome_probability(self, outcome_name: str, history: List[Dict]) -> float:

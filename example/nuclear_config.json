@@ -1,0 +1,42 @@
+{
+    "name": "nuclear_brinkmanship_wargame",
+    "query": "Two rival nuclear-armed countries, Alpha and Beta, are locked in a territorial dispute. Both countries can choose one of three strategies each turn: De-escalate, Maintain Posture, or Escalate. Escalation increases the chance of accidental nuclear war but may force the other side to back down. De-escalation reduces tension but may appear weak. Maintaining posture is a neutral move. Simulate how rational but risk-tolerant agents behave over time under uncertainty and imperfect information.",
+    "steps": 10,
+    "num_simulations": 24,
+    "results_folder": "results_nuclear_wargame",
+    "agent_type": "timescale_aware",
+    "chunk_size": 1200,
+    "plot_results": true,
+    "outcomes": [
+        {
+            "name": "mutual_deescalation",
+            "condition": "Both Alpha and Beta choose De-escalate, resulting in a reduction of overall conflict risk",
+            "description": "Peace is preserved and tensions are reduced"
+        },
+        {
+            "name": "mutual_escalation_no_war",
+            "condition": "Both Alpha and Beta choose Escalate, but nuclear war does not occur (stochastic outcome based on risk threshold)",
+            "description": "Crisis intensifies, arms race continues, but war is avoided"
+        },
+        {
+            "name": "nuclear_war",
+            "condition": "At least one country chooses Escalate and cumulative escalation exceeds risk threshold, triggering nuclear exchange",
+            "description": "Global catastrophe: full-scale nuclear war"
+        },
+        {
+            "name": "alpha_backs_down",
+            "condition": "Alpha chooses De-escalate while Beta Escalates, resulting in perceived loss of face for Alpha",
+            "description": "Beta gains strategic advantage; Alpha appears weak"
+        },
+        {
+            "name": "beta_backs_down",
+            "condition": "Beta chooses De-escalate while Alpha Escalates, resulting in perceived loss of face for Beta",
+            "description": "Alpha gains strategic advantage; Beta appears weak"
+        },
+        {
+            "name": "status_quo_maintained",
+            "condition": "Both Alpha and Beta Maintain Posture for several steps without escalation or de-escalation",
+            "description": "Tense standoff continues with no major change in strategic balance"
+        }
+    ]
+}

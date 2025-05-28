@@ -1,0 +1,4 @@
+Experiment: makeup_ad_ab_test
+Number of simulations: 1
+
+Outcome Statistics:
