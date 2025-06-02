@@ -1,0 +1,75 @@
+{
+  "name": "red_blue_manual",
+  "steps": 5,
+  "agent_type": "timescale_aware",
+  "chunk_size": 1200,
+  "results_folder": "results_manual",
+  "plot_results": true,
+  "agents": [
+    {
+      "id": "agent_0",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    },
+    {
+      "id": "agent_1",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    },
+    {
+      "id": "agent_2",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    },
+    {
+      "id": "agent_3",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    },
+    {
+      "id": "agent_4",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    },
+    {
+      "id": "agent_5",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    },
+    {
+      "id": "agent_6",
+      "prompt": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+    }
+  ],
+  "connectivity": {
+    "agent_0": {
+      "visible_facts": [],
+      "neighbors": ["agent_1"]
+    },
+    "agent_1": {
+      "visible_facts": [],
+      "neighbors": ["agent_0"]
+    },
+    "agent_2": {
+      "visible_facts": [],
+      "neighbors": ["agent_3"]
+    },
+    "agent_3": {
+      "visible_facts": [],
+      "neighbors": ["agent_2"]
+    },
+    "agent_4": {
+      "visible_facts": [],
+      "neighbors": ["agent_5"]
+    },
+    "agent_5": {
+      "visible_facts": [],
+      "neighbors": ["agent_4"]
+    },
+    "agent_6": {
+      "visible_facts": [],
+      "neighbors": ["agent_5"]
+    }
+  },
+  "outcomes": [
+    
+  ],
+  "agent_outcome_definitions": {
+    "red": "Only consider the final piece of the agents memory. The agent has to make a choice. It cannot be two colors. Does the agent choose red? For the agent to be red, it must state it unambiguously.",
+    "blue": "Only consider the final piece of the agents memory. The agent has to make a choice. It cannot be two colors. Does the agent choose blue? For the agent to be blue, it must state it unambiguously."
+  }
+}

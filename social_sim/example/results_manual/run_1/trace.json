@@ -1,0 +1,678 @@
+{
+  "steps": [
+    {
+      "step": 1,
+      "actions": [
+        {
+          "agent": "agent_0",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [],
+          "action": "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation."
+        },
+        {
+          "agent": "agent_1",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_0",
+              "message": "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation."
+            }
+          ],
+          "action": "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents."
+        },
+        {
+          "agent": "agent_2",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [],
+          "action": "I will randomly choose to identify as red."
+        },
+        {
+          "agent": "agent_3",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_2",
+              "message": "I will randomly choose to identify as red."
+            }
+          ],
+          "action": "I will choose to identify as blue."
+        },
+        {
+          "agent": "agent_4",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [],
+          "action": "I will randomly choose to be red."
+        },
+        {
+          "agent": "agent_5",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_4",
+              "message": "I will randomly choose to be red."
+            }
+          ],
+          "action": "I will also choose to be red."
+        },
+        {
+          "agent": "agent_6",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will also choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        }
+      ],
+      "environment": [
+        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
+        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
+        "I will randomly choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will randomly choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue."
+      ],
+      "agent_states": {
+        "agent_0": {},
+        "agent_1": {},
+        "agent_2": {},
+        "agent_3": {},
+        "agent_4": {},
+        "agent_5": {},
+        "agent_6": {}
+      }
+    },
+    {
+      "step": 2,
+      "actions": [
+        {
+          "agent": "agent_0",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_1",
+              "message": "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents."
+            }
+          ],
+          "action": "I will choose to identify as red to help achieve the goal of having half red and half blue agents."
+        },
+        {
+          "agent": "agent_1",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_0",
+              "message": "I will choose to identify as red to help achieve the goal of having half red and half blue agents."
+            }
+          ],
+          "action": "I will also choose to identify as red to help achieve the goal of having half red and half blue agents."
+        },
+        {
+          "agent": "agent_2",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_3",
+              "message": "I will choose to identify as blue."
+            }
+          ],
+          "action": "I will choose to identify as red."
+        },
+        {
+          "agent": "agent_3",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_2",
+              "message": "I will choose to identify as red."
+            }
+          ],
+          "action": "I will choose to identify as blue."
+        },
+        {
+          "agent": "agent_4",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will also choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        },
+        {
+          "agent": "agent_5",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_4",
+              "message": "I will choose to be blue."
+            }
+          ],
+          "action": "I will choose to be red."
+        },
+        {
+          "agent": "agent_6",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will also choose to be red."
+        }
+      ],
+      "environment": [
+        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
+        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
+        "I will randomly choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will randomly choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue."
+      ],
+      "agent_states": {
+        "agent_0": {},
+        "agent_1": {},
+        "agent_2": {},
+        "agent_3": {},
+        "agent_4": {},
+        "agent_5": {},
+        "agent_6": {}
+      }
+    },
+    {
+      "step": 3,
+      "actions": [
+        {
+          "agent": "agent_0",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_1",
+              "message": "I will also choose to identify as red to help achieve the goal of having half red and half blue agents."
+            }
+          ],
+          "action": "I will choose to identify as red."
+        },
+        {
+          "agent": "agent_1",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_0",
+              "message": "I will choose to identify as red."
+            }
+          ],
+          "action": "I will choose to identify as blue."
+        },
+        {
+          "agent": "agent_2",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_3",
+              "message": "I will choose to identify as blue."
+            }
+          ],
+          "action": "I will choose to identify as red."
+        },
+        {
+          "agent": "agent_3",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_2",
+              "message": "I will choose to identify as red."
+            }
+          ],
+          "action": "I will choose to identify as blue."
+        },
+        {
+          "agent": "agent_4",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        },
+        {
+          "agent": "agent_5",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_4",
+              "message": "I will choose to be blue."
+            }
+          ],
+          "action": "I will choose to be red."
+        },
+        {
+          "agent": "agent_6",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        }
+      ],
+      "environment": [
+        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
+        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
+        "I will randomly choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will randomly choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue."
+      ],
+      "agent_states": {
+        "agent_0": {},
+        "agent_1": {},
+        "agent_2": {},
+        "agent_3": {},
+        "agent_4": {},
+        "agent_5": {},
+        "agent_6": {}
+      }
+    },
+    {
+      "step": 4,
+      "actions": [
+        {
+          "agent": "agent_0",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_1",
+              "message": "I will choose to identify as blue."
+            }
+          ],
+          "action": "I will choose to identify as red."
+        },
+        {
+          "agent": "agent_1",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_0",
+              "message": "I will choose to identify as red."
+            }
+          ],
+          "action": "I will identify as blue."
+        },
+        {
+          "agent": "agent_2",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_3",
+              "message": "I will choose to identify as blue."
+            }
+          ],
+          "action": "I will choose to identify as red."
+        },
+        {
+          "agent": "agent_3",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_2",
+              "message": "I will choose to identify as red."
+            }
+          ],
+          "action": "I will choose to identify as blue."
+        },
+        {
+          "agent": "agent_4",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        },
+        {
+          "agent": "agent_5",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_4",
+              "message": "I will choose to be blue."
+            }
+          ],
+          "action": "I will choose to be red."
+        },
+        {
+          "agent": "agent_6",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        }
+      ],
+      "environment": [
+        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
+        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
+        "I will randomly choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will randomly choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue."
+      ],
+      "agent_states": {
+        "agent_0": {},
+        "agent_1": {},
+        "agent_2": {},
+        "agent_3": {},
+        "agent_4": {},
+        "agent_5": {},
+        "agent_6": {}
+      }
+    },
+    {
+      "step": 5,
+      "actions": [
+        {
+          "agent": "agent_0",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_1",
+              "message": "I will identify as blue."
+            }
+          ],
+          "action": "I will identify as red."
+        },
+        {
+          "agent": "agent_1",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_0",
+              "message": "I will identify as red."
+            }
+          ],
+          "action": "I will identify as blue."
+        },
+        {
+          "agent": "agent_2",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_3",
+              "message": "I will choose to identify as blue."
+            }
+          ],
+          "action": "I will choose to identify as red."
+        },
+        {
+          "agent": "agent_3",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_2",
+              "message": "I will choose to identify as red."
+            }
+          ],
+          "action": "I will choose to identify as blue."
+        },
+        {
+          "agent": "agent_4",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        },
+        {
+          "agent": "agent_5",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_4",
+              "message": "I will choose to be blue."
+            }
+          ],
+          "action": "I will choose to be red."
+        },
+        {
+          "agent": "agent_6",
+          "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+          "visible_state": [],
+          "received_messages": [
+            {
+              "sender": "agent_5",
+              "message": "I will choose to be red."
+            }
+          ],
+          "action": "I will choose to be blue."
+        }
+      ],
+      "environment": [
+        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
+        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
+        "I will randomly choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will randomly choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will also choose to be red.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will choose to identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue.",
+        "I will identify as red.",
+        "I will identify as blue.",
+        "I will choose to identify as red.",
+        "I will choose to identify as blue.",
+        "I will choose to be blue.",
+        "I will choose to be red.",
+        "I will choose to be blue."
+      ],
+      "agent_states": {
+        "agent_0": {},
+        "agent_1": {},
+        "agent_2": {},
+        "agent_3": {},
+        "agent_4": {},
+        "agent_5": {},
+        "agent_6": {}
+      }
+    }
+  ],
+  "outcome_analysis": {},
+  "statistics": {},
+  "agent_outcomes": {
+    "red": [
+      "agent_0",
+      "agent_2",
+      "agent_5"
+    ],
+    "blue": [
+      "agent_3",
+      "agent_4",
+      "agent_6"
+    ]
+  }
+}

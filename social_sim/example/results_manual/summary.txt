@@ -1,0 +1,4 @@
+Experiment: red_blue_manual
+Number of simulations: 1
+
+Outcome Statistics:

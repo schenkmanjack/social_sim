@@ -1,0 +1,62 @@
+{
+  "name": "prisoners_dilemma_manual",
+  "steps": 5,
+  "agent_type": "timescale_aware",
+  "chunk_size": 1200,
+  "results_folder": "results_prisoners_manual",
+  "plot_results": true,
+
+  /* ------------------------------------------------------------------ */
+  /* 1. Agents – each must have id + prompt                            */
+  /* ------------------------------------------------------------------ */
+  "agents": [
+    {
+      "id": "agent_0",
+      "prompt": "You are Alice, one of two prisoners in a classic Prisoner's Dilemma.\n\
+You cannot communicate with your partner once the game begins.\n\
+Each step represents a simultaneous decision round.\n\
+At every round you must output only one word – either:\n\
+  cooperate   (remain silent)\n\
+  defect      (betray)\n\
+No explanation or extra text – just the single word."
+    },
+    {
+      "id": "agent_1",
+      "prompt": "You are Bob, one of two prisoners in a classic Prisoner's Dilemma.\n\
+You cannot communicate with your partner once the game begins.\n\
+Each step represents a simultaneous decision round.\n\
+At every round you must output only one word – either:\n\
+  cooperate   (remain silent)\n\
+  defect      (betray)\n\
+No explanation or extra text – just the single word."
+    }
+  ],
+
+  /* ------------------------------------------------------------------ */
+  /* 2. Connectivity graph – required by run_manual.py                  */
+  /*    Here both prisoners can talk to nobody (they are isolated),     */
+  /*    but we still list each other as neighbours to keep the option   */
+  /*    open for later experiments. Visible-facts left empty.           */
+  /* ------------------------------------------------------------------ */
+  "connectivity": {
+    "agent_0": {
+      "visible_facts": [],
+      "neighbors": ["agent_1"]
+    },
+    "agent_1": {
+      "visible_facts": [],
+      "neighbors": ["agent_0"]
+    }
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* 3. Outcome definitions – optional but copied from the old config   */
+  /* ------------------------------------------------------------------ */
+  "outcomes": [
+    {
+      "name": "both_cooperate",
+      "condition": "Both prisoners choose to cooperate and remain silent, resulting in equal outcomes of 1 year each",
+      "description": "Both prisoners serve 1 year in prison"
+    }
+  ]
+} 

@@ -1,0 +1,12 @@
+{
+  "red": [
+    "agent_0",
+    "agent_2",
+    "agent_5"
+  ],
+  "blue": [
+    "agent_3",
+    "agent_4",
+    "agent_6"
+  ]
+}
