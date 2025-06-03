@@ -8,7 +8,7 @@
           "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
           "visible_state": [],
           "received_messages": [],
-          "action": "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation."
+          "action": "I choose to identify as red and communicate this choice to my neighbors."
         },
         {
           "agent": "agent_1",
@@ -17,17 +17,17 @@
           "received_messages": [
             {
               "sender": "agent_0",
-              "message": "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation."
+              "message": "I choose to identify as red and communicate this choice to my neighbors."
             }
           ],
-          "action": "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents."
+          "action": "I choose to identify as blue to help maintain balance since my neighbor chose red."
         },
         {
           "agent": "agent_2",
           "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
           "visible_state": [],
           "received_messages": [],
-          "action": "I will randomly choose to identify as red."
+          "action": "I choose to identify as red and communicate this choice to my neighbors."
         },
         {
           "agent": "agent_3",
@@ -36,17 +36,17 @@
           "received_messages": [
             {
               "sender": "agent_2",
-              "message": "I will randomly choose to identify as red."
+              "message": "I choose to identify as red and communicate this choice to my neighbors."
             }
           ],
-          "action": "I will choose to identify as blue."
+          "action": "I choose to identify as blue to help maintain balance since my neighbor chose red."
         },
         {
           "agent": "agent_4",
           "identity": "You are an agent who identifies as red or blue. \nEach step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
           "visible_state": [],
           "received_messages": [],
-          "action": "I will randomly choose to be red."
+          "action": "I choose to identify as red and communicate this choice to my neighbors."
         },
         {
           "agent": "agent_5",
@@ -55,10 +55,10 @@
           "received_messages": [
             {
               "sender": "agent_4",
-              "message": "I will randomly choose to be red."
+              "message": "I choose to identify as red and communicate this choice to my neighbors."
             }
           ],
-          "action": "I will also choose to be red."
+          "action": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
         },
         {
           "agent": "agent_6",
@@ -67,48 +67,48 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will also choose to be red."
+              "message": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help balance out my neighbor who chose blue."
         }
       ],
       "environment": [
-        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
-        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
-        "I will randomly choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will randomly choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue."
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out my neighbor who chose blue.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out the blue choice from agent_5.",
+        "I choose to identify as blue to help maintain balance with agent_4's red choice.",
+        "I choose to identify as red to help balance out agent_5's blue choice.",
+        "I choose to identify as red to help maintain an even balance since my neighbor chose blue.",
+        "I choose to identify as blue to help balance out the red choice from my neighbor.",
+        "I choose to identify as red to help balance out since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out agent_5's blue identification.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance out the blue identification from agent_5.",
+        "I choose to identify as red to help maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance since my neighbor chose red.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an even balance since my neighbor identified as red.",
+        "I choose to identify as red to help maintain the balance since agent_5 chose blue.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance the colors since agent_5 chose blue.",
+        "I choose to identify as red to maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance between red and blue agents.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance with the red agent.",
+        "I choose to identify as red to help maintain balance since agent_5 identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance between red and blue colors.",
+        "I choose to identify as red to help maintain the balance between red and blue agents."
       ],
       "agent_states": {
         "agent_0": {},
@@ -130,10 +130,10 @@
           "received_messages": [
             {
               "sender": "agent_1",
-              "message": "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents."
+              "message": "I choose to identify as blue to help maintain balance since my neighbor chose red."
             }
           ],
-          "action": "I will choose to identify as red to help achieve the goal of having half red and half blue agents."
+          "action": "I choose to identify as red to help balance the colors since my neighbor chose blue."
         },
         {
           "agent": "agent_1",
@@ -142,10 +142,10 @@
           "received_messages": [
             {
               "sender": "agent_0",
-              "message": "I will choose to identify as red to help achieve the goal of having half red and half blue agents."
+              "message": "I choose to identify as red to help balance the colors since my neighbor chose blue."
             }
           ],
-          "action": "I will also choose to identify as red to help achieve the goal of having half red and half blue agents."
+          "action": "I choose to identify as blue to maintain balance since my neighbor identified as red."
         },
         {
           "agent": "agent_2",
@@ -154,10 +154,10 @@
           "received_messages": [
             {
               "sender": "agent_3",
-              "message": "I will choose to identify as blue."
+              "message": "I choose to identify as blue to help maintain balance since my neighbor chose red."
             }
           ],
-          "action": "I will choose to identify as red."
+          "action": "I choose to identify as red to help balance the colors since my neighbor chose blue."
         },
         {
           "agent": "agent_3",
@@ -166,10 +166,10 @@
           "received_messages": [
             {
               "sender": "agent_2",
-              "message": "I will choose to identify as red."
+              "message": "I choose to identify as red to help balance the colors since my neighbor chose blue."
             }
           ],
-          "action": "I will choose to identify as blue."
+          "action": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
         },
         {
           "agent": "agent_4",
@@ -178,10 +178,10 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will also choose to be red."
+              "message": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help balance out the blue choice from agent_5."
         },
         {
           "agent": "agent_5",
@@ -190,10 +190,10 @@
           "received_messages": [
             {
               "sender": "agent_4",
-              "message": "I will choose to be blue."
+              "message": "I choose to identify as red to help balance out the blue choice from agent_5."
             }
           ],
-          "action": "I will choose to be red."
+          "action": "I choose to identify as blue to help maintain balance with agent_4's red choice."
         },
         {
           "agent": "agent_6",
@@ -202,48 +202,48 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain balance with agent_4's red choice."
             }
           ],
-          "action": "I will also choose to be red."
+          "action": "I choose to identify as red to help balance out agent_5's blue choice."
         }
       ],
       "environment": [
-        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
-        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
-        "I will randomly choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will randomly choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue."
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out my neighbor who chose blue.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out the blue choice from agent_5.",
+        "I choose to identify as blue to help maintain balance with agent_4's red choice.",
+        "I choose to identify as red to help balance out agent_5's blue choice.",
+        "I choose to identify as red to help maintain an even balance since my neighbor chose blue.",
+        "I choose to identify as blue to help balance out the red choice from my neighbor.",
+        "I choose to identify as red to help balance out since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out agent_5's blue identification.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance out the blue identification from agent_5.",
+        "I choose to identify as red to help maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance since my neighbor chose red.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an even balance since my neighbor identified as red.",
+        "I choose to identify as red to help maintain the balance since agent_5 chose blue.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance the colors since agent_5 chose blue.",
+        "I choose to identify as red to maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance between red and blue agents.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance with the red agent.",
+        "I choose to identify as red to help maintain balance since agent_5 identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance between red and blue colors.",
+        "I choose to identify as red to help maintain the balance between red and blue agents."
       ],
       "agent_states": {
         "agent_0": {},
@@ -265,10 +265,10 @@
           "received_messages": [
             {
               "sender": "agent_1",
-              "message": "I will also choose to identify as red to help achieve the goal of having half red and half blue agents."
+              "message": "I choose to identify as blue to maintain balance since my neighbor identified as red."
             }
           ],
-          "action": "I will choose to identify as red."
+          "action": "I choose to identify as red to help maintain an even balance since my neighbor chose blue."
         },
         {
           "agent": "agent_1",
@@ -277,10 +277,10 @@
           "received_messages": [
             {
               "sender": "agent_0",
-              "message": "I will choose to identify as red."
+              "message": "I choose to identify as red to help maintain an even balance since my neighbor chose blue."
             }
           ],
-          "action": "I will choose to identify as blue."
+          "action": "I choose to identify as blue to help balance out the red choice from my neighbor."
         },
         {
           "agent": "agent_2",
@@ -289,10 +289,10 @@
           "received_messages": [
             {
               "sender": "agent_3",
-              "message": "I will choose to identify as blue."
+              "message": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
             }
           ],
-          "action": "I will choose to identify as red."
+          "action": "I choose to identify as red to help balance out since my neighbor identified as blue."
         },
         {
           "agent": "agent_3",
@@ -301,10 +301,10 @@
           "received_messages": [
             {
               "sender": "agent_2",
-              "message": "I will choose to identify as red."
+              "message": "I choose to identify as red to help balance out since my neighbor identified as blue."
             }
           ],
-          "action": "I will choose to identify as blue."
+          "action": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
         },
         {
           "agent": "agent_4",
@@ -313,10 +313,10 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain balance with agent_4's red choice."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help balance out agent_5's blue identification."
         },
         {
           "agent": "agent_5",
@@ -325,10 +325,10 @@
           "received_messages": [
             {
               "sender": "agent_4",
-              "message": "I will choose to be blue."
+              "message": "I choose to identify as red to help balance out agent_5's blue identification."
             }
           ],
-          "action": "I will choose to be red."
+          "action": "I choose to identify as blue to help maintain balance since agent_4 identified as red."
         },
         {
           "agent": "agent_6",
@@ -337,48 +337,48 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain balance since agent_4 identified as red."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help balance out the blue identification from agent_5."
         }
       ],
       "environment": [
-        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
-        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
-        "I will randomly choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will randomly choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue."
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out my neighbor who chose blue.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out the blue choice from agent_5.",
+        "I choose to identify as blue to help maintain balance with agent_4's red choice.",
+        "I choose to identify as red to help balance out agent_5's blue choice.",
+        "I choose to identify as red to help maintain an even balance since my neighbor chose blue.",
+        "I choose to identify as blue to help balance out the red choice from my neighbor.",
+        "I choose to identify as red to help balance out since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out agent_5's blue identification.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance out the blue identification from agent_5.",
+        "I choose to identify as red to help maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance since my neighbor chose red.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an even balance since my neighbor identified as red.",
+        "I choose to identify as red to help maintain the balance since agent_5 chose blue.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance the colors since agent_5 chose blue.",
+        "I choose to identify as red to maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance between red and blue agents.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance with the red agent.",
+        "I choose to identify as red to help maintain balance since agent_5 identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance between red and blue colors.",
+        "I choose to identify as red to help maintain the balance between red and blue agents."
       ],
       "agent_states": {
         "agent_0": {},
@@ -400,10 +400,10 @@
           "received_messages": [
             {
               "sender": "agent_1",
-              "message": "I will choose to identify as blue."
+              "message": "I choose to identify as blue to help balance out the red choice from my neighbor."
             }
           ],
-          "action": "I will choose to identify as red."
+          "action": "I choose to identify as red to help maintain balance since my neighbor chose blue."
         },
         {
           "agent": "agent_1",
@@ -412,10 +412,10 @@
           "received_messages": [
             {
               "sender": "agent_0",
-              "message": "I will choose to identify as red."
+              "message": "I choose to identify as red to help maintain balance since my neighbor chose blue."
             }
           ],
-          "action": "I will identify as blue."
+          "action": "I choose to identify as blue to help achieve an equal balance since my neighbor chose red."
         },
         {
           "agent": "agent_2",
@@ -424,10 +424,10 @@
           "received_messages": [
             {
               "sender": "agent_3",
-              "message": "I will choose to identify as blue."
+              "message": "I choose to identify as blue to help maintain balance since my neighbor identified as red."
             }
           ],
-          "action": "I will choose to identify as red."
+          "action": "I choose to identify as red to help maintain balance since my neighbor identified as blue."
         },
         {
           "agent": "agent_3",
@@ -436,10 +436,10 @@
           "received_messages": [
             {
               "sender": "agent_2",
-              "message": "I will choose to identify as red."
+              "message": "I choose to identify as red to help maintain balance since my neighbor identified as blue."
             }
           ],
-          "action": "I will choose to identify as blue."
+          "action": "I choose to identify as blue to help maintain an even balance since my neighbor identified as red."
         },
         {
           "agent": "agent_4",
@@ -448,10 +448,10 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain balance since agent_4 identified as red."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help maintain the balance since agent_5 chose blue."
         },
         {
           "agent": "agent_5",
@@ -460,10 +460,10 @@
           "received_messages": [
             {
               "sender": "agent_4",
-              "message": "I will choose to be blue."
+              "message": "I choose to identify as red to help maintain the balance since agent_5 chose blue."
             }
           ],
-          "action": "I will choose to be red."
+          "action": "I choose to identify as blue to help maintain balance since agent_4 identified as red."
         },
         {
           "agent": "agent_6",
@@ -472,48 +472,48 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain balance since agent_4 identified as red."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help balance the colors since agent_5 chose blue."
         }
       ],
       "environment": [
-        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
-        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
-        "I will randomly choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will randomly choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue."
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out my neighbor who chose blue.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out the blue choice from agent_5.",
+        "I choose to identify as blue to help maintain balance with agent_4's red choice.",
+        "I choose to identify as red to help balance out agent_5's blue choice.",
+        "I choose to identify as red to help maintain an even balance since my neighbor chose blue.",
+        "I choose to identify as blue to help balance out the red choice from my neighbor.",
+        "I choose to identify as red to help balance out since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out agent_5's blue identification.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance out the blue identification from agent_5.",
+        "I choose to identify as red to help maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance since my neighbor chose red.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an even balance since my neighbor identified as red.",
+        "I choose to identify as red to help maintain the balance since agent_5 chose blue.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance the colors since agent_5 chose blue.",
+        "I choose to identify as red to maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance between red and blue agents.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance with the red agent.",
+        "I choose to identify as red to help maintain balance since agent_5 identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance between red and blue colors.",
+        "I choose to identify as red to help maintain the balance between red and blue agents."
       ],
       "agent_states": {
         "agent_0": {},
@@ -535,10 +535,10 @@
           "received_messages": [
             {
               "sender": "agent_1",
-              "message": "I will identify as blue."
+              "message": "I choose to identify as blue to help achieve an equal balance since my neighbor chose red."
             }
           ],
-          "action": "I will identify as red."
+          "action": "I choose to identify as red to maintain balance since my neighbor chose blue."
         },
         {
           "agent": "agent_1",
@@ -547,10 +547,10 @@
           "received_messages": [
             {
               "sender": "agent_0",
-              "message": "I will identify as red."
+              "message": "I choose to identify as red to maintain balance since my neighbor chose blue."
             }
           ],
-          "action": "I will identify as blue."
+          "action": "I choose to identify as blue to help achieve an equal balance between red and blue agents."
         },
         {
           "agent": "agent_2",
@@ -559,10 +559,10 @@
           "received_messages": [
             {
               "sender": "agent_3",
-              "message": "I will choose to identify as blue."
+              "message": "I choose to identify as blue to help maintain an even balance since my neighbor identified as red."
             }
           ],
-          "action": "I will choose to identify as red."
+          "action": "I choose to identify as red to help maintain balance since my neighbor identified as blue."
         },
         {
           "agent": "agent_3",
@@ -571,10 +571,10 @@
           "received_messages": [
             {
               "sender": "agent_2",
-              "message": "I will choose to identify as red."
+              "message": "I choose to identify as red to help maintain balance since my neighbor identified as blue."
             }
           ],
-          "action": "I will choose to identify as blue."
+          "action": "I choose to identify as blue to help maintain an equal balance with the red agent."
         },
         {
           "agent": "agent_4",
@@ -583,10 +583,10 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain balance since agent_4 identified as red."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help maintain balance since agent_5 identified as blue."
         },
         {
           "agent": "agent_5",
@@ -595,10 +595,10 @@
           "received_messages": [
             {
               "sender": "agent_4",
-              "message": "I will choose to be blue."
+              "message": "I choose to identify as red to help maintain balance since agent_5 identified as blue."
             }
           ],
-          "action": "I will choose to be red."
+          "action": "I choose to identify as blue to help maintain an equal balance between red and blue colors."
         },
         {
           "agent": "agent_6",
@@ -607,48 +607,48 @@
           "received_messages": [
             {
               "sender": "agent_5",
-              "message": "I will choose to be red."
+              "message": "I choose to identify as blue to help maintain an equal balance between red and blue colors."
             }
           ],
-          "action": "I will choose to be blue."
+          "action": "I choose to identify as red to help maintain the balance between red and blue agents."
         }
       ],
       "environment": [
-        "I will randomly choose to identify as red in order to begin diversifying the colors in the simulation.",
-        "I will also choose to identify as red to help begin achieving the goal of having half red and half blue agents.",
-        "I will randomly choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will randomly choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will also choose to identify as red to help achieve the goal of having half red and half blue agents.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will also choose to be red.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will choose to identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue.",
-        "I will identify as red.",
-        "I will identify as blue.",
-        "I will choose to identify as red.",
-        "I will choose to identify as blue.",
-        "I will choose to be blue.",
-        "I will choose to be red.",
-        "I will choose to be blue."
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor chose red.",
+        "I choose to identify as red and communicate this choice to my neighbors.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out my neighbor who chose blue.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance the colors since my neighbor chose blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out the blue choice from agent_5.",
+        "I choose to identify as blue to help maintain balance with agent_4's red choice.",
+        "I choose to identify as red to help balance out agent_5's blue choice.",
+        "I choose to identify as red to help maintain an even balance since my neighbor chose blue.",
+        "I choose to identify as blue to help balance out the red choice from my neighbor.",
+        "I choose to identify as red to help balance out since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain balance since my neighbor identified as red.",
+        "I choose to identify as red to help balance out agent_5's blue identification.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance out the blue identification from agent_5.",
+        "I choose to identify as red to help maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance since my neighbor chose red.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an even balance since my neighbor identified as red.",
+        "I choose to identify as red to help maintain the balance since agent_5 chose blue.",
+        "I choose to identify as blue to help maintain balance since agent_4 identified as red.",
+        "I choose to identify as red to help balance the colors since agent_5 chose blue.",
+        "I choose to identify as red to maintain balance since my neighbor chose blue.",
+        "I choose to identify as blue to help achieve an equal balance between red and blue agents.",
+        "I choose to identify as red to help maintain balance since my neighbor identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance with the red agent.",
+        "I choose to identify as red to help maintain balance since agent_5 identified as blue.",
+        "I choose to identify as blue to help maintain an equal balance between red and blue colors.",
+        "I choose to identify as red to help maintain the balance between red and blue agents."
       ],
       "agent_states": {
         "agent_0": {},
@@ -665,14 +665,14 @@
   "statistics": {},
   "agent_outcomes": {
     "red": [
-      "agent_0",
       "agent_2",
-      "agent_5"
-    ],
-    "blue": [
-      "agent_3",
       "agent_4",
       "agent_6"
+    ],
+    "blue": [
+      "agent_1",
+      "agent_3",
+      "agent_5"
     ]
   }
 }

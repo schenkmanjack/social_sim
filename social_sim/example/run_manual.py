@@ -33,10 +33,9 @@ from datetime import datetime
 
 from social_sim.agents.agent import Agent
 from social_sim.interactions.connectivity import ConnectivityGraph
-from social_sim.llm_interfaces import OpenAIBackend
+from social_sim.llm_interfaces import OpenAIBackend, AnthropicBackend
 from social_sim.simulation import Simulation
 from social_sim.experiment import Experiment
-
 
 # --------------------------------------------------------------------------- #
 # helper functions
@@ -88,10 +87,15 @@ def main() -> None:
     args = parser.parse_args()
 
     # LLM backend
-    api_key = os.getenv("OPENAI_API_KEY")
+    # api_key = os.getenv("OPENAI_API_KEY")
+    # if not api_key:
+    #     raise EnvironmentError("Set the OPENAI_API_KEY environment variable first")
+    # llm = OpenAIBackend(api_key=api_key)
+
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        raise EnvironmentError("Set the OPENAI_API_KEY environment variable first")
-    llm = OpenAIBackend(api_key=api_key)
+        raise EnvironmentError("Set the ANTHROPIC_API_KEY environment variable first")
+    llm = AnthropicBackend(api_key=api_key)
 
     # Create simulation and set it up from config
     sim = Simulation(

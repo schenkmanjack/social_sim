@@ -5,7 +5,7 @@ from typing import Generator, Dict, List
 import json
 
 class Simulation:
-    def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000, agent_outcome_definitions=None):
+    def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000, agent_outcome_definitions=None, debug=False):
         """
         Initialize the simulation with an LLM wrapper
         Args:
@@ -13,6 +13,7 @@ class Simulation:
             agent_type: Type of agent to use ("regular" or "timescale_aware")
             chunk_size: Number of steps to include in each summary chunk
             agent_outcome_definitions: Definitions for agent-specific outcomes
+            debug: Whether to print debug statements (default: False)
         """
         self.orchestrator = Orchestrator(llm_wrapper)
         self.agents = {}
@@ -21,13 +22,15 @@ class Simulation:
         self.agent_type = agent_type
         self.chunk_size = chunk_size
         self.agent_outcome_definitions = agent_outcome_definitions or []
+        self.debug = debug
 
     def _summarize_chunk(self, chunk):
         """Summarize a chunk of simulation steps"""
         try:
             return self.orchestrator.summarize_outcome(chunk)
         except Exception as e:
-            print(f"Warning: Error summarizing chunk: {str(e)}")
+            if self.debug:
+                print(f"Warning: Error summarizing chunk: {str(e)}")
             return "Chunk summary generation failed."
 
     def _summarize_chunks(self, chunk_summaries):
@@ -38,7 +41,8 @@ class Simulation:
                 "summary": combined_summary
             }])
         except Exception as e:
-            print(f"Warning: Error combining chunk summaries: {str(e)}")
+            if self.debug:
+                print(f"Warning: Error combining chunk summaries: {str(e)}")
             return "Final summary generation failed."
 
     def _get_messages_for_agent(self, agent_id):
@@ -66,7 +70,8 @@ class Simulation:
         """
         # Setup the simulation world
         setup = self.orchestrator.setup_simulation(query)
-        print("Setup data:", setup)
+        if self.debug:
+            print("Setup data:", setup)
         
         # Initialize environment
         self.env = Environment(setup["environment"]["facts"])
@@ -76,7 +81,8 @@ class Simulation:
         
         # Initialize agents
         for agent_data in setup["agents"]:
-            print("Agent data:", agent_data)
+            if self.debug:
+                print("Agent data:", agent_data)
             agent_id = agent_data["id"]
             if self.agent_type == "timescale_aware":
                 self.agents[agent_id] = TimescaleAwareAgent(
@@ -94,7 +100,8 @@ class Simulation:
         # Run simulation steps
         history = []
         for step in range(steps):
-            print(f"\nRunning step {step + 1}/{steps}...")
+            if self.debug:
+                print(f"\nRunning step {step + 1}/{steps}...")
             step_actions = []
             
             # Each agent takes their turn
@@ -150,20 +157,23 @@ class Simulation:
             # Summarize each chunk
             chunk_summaries = []
             for i, chunk in enumerate(chunks):
-                print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
+                if self.debug:
+                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
                 chunk_summary = self._summarize_chunk(chunk)
                 chunk_summaries.append(chunk_summary)
             
             # Combine and summarize chunk summaries
             if len(chunk_summaries) > 1:
-                print("Combining chunk summaries...")
+                if self.debug:
+                    print("Combining chunk summaries...")
                 summary = self._summarize_chunks(chunk_summaries)
             else:
                 summary = chunk_summaries[0]
                 
             # Analyze agent outcomes
             agent_outcomes = self.analyze_agent_outcomes()
-            print(f"Agent outcomes: {agent_outcomes}")
+            if self.debug:
+                print(f"Agent outcomes: {agent_outcomes}")
             
             # Yield final result
             final_result = {
@@ -176,7 +186,8 @@ class Simulation:
             yield final_result
             
         except Exception as e:
-            print(f"Warning: Could not generate summary due to error: {str(e)}")
+            if self.debug:
+                print(f"Warning: Could not generate summary due to error: {str(e)}")
             summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
             agent_outcomes = {}
             yield steps, {
@@ -204,7 +215,8 @@ class Simulation:
         """
         # Setup the simulation world
         setup = self.orchestrator.setup_simulation(query)
-        print("Setup data:", setup)  # Debug print
+        if self.debug:
+            print("Setup data:", setup)
         
         # Initialize environment
         self.env = Environment(setup["environment"]["facts"])
@@ -214,7 +226,8 @@ class Simulation:
         
         # Initialize agents
         for agent_data in setup["agents"]:
-            print("Agent data:", agent_data)  # Debug print
+            if self.debug:
+                print("Agent data:", agent_data)
             agent_id = agent_data["id"]
             if self.agent_type == "timescale_aware":
                 self.agents[agent_id] = TimescaleAwareAgent(
@@ -232,7 +245,8 @@ class Simulation:
         # Run simulation steps
         history = []
         for step in range(steps):
-            print(f"\nRunning step {step + 1}/{steps}...")  # Added print statement
+            if self.debug:
+                print(f"\nRunning step {step + 1}/{steps}...")
             step_actions = []
             
             # Each agent takes their turn
@@ -290,19 +304,22 @@ class Simulation:
             # Summarize each chunk
             chunk_summaries = []
             for i, chunk in enumerate(chunks):
-                print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
+                if self.debug:
+                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
                 chunk_summary = self._summarize_chunk(chunk)
                 chunk_summaries.append(chunk_summary)
             
             # Combine and summarize chunk summaries
             if len(chunk_summaries) > 1:
-                print("Combining chunk summaries...")
+                if self.debug:
+                    print("Combining chunk summaries...")
                 summary = self._summarize_chunks(chunk_summaries)
             else:
                 summary = chunk_summaries[0]
                 
         except Exception as e:
-            print(f"Warning: Could not generate summary due to error: {str(e)}")
+            if self.debug:
+                print(f"Warning: Could not generate summary due to error: {str(e)}")
             summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
         
         # Convert metrics to the expected format using chunked approach
@@ -310,7 +327,8 @@ class Simulation:
             metrics = []
             # Process history in chunks for metric determination
             for i, chunk in enumerate(chunks):
-                print(f"Analyzing metrics for chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
+                if self.debug:
+                    print(f"Analyzing metrics for chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
                 try:
                     chunk_metrics = self.orchestrator.determine_plot_metrics(query, chunk)
                     for name, keywords in chunk_metrics:
@@ -324,15 +342,18 @@ class Simulation:
                                 "data_type": "trend"
                             })
                 except Exception as e:
-                    print(f"Warning: Could not determine metrics for chunk {i+1}: {str(e)}")
+                    if self.debug:
+                        print(f"Warning: Could not determine metrics for chunk {i+1}: {str(e)}")
                     continue
         except Exception as e:
-            print(f"Warning: Could not format metrics: {str(e)}")
+            if self.debug:
+                print(f"Warning: Could not format metrics: {str(e)}")
             metrics = []
         
         # Analyze agent outcomes
         agent_outcomes = self.analyze_agent_outcomes()
-        print(f"Agent outcomes: {agent_outcomes}")
+        if self.debug:
+            print(f"Agent outcomes: {agent_outcomes}")
         
         # Yield final result
         yield steps, {
@@ -354,7 +375,8 @@ class Simulation:
         agent_outcomes = {name: [] for name in self.agent_outcome_definitions}
         
         if not self.agent_outcome_definitions:
-            print("No agent outcome definitions provided.")
+            if self.debug:
+                print("No agent outcome definitions provided.")
             return agent_outcomes
         
         # Initialize agent_outcomes dictionary for each agent
@@ -387,7 +409,8 @@ class Simulation:
                     # Get the LLM's analysis for this agent and outcome
                     analysis = self.orchestrator._call_llm_with_retry(prompt)
                     analysis_result = json.loads(analysis)["analysis"]
-                    print(f"Agent {agent_id} Analysis result: {analysis_result}")
+                    if self.debug:
+                        print(f"Agent {agent_id} Analysis result: {analysis_result}")
                     
                     # Update agent's agent_outcomes with their analysis for this outcome
                     agent.agent_outcomes[outcome_name] = analysis_result
@@ -397,7 +420,8 @@ class Simulation:
                         agent_outcomes[outcome_name].append(agent_id)
                 
                 except Exception as e:
-                    print(f"Error analyzing outcome {outcome_name} for agent {agent_id}: {e}")
+                    if self.debug:
+                        print(f"Error analyzing outcome {outcome_name} for agent {agent_id}: {e}")
                     agent.agent_outcomes[outcome_name] = "Analysis failed"
                     continue
         
@@ -423,7 +447,8 @@ class Simulation:
         # Run simulation steps
         history = []
         for step in range(steps):
-            print(f"\nRunning step {step + 1}/{steps}...")
+            if self.debug:
+                print(f"\nRunning step {step + 1}/{steps}...")
             step_actions = []
             
             # Each agent takes their turn
@@ -479,20 +504,23 @@ class Simulation:
             # Summarize each chunk
             chunk_summaries = []
             for i, chunk in enumerate(chunks):
-                print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
+                if self.debug:
+                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
                 chunk_summary = self._summarize_chunk(chunk)
                 chunk_summaries.append(chunk_summary)
             
             # Combine and summarize chunk summaries
             if len(chunk_summaries) > 1:
-                print("Combining chunk summaries...")
+                if self.debug:
+                    print("Combining chunk summaries...")
                 summary = self._summarize_chunks(chunk_summaries)
             else:
                 summary = chunk_summaries[0] if chunk_summaries else "No summary available"
                 
             # Analyze agent outcomes
             agent_outcomes = self.analyze_agent_outcomes()
-            print(f"Agent outcomes: {agent_outcomes}")
+            if self.debug:
+                print(f"Agent outcomes: {agent_outcomes}")
             
             # Yield final result
             final_result = {
@@ -505,7 +533,8 @@ class Simulation:
             yield final_result
             
         except Exception as e:
-            print(f"Warning: Could not generate summary due to error: {str(e)}")
+            if self.debug:
+                print(f"Warning: Could not generate summary due to error: {str(e)}")
             summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
             agent_outcomes = {}
             yield {
@@ -516,15 +545,17 @@ class Simulation:
                 "environment_state": self.env.get_state()
             }
 
-    def setup_from_config(self, config_path: str) -> None:
+    def setup_from_config(self, config) -> None:
         """
-        Set up the simulation from a JSON configuration file for manual runs.
+        Set up the simulation from a JSON configuration object for manual runs.
         
         Args:
-            config_path: Path to the JSON configuration file
+            config: Dictionary containing the configuration (can be loaded from JSON)
         """
-        with open(config_path, 'r') as f:
-            config = json.load(f)
+        # If config is a string path, load it as JSON
+        if isinstance(config, str):
+            with open(config, 'r') as f:
+                config = json.load(f)
         
         # Validate required fields
         required_fields = ["name", "steps", "agents", "connectivity"]
@@ -552,9 +583,11 @@ class Simulation:
         # Set agent outcome definitions from config
         if "agent_outcome_definitions" in config:
             self.agent_outcome_definitions = config["agent_outcome_definitions"]
-            print(f"Loaded {len(self.agent_outcome_definitions)} agent outcome definitions: {list(self.agent_outcome_definitions.keys())}")
+            if self.debug:
+                print(f"Loaded {len(self.agent_outcome_definitions)} agent outcome definitions: {list(self.agent_outcome_definitions.keys())}")
         else:
-            print("No agent outcome definitions found in config")
+            if self.debug:
+                print("No agent outcome definitions found in config")
         
         # Set up environment with empty facts (manual setup)
         self.env = Environment([])
@@ -581,4 +614,5 @@ class Simulation:
             
             self.agents[agent_id] = agent
         
-        print(f"Successfully set up simulation '{config['name']}' with {len(self.agents)} agents")
+        if self.debug:
+            print(f"Successfully set up simulation '{config['name']}' with {len(self.agents)} agents")

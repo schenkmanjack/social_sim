@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 from openai import OpenAI
+from anthropic import Anthropic
 
 class LLMWrapper(ABC):
     """Abstract base class for LLM interfaces"""
@@ -31,6 +32,28 @@ class OpenAIBackend(LLMWrapper):
             ]
         )
         return response.choices[0].message.content
+
+class AnthropicBackend(LLMWrapper):
+    """Implementation using Anthropic's API"""
+    
+    def __init__(self, api_key: str, model: str = "claude-3-5-sonnet-20241022"):
+        try:
+            import anthropic
+        except ImportError:
+            raise ImportError("anthropic package not installed. Install with: pip install anthropic")
+        
+        self.client = anthropic.Anthropic(api_key=api_key)
+        self.model = model
+        
+    def generate(self, prompt: str) -> str:
+        response = self.client.messages.create(
+            model=self.model,
+            max_tokens=4000,
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.content[0].text
 
 class MockLLM(LLMWrapper):
     """Mock implementation for testing"""

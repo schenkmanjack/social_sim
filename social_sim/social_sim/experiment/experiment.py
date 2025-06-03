@@ -6,18 +6,20 @@ import re
 import matplotlib.pyplot as plt
 
 class Experiment:
-    def __init__(self, simulations: List['Simulation'], name: str = None):
+    def __init__(self, simulations: List['Simulation'], name: str = None, debug: bool = False):
         """
         Initialize an experiment with multiple simulations.
         
         Args:
             simulations: List of Simulation objects to run
             name: Optional name for the experiment
+            debug: Whether to print debug information during execution
         """
         self.simulations = simulations
         self.name = name or f"experiment_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         self.results = None
         self.outcome_definitions = {}
+        self.debug = debug
         
     def define_outcome(self, name: str, condition: str, description: str):
         """
@@ -40,7 +42,8 @@ class Experiment:
         Uses the outcome definitions from the configuration to determine results.
         """
         if not self.outcome_definitions:
-            print("Warning: No outcomes defined for analysis")
+            if self.debug:
+                print("Warning: No outcomes defined for analysis")
             return {}
             
         # Extract the final state from the history
@@ -48,21 +51,26 @@ class Experiment:
         for step in reversed(history):  # Look at the most recent steps first
             if "actions" in step:
                 final_state["actions"] = step["actions"]
-                print(f"\nFound actions in step: {step['actions']}")
+                if self.debug:
+                    print(f"\nFound actions in step: {step['actions']}")
             if "environment_state" in step:
                 final_state["environment"] = step["environment_state"]
-                print(f"Found environment state: {step['environment_state']}")
+                if self.debug:
+                    print(f"Found environment state: {step['environment_state']}")
             if "agent_states" in step:
                 final_state["agent_states"] = step["agent_states"]
-                print(f"Found agent states: {step['agent_states']}")
+                if self.debug:
+                    print(f"Found agent states: {step['agent_states']}")
             if final_state:  # If we found any state information
                 break
         
         if not final_state:
-            print("Warning: No final state found in history")
+            if self.debug:
+                print("Warning: No final state found in history")
             return {name: False for name in self.outcome_definitions}
         
-        print(f"\nFinal state for analysis: {json.dumps(final_state, indent=2)}")
+        if self.debug:
+            print(f"\nFinal state for analysis: {json.dumps(final_state, indent=2)}")
         
         # Use the first simulation's orchestrator for analysis
         orchestrator = self.simulations[0].orchestrator
@@ -99,55 +107,64 @@ class Experiment:
         try:
             # Get the LLM's analysis using _call_llm_with_retry instead of analyze
             analysis = orchestrator._call_llm_with_retry(prompt)
-            print(f"\nRaw analysis from LLM: {analysis}")
+            if self.debug:
+                print(f"\nRaw analysis from LLM: {analysis}")
             
             try:
                 outcome = json.loads(analysis)
             except json.JSONDecodeError:
-                print(f"Warning: Failed to parse LLM response as JSON: {analysis}")
-                # Try to extract JSON from the response
-                match = re.search(r'\{.*\}', analysis, re.DOTALL)
-                if match:
-                    try:
-                        outcome = json.loads(match.group(0))
-                    except json.JSONDecodeError:
-                        print("Warning: Could not extract valid JSON from response")
-                        return {name: False for name in self.outcome_definitions}
-                else:
-                    print("Warning: No JSON found in response")
-                    return {name: False for name in self.outcome_definitions}
+                if self.debug:
+                    print(f"Warning: Failed to parse LLM response as JSON: {analysis}")
+                    # Try to extract JSON from the response
+                    match = re.search(r'\{.*\}', analysis, re.DOTALL)
+                    if match:
+                        try:
+                            outcome = json.loads(match.group(0))
+                        except json.JSONDecodeError:
+                            if self.debug:
+                                print("Warning: Could not extract valid JSON from response")
+                                return {name: False for name in self.outcome_definitions}
+                        else:
+                            if self.debug:
+                                print("Warning: No JSON found in response")
+                            return {name: False for name in self.outcome_definitions}
             
             # Validate that all defined outcomes are present in the result
             for outcome_name in self.outcome_definitions:
                 if outcome_name not in outcome:
-                    print(f"Warning: Outcome '{outcome_name}' not found in analysis")
+                    if self.debug:
+                        print(f"Warning: Outcome '{outcome_name}' not found in analysis")
                     outcome[outcome_name] = False
             
             # Ensure exactly one outcome is true
             true_outcomes = [name for name, value in outcome.items() if value]
             if len(true_outcomes) != 1:
-                print(f"Warning: Expected exactly one true outcome, but found {len(true_outcomes)}")
-                print(f"True outcomes: {true_outcomes}")
-                print(f"Full outcome analysis: {outcome}")
-                # If we have multiple true outcomes, keep the first one
-                if true_outcomes:
-                    outcome = {name: (name == true_outcomes[0]) for name in self.outcome_definitions}
-                else:
-                    # If no outcomes are true, make a best guess based on the final state
-                    print("No outcomes were true, making best guess based on final state")
-                    print(f"Final state: {json.dumps(final_state, indent=2)}")
-                    # Default to the first outcome if we can't determine
-                    outcome = {name: (name == list(self.outcome_definitions.keys())[0]) 
-                             for name in self.outcome_definitions}
+                if self.debug:
+                    print(f"Warning: Expected exactly one true outcome, but found {len(true_outcomes)}")
+                    print(f"True outcomes: {true_outcomes}")
+                    print(f"Full outcome analysis: {outcome}")
+                    # If we have multiple true outcomes, keep the first one
+                    if true_outcomes:
+                        outcome = {name: (name == true_outcomes[0]) for name in self.outcome_definitions}
+                    else:
+                        # If no outcomes are true, make a best guess based on the final state
+                        if self.debug:
+                            print("No outcomes were true, making best guess based on final state")
+                            print(f"Final state: {json.dumps(final_state, indent=2)}")
+                            # Default to the first outcome if we can't determine
+                            outcome = {name: (name == list(self.outcome_definitions.keys())[0]) 
+                                     for name in self.outcome_definitions}
             
-            print(f"Final determined outcome: {outcome}")
+            if self.debug:
+                print(f"Final determined outcome: {outcome}")
             return outcome
             
         except Exception as e:
-            print(f"Error analyzing outcome: {e}")
-            print(f"Error details: {str(e)}")
-            import traceback
-            traceback.print_exc()
+            if self.debug:
+                print(f"Error analyzing outcome: {e}")
+                print(f"Error details: {str(e)}")
+                import traceback
+                traceback.print_exc()
             return {name: False for name in self.outcome_definitions}
             
     def run(self, query: str, steps: int = 5) -> Generator[Tuple[Dict, Dict], None, None]:
@@ -166,7 +183,8 @@ class Experiment:
         simulation_histories = []  # Store complete histories for each simulation
         
         for sim_idx, simulation in enumerate(self.simulations, 1):
-            print(f"\nRunning simulation {sim_idx}/{total_simulations}")
+            if self.debug:
+                print(f"\nRunning simulation {sim_idx}/{total_simulations}")
             sim_results = []
             sim_history = []  # Store history for this simulation
             
@@ -186,19 +204,22 @@ class Experiment:
                 
                 # Print the current step's actions for debugging
                 if "actions" in result:
-                    print(f"Step {step_idx} actions: {result['actions']}")
+                    if self.debug:
+                        print(f"Step {step_idx} actions: {result['actions']}")
                 
                 # Yield progress and current data
                 yield progress, result
             
             # After simulation completes, analyze its outcome
             if sim_results:
-                print(f"\nAnalyzing simulation {sim_idx} results:")
-                print(f"Number of steps: {len(sim_results)}")
-                print(f"Final step result: {json.dumps(sim_results[-1], indent=2)}")
+                if self.debug:
+                    print(f"\nAnalyzing simulation {sim_idx} results:")
+                    print(f"Number of steps: {len(sim_results)}")
+                    print(f"Final step result: {json.dumps(sim_results[-1], indent=2)}")
                 
                 outcome = self.analyze_outcome(sim_history)
-                print(f"Simulation {sim_idx} outcome: {outcome}")
+                if self.debug:
+                    print(f"Simulation {sim_idx} outcome: {outcome}")
                 
                 # Create a complete simulation result
                 sim_result = {
@@ -213,11 +234,13 @@ class Experiment:
                 all_results.append(sim_result)
                 simulation_histories.append(sim_history)
             else:
-                print(f"Warning: No results for simulation {sim_idx}")
+                if self.debug:
+                    print(f"Warning: No results for simulation {sim_idx}")
         
         # After all simulations complete, calculate final statistics
         if all_results:
-            print("\nCalculating final statistics...")
+            if self.debug:
+                print("\nCalculating final statistics...")
             statistics = self._calculate_statistics([r['outcome_analysis'] for r in all_results])
             final_result = {
                 "runs": all_results,
@@ -227,7 +250,8 @@ class Experiment:
             self.experiment_results = final_result
             yield {'percentage': 100}, final_result
         else:
-            print("Warning: No results were generated from the experiment")
+            if self.debug:
+                print("Warning: No results were generated from the experiment")
 
     def _process_results(self, results):
         """Process and analyze the results"""
@@ -263,7 +287,8 @@ class Experiment:
             outcome_results.append(outcome_analysis)
             
             # Print debug info for each run
-            print(f"\nRun outcomes: {outcome_analysis}")
+            if self.debug:
+                print(f"\nRun outcomes: {outcome_analysis}")
             
         # Calculate statistics
         statistics = self._calculate_statistics(outcome_results)
@@ -284,7 +309,8 @@ class Experiment:
         num_simulations = len(outcome_results)
         
         if num_simulations == 0:
-            print("Warning: No simulation results to analyze")
+            if self.debug:
+                print("Warning: No simulation results to analyze")
             return {}
             
         # Initialize statistics for each outcome
@@ -299,7 +325,8 @@ class Experiment:
         for result in outcome_results:
             if not result:  # Skip empty results
                 continue
-            print(f"\nAnalyzing outcome result: {result}")  # Debug print
+            if self.debug:
+                print(f"\nAnalyzing outcome result: {result}")  # Debug print
             for outcome_name, occurred in result.items():
                 if occurred:
                     statistics[outcome_name]["count"] += 1
@@ -310,9 +337,10 @@ class Experiment:
             statistics[outcome_name]["percentage"] = (count / num_simulations) * 100 if num_simulations > 0 else 0.0
             
         # Print debug information
-        print("\nOutcome counts:")
-        for outcome_name, stats in statistics.items():
-            print(f"{outcome_name}: {stats['count']}/{num_simulations}")
+        if self.debug:
+            print("\nOutcome counts:")
+            for outcome_name, stats in statistics.items():
+                print(f"{outcome_name}: {stats['count']}/{num_simulations}")
             
         return statistics
         
@@ -324,7 +352,8 @@ class Experiment:
             output_dir: Directory to save the plot in
         """
         if not hasattr(self, 'experiment_results') or not self.experiment_results:
-            print("Warning: No results to plot")
+            if self.debug:
+                print("Warning: No results to plot")
             return
             
         # Create a bar plot of outcome frequencies
@@ -353,7 +382,8 @@ class Experiment:
         plt.savefig(plot_path)
         plt.close()
         
-        print(f"Plot saved to {plot_path}")
+        if self.debug:
+            print(f"Plot saved to {plot_path}")
 
     def save_results(self,
                      output_dir: str,
@@ -368,7 +398,8 @@ class Experiment:
 
         # Ensure root results directory exists
         os.makedirs(output_dir, exist_ok=True)
-        print(f"Created results directory at: {os.path.abspath(output_dir)}")
+        if self.debug:
+            print(f"Created results directory at: {os.path.abspath(output_dir)}")
 
         # ------------------------------------------------------------------ #
         # 1.  Save the detailed trace for every run (existing behaviour + AO)
@@ -389,7 +420,8 @@ class Experiment:
 
             with open(os.path.join(sim_dir, "trace.json"), "w") as f:
                 json.dump(trace, f, indent=2)
-            print(f"Saved trace for run {i+1}")
+            if self.debug:
+                print(f"Saved trace for run {i+1}")
 
         # ------------------------------------------------------------------ #
         # 2.  NEW: write agent_outcomes for each run into a dedicated folder
@@ -403,7 +435,8 @@ class Experiment:
             )
             with open(ao_path, "w") as f:
                 json.dump(result.get("agent_outcomes", {}), f, indent=2)
-            print(f"Saved agent outcomes for run {i+1} to {ao_path}")
+            if self.debug:
+                print(f"Saved agent outcomes for run {i+1} to {ao_path}")
 
         # ------------------------------------------------------------------ #
         # 3.  Summary & optional plot (unchanged)
@@ -418,7 +451,8 @@ class Experiment:
                 f.write(f"  Count: {stats['count']}/{len(results)}\n")
                 f.write(f"  Percentage: {stats['percentage']:.1f}%\n")
                 f.write(f"  Description: {stats['description']}\n")
-        print(f"Summary saved to {summary_path}")
+        if self.debug:
+            print(f"Summary saved to {summary_path}")
 
         if plot_results:
             self._generate_plot(output_dir)
@@ -491,7 +525,8 @@ class Experiment:
         simulation_histories = []
         
         for sim_idx, simulation in enumerate(self.simulations, 1):
-            print(f"\nRunning simulation {sim_idx}/{total_simulations}")
+            if self.debug:
+                print(f"\nRunning simulation {sim_idx}/{total_simulations}")
             sim_results = []
             sim_history = []
             
@@ -513,7 +548,8 @@ class Experiment:
                 sim_results.append(result)
                 if "actions" in result:  # This is a step result
                     sim_history.append(result)
-                    print(f"Step {step_count} actions: {result['actions']}")
+                    if self.debug:
+                        print(f"Step {step_count} actions: {result['actions']}")
                 
                 # Yield progress and current data
                 yield progress, result
@@ -521,7 +557,8 @@ class Experiment:
             # Analyze outcomes for this simulation
             if sim_results:
                 outcome = self.analyze_outcome(sim_history)
-                print(f"Simulation {sim_idx} outcome: {outcome}")
+                if self.debug:
+                    print(f"Simulation {sim_idx} outcome: {outcome}")
                 
                 # Get agent outcomes from the final result
                 final_result = sim_results[-1] if sim_results else {}
@@ -550,4 +587,5 @@ class Experiment:
             self.experiment_results = final_result
             yield {'percentage': 100}, final_result
         else:
-            print("Warning: No results were generated from the experiment") 
+            if self.debug:
+                print("Warning: No results were generated from the experiment") 
