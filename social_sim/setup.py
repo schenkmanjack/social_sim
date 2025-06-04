@@ -10,6 +10,11 @@ setup(
     install_requires=[
         'openai',
         'python-dotenv',
+        'anthropic',
+        'matplotlib',
+        'numpy',
+        'wordcloud',
+        'flask'
     ],
     python_requires='>=3.8',
 )
