@@ -81,12 +81,14 @@ class AnthropicBackend(LLMWrapper):
         # Create batch requests
         requests = []
         for i, prompt in enumerate(prompts):
+            prompt = prompt + str(i)
             new_request = Request(
                 custom_id=f"agent-request-{i}",
                 params=MessageCreateParamsNonStreaming(
                     model=self.model,
                     max_tokens=4000,
-                    messages=[{"role": "user", "content": prompt}]
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=1.0  # Add temperature for stochastic responses
                 )
             )
             requests.append(new_request)
@@ -124,6 +126,7 @@ class AnthropicBackend(LLMWrapper):
             
             ordered_results[index] = content
         
+        print(ordered_results)
         return ordered_results
 
 class MockLLM(LLMWrapper):

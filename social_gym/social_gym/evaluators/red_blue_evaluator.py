@@ -15,7 +15,7 @@ class RedBlueEvaluator:
         self.llm = evaluator_config.get('llm_wrapper')
         self._initial_evaluator_config = evaluator_config.copy()
         self._use_scheduling = use_scheduling
-        self.use_batched_evaluation = False
+        self.use_batched_evaluation = evaluator_config.get('use_batched_evaluation', False)
         
         # Get required config parameters
         self.num_agents = evaluator_config.get('num_agents', 7)
@@ -114,10 +114,11 @@ class RedBlueEvaluator:
         
         self.experiment  = experiment #return runs[0] if runs else None
 
-    def evaluate_simulation_outcomes(self):
+    def evaluate_simulation_outcomes(self, simulation=None):
         """Evaluate simulation outcomes and return objectives"""
-        
-        agent_outcomes = self.experiment.simulations[0].agent_outcomes
+        if simulation is None:
+            raise ValueError("Simulation is required for evaluation")
+        agent_outcomes = simulation.agent_outcomes
         red_agents = agent_outcomes.get('red', [])
         blue_agents = agent_outcomes.get('blue', [])
         
@@ -157,7 +158,7 @@ class RedBlueEvaluator:
             # Run simulation
             self.run_simulation(config)
             # Evaluate outcomes
-            objectives = self.evaluate_simulation_outcomes()
+            objectives = self.evaluate_simulation_outcomes(simulation=self.experiment.simulations[0])
             
             # For this evaluator, objectives and metrics are the same
             constraints = []
@@ -169,6 +170,83 @@ class RedBlueEvaluator:
         except Exception as e:
             print(f"Error in evaluate: {str(e)}")
             return [1.0, 1.0], [], [1.0, 1.0]  # Return penalty for errors
+    
+    def evaluate_batch(self, individuals=None):
+        """Evaluate a batch of DOFs"""
+        if individuals is None or len(individuals) == 0:
+            return [], [], []
+
+        try:
+            # Create a simulation for each individual
+            simulations = []
+            for individual in individuals:
+                # Create config from individual's DOF
+                config_name = f"eval_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
+                config = self.create_config_from_dof(individual.dof, config_name)
+                
+                # Create simulation
+                sim = Simulation(
+                    llm_wrapper=self.llm,
+                    chunk_size=config.get("chunk_size", 1200),
+                )
+                
+                # Set up from config dict directly
+                sim.setup_from_config(config)
+                simulations.append(sim)
+
+            # Create experiment with all simulations
+            experiment = Experiment(simulations, name=f"batch_eval_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+            
+            # Run experiment using batched or non-batched mode based on config
+            runs = []
+            if self.use_batched_evaluation:
+                for progress, data in experiment.run_manual_batch(
+                    steps=self.steps,
+                    time_scale=None  # Add time_scale from config if needed
+                ):
+                    if progress.get("percentage") == 100 and "runs" in data:
+                        runs = data["runs"]
+                        break
+            else:
+                for progress, data in experiment.run_manual(
+                    steps=self.steps,
+                    time_scale=None,  # Add time_scale from config if needed
+                    use_batched=False
+                ):
+                    if progress.get("percentage") == 100 and "runs" in data:
+                        runs = data["runs"]
+                        break
+
+            # Process results for each individual
+            all_objectives = []
+            all_constraints = []
+            all_metrics = []
+
+            self.experiment = experiment
+
+            # Process each run's outcomes
+            for i, run in enumerate(runs):
+                
+                # Evaluate outcomes for this specific simulation
+                objectives = self.evaluate_simulation_outcomes(simulation=self.experiment.simulations[i])
+                constraints = []
+                metrics = objectives.copy()
+                
+                all_objectives.append(objectives)
+                all_constraints.append(constraints)
+                all_metrics.append(metrics)
+
+            return all_objectives, all_constraints, all_metrics
+
+        except Exception as e:
+            print(f"Error in evaluate_batch: {str(e)}")
+            # Return penalty values for each individual
+            num_individuals = len(individuals)
+            return (
+                [[1.0, 1.0] for _ in range(num_individuals)],  # objectives
+                [[] for _ in range(num_individuals)],          # constraints
+                [[1.0, 1.0] for _ in range(num_individuals)]   # metrics
+            )
 
     def schedule(self, gen, n_generations):
         """Update evaluator parameters based on generation"""
