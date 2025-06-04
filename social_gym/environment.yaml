@@ -1,0 +1,18 @@
+name: social_gym
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - matplotlib
+    - numpy
+    - wordcloud
+    - flask
+    - openai
+    - python-dotenv
+    - -e "git+ssh://git@github.com/schenkmanjack/NeuroEvo.git@mongodb#egg=genetic-algorithm&subdirectory=genetic_algorithm"
+    - -e "git+ssh://git@github.com/schenkmanjack/social_sim.git@main#egg=social_sim&subdirectory=social_sim"
+
+   

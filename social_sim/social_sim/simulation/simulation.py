@@ -64,6 +64,62 @@ class Simulation:
         
         return messages_with_senders
 
+    def _generate_final_summary(self, history):
+        """
+        Generate final summary and agent outcomes from simulation history.
+        
+        Args:
+            history: List of simulation step results
+            
+        Returns:
+            Dict containing summary, agent_outcomes, agent_states, and environment_state
+        """
+        try:
+            # Split history into chunks
+            chunks = []
+            for i in range(0, len(history), self.chunk_size):
+                chunks.append(history[i:i + self.chunk_size])
+            
+            # Summarize each chunk
+            chunk_summaries = []
+            for i, chunk in enumerate(chunks):
+                if self.debug:
+                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
+                chunk_summary = self._summarize_chunk(chunk)
+                chunk_summaries.append(chunk_summary)
+            
+            # Combine and summarize chunk summaries
+            if len(chunk_summaries) > 1:
+                if self.debug:
+                    print("Combining chunk summaries...")
+                summary = self._summarize_chunks(chunk_summaries)
+            else:
+                summary = chunk_summaries[0] if chunk_summaries else "No summary available"
+                
+            # Analyze agent outcomes
+            agent_outcomes = self.analyze_agent_outcomes()
+            if self.debug:
+                print(f"Agent outcomes: {agent_outcomes}")
+            
+            return {
+                "summary": summary,
+                "history": history,
+                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
+                "environment_state": self.env.get_state(),
+                "agent_outcomes": agent_outcomes
+            }
+            
+        except Exception as e:
+            if self.debug:
+                print(f"Warning: Could not generate summary due to error: {str(e)}")
+            return {
+                "history": history,
+                "summary": "Summary generation failed. Please refer to the detailed trace file for the simulation results.",
+                "agent_outcomes": {},
+                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
+                "environment_state": self.env.get_state()
+            }
+
     def run(self, query: str, steps: int = 5) -> Generator[Dict, None, None]:
         """
         Run the simulation for a given number of steps.
@@ -147,56 +203,9 @@ class Simulation:
             # Yield step result
             yield step_result
 
-        # Generate final summary
-        try:
-            # Split history into chunks
-            chunks = []
-            for i in range(0, len(history), self.chunk_size):
-                chunks.append(history[i:i + self.chunk_size])
-            
-            # Summarize each chunk
-            chunk_summaries = []
-            for i, chunk in enumerate(chunks):
-                if self.debug:
-                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
-                chunk_summary = self._summarize_chunk(chunk)
-                chunk_summaries.append(chunk_summary)
-            
-            # Combine and summarize chunk summaries
-            if len(chunk_summaries) > 1:
-                if self.debug:
-                    print("Combining chunk summaries...")
-                summary = self._summarize_chunks(chunk_summaries)
-            else:
-                summary = chunk_summaries[0]
-                
-            # Analyze agent outcomes
-            agent_outcomes = self.analyze_agent_outcomes()
-            if self.debug:
-                print(f"Agent outcomes: {agent_outcomes}")
-            
-            # Yield final result
-            final_result = {
-                "summary": summary,
-                "history": history,
-                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
-                "environment_state": self.env.get_state(),
-                "agent_outcomes": agent_outcomes
-            }
-            yield final_result
-            
-        except Exception as e:
-            if self.debug:
-                print(f"Warning: Could not generate summary due to error: {str(e)}")
-            summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
-            agent_outcomes = {}
-            yield steps, {
-                "setup": setup,
-                "history": history,
-                "summary": summary,
-                "metrics": [],
-                "agent_outcomes": agent_outcomes
-            }
+        # Generate final summary using the new method
+        final_result = self._generate_final_summary(history)
+        yield final_result
 
     def should_activate(self, agent_id):
         return True
@@ -294,75 +303,9 @@ class Simulation:
                 "total_steps": steps
             }
 
-        # Generate final summary using chunked approach
-        try:
-            # Split history into chunks using instance variable
-            chunks = []
-            for i in range(0, len(history), self.chunk_size):
-                chunks.append(history[i:i + self.chunk_size])
-            
-            # Summarize each chunk
-            chunk_summaries = []
-            for i, chunk in enumerate(chunks):
-                if self.debug:
-                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
-                chunk_summary = self._summarize_chunk(chunk)
-                chunk_summaries.append(chunk_summary)
-            
-            # Combine and summarize chunk summaries
-            if len(chunk_summaries) > 1:
-                if self.debug:
-                    print("Combining chunk summaries...")
-                summary = self._summarize_chunks(chunk_summaries)
-            else:
-                summary = chunk_summaries[0]
-                
-        except Exception as e:
-            if self.debug:
-                print(f"Warning: Could not generate summary due to error: {str(e)}")
-            summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
-        
-        # Convert metrics to the expected format using chunked approach
-        try:
-            metrics = []
-            # Process history in chunks for metric determination
-            for i, chunk in enumerate(chunks):
-                if self.debug:
-                    print(f"Analyzing metrics for chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
-                try:
-                    chunk_metrics = self.orchestrator.determine_plot_metrics(query, chunk)
-                    for name, keywords in chunk_metrics:
-                        # Only add if not already present
-                        if not any(m["metric_name"] == name for m in metrics):
-                            metrics.append({
-                                "question": f"How did {name.lower()} change over time?",
-                                "metric_name": name,
-                                "keywords": keywords,
-                                "visualization": "line",  # Default to line chart for time series
-                                "data_type": "trend"
-                            })
-                except Exception as e:
-                    if self.debug:
-                        print(f"Warning: Could not determine metrics for chunk {i+1}: {str(e)}")
-                    continue
-        except Exception as e:
-            if self.debug:
-                print(f"Warning: Could not format metrics: {str(e)}")
-            metrics = []
-        
-        # Analyze agent outcomes
-        agent_outcomes = self.analyze_agent_outcomes()
-        if self.debug:
-            print(f"Agent outcomes: {agent_outcomes}")
-        
-        # Yield final result
-        yield steps, {
-            "setup": setup,
-            "history": history,
-            "summary": summary,
-            "metrics": metrics,
-            "agent_outcomes": agent_outcomes
-        }
+        # Generate final summary using the new method
+        final_result = self._generate_final_summary(history)
+        yield final_result
 
     def analyze_agent_outcomes(self) -> Dict[str, List[str]]:
         """
@@ -428,9 +371,70 @@ class Simulation:
         self.agent_outcomes = agent_outcomes
         return agent_outcomes
 
-    def run_manual(self, steps: int = 5, time_scale: str = None) -> Generator[Dict, None, None]:
+    def _process_batch_responses(self, agent_ids, batch_responses, agent_contexts, step):
         """
-        Run the simulation for a given number of steps without orchestrator setup.
+        Process batch LLM responses and update agent states.
+        
+        Args:
+            agent_ids: List of agent IDs in the same order as batch_responses
+            batch_responses: List of LLM responses from batch call OR list of result dicts from batch_process_agents
+            agent_contexts: List of context dictionaries for each agent
+            step: Current simulation step (0-indexed)
+            
+        Returns:
+            Tuple of (step_actions, failed_agents)
+        """
+        step_actions = []
+        failed_agents = []
+        
+        for i, (agent_id, response_data) in enumerate(zip(agent_ids, batch_responses)):
+            try:
+                agent = self.agents[agent_id]
+                context = agent_contexts[i]
+                
+                # Handle new response format from batch_process_agents
+                if isinstance(response_data, dict) and 'success' in response_data:
+                    if not response_data['success']:
+                        if self.debug:
+                            print(f"Agent {agent_id} failed: {response_data.get('error', 'Unknown error')}")
+                        failed_agents.append(agent_id)
+                        continue
+                    response = response_data['response']
+                else:
+                    # Handle old format (direct response)
+                    response = response_data
+                    if response is None:
+                        if self.debug:
+                            print(f"Agent {agent_id} failed: No response received")
+                        failed_agents.append(agent_id)
+                        continue
+                
+                # Update agent state with the response
+                agent.last_message = response
+                agent.memory.append(response)
+                
+                step_actions.append({
+                    "agent": agent_id,
+                    "identity": agent.identity,
+                    "visible_state": context["visible_state"],
+                    "received_messages": context["messages_with_senders"],
+                    "action": response
+                })
+                
+                # Update environment with action
+                self.env.update(response)
+                
+            except Exception as e:
+                if self.debug:
+                    print(f"Error processing response for agent {agent_id}: {str(e)}")
+                failed_agents.append(agent_id)
+                continue
+        
+        return step_actions, failed_agents
+
+    def run_manual_batching(self, steps: int = 5, time_scale: str = None) -> Generator[Dict, None, None]:
+        """
+        Run the simulation for a given number of steps without orchestrator setup using batch LLM calls.
         Assumes agents, environment, and connectivity are already configured.
         
         Args:
@@ -438,112 +442,98 @@ class Simulation:
             time_scale: Optional time scale for TimescaleAwareAgents ("years", "months", "weeks", "days", "hours")
         """
         if not self.agents:
-            raise ValueError("No agents configured. Use manual setup before calling run_manual.")
+            raise ValueError("No agents configured. Use manual setup before calling run_manual_batching.")
         if self.env is None:
-            raise ValueError("Environment not configured. Use manual setup before calling run_manual.")
+            raise ValueError("Environment not configured. Use manual setup before calling run_manual_batching.")
         if self.graph is None:
-            raise ValueError("Connectivity graph not configured. Use manual setup before calling run_manual.")
+            raise ValueError("Connectivity graph not configured. Use manual setup before calling run_manual_batching.")
 
+        # Track failed agents to exclude from subsequent steps
+        failed_agents = set()
+        
         # Run simulation steps
         history = []
         for step in range(steps):
             if self.debug:
                 print(f"\nRunning step {step + 1}/{steps}...")
-            step_actions = []
             
-            # Each agent takes their turn
-            for agent_id, agent in self.agents.items():
+            # Get active agents (exclude failed ones)
+            active_agents = {aid: agent for aid, agent in self.agents.items() if aid not in failed_agents}
+            
+            if not active_agents:
+                if self.debug:
+                    print("No active agents remaining. Ending simulation.")
+                break
+            
+            # Prepare data for batch_process_agents
+            agents_data = []
+            agent_contexts = []
+            agent_ids = list(active_agents.keys())
+            
+            for agent_id in agent_ids:
+                agent = active_agents[agent_id]
+                
                 # Get visible environment state for this agent
                 visible_state = self.env.snapshot_for_agent(agent_id, self.graph)
                 
                 # Get messages from neighbors using the dedicated function
                 messages_with_senders = self._get_messages_for_agent(agent_id)
                 
-                # Agent decides on action - pass time information for TimescaleAwareAgents
-                if hasattr(agent, 'time_scale'):  # Check if it's a TimescaleAwareAgent
-                    action = agent.act(
-                        visible_state, 
-                        messages_with_senders, 
-                        current_step=step + 1, 
-                        total_steps=steps, 
-                        time_scale=time_scale
-                    )
-                else:
-                    action = agent.act(visible_state, messages_with_senders)
-                    
-                step_actions.append({
-                    "agent": agent_id,
-                    "identity": agent.identity,
+                # Prepare data structure for batch_process_agents
+                agent_data = {
+                    "agent": agent,
+                    "agent_id": agent_id,
+                    "simulation_index": 0,  # Always 0 for single simulation
                     "visible_state": visible_state,
-                    "received_messages": messages_with_senders,
-                    "action": action
-                })
+                    "messages_with_senders": messages_with_senders,
+                    "step": step + 1,
+                    "total_steps": steps
+                }
                 
-                # Update environment with action
-                self.env.update(action)
+                if time_scale:
+                    agent_data["time_scale"] = time_scale
+                
+                agents_data.append(agent_data)
+                
+                # Keep context for _process_batch_responses
+                agent_contexts.append({
+                    "agent_id": agent_id,
+                    "visible_state": visible_state,
+                    "messages_with_senders": messages_with_senders
+                })
+            
+            # Use batch_process_agents class method properly
+            if self.debug:
+                print(f"Processing batch for {len(agents_data)} agents...")
+            
+            batch_results = Simulation.batch_process_agents(agents_data, debug=self.debug)
+            
+            # Process batch responses using the updated method
+            step_actions, step_failed_agents = self._process_batch_responses(agent_ids, batch_results, agent_contexts, step)
+            
+            # Add newly failed agents to the set
+            failed_agents.update(step_failed_agents)
+            
+            if step_failed_agents and self.debug:
+                print(f"Agents failed in this step: {step_failed_agents}")
             
             # Record step results
             step_result = {
                 "step": step + 1,
                 "actions": step_actions,
                 "environment": self.env.get_state(),
-                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()}
+                "agent_states": {agent_id: agent.state for agent_id, agent in active_agents.items()},
+                "failed_agents": list(failed_agents)
             }
             history.append(step_result)
             
             # Yield step result
             yield step_result
 
-        # Generate final summary
-        try:
-            # Split history into chunks
-            chunks = []
-            for i in range(0, len(history), self.chunk_size):
-                chunks.append(history[i:i + self.chunk_size])
-            
-            # Summarize each chunk
-            chunk_summaries = []
-            for i, chunk in enumerate(chunks):
-                if self.debug:
-                    print(f"Summarizing chunk {i+1}/{len(chunks)} (size: {len(chunk)} steps)...")
-                chunk_summary = self._summarize_chunk(chunk)
-                chunk_summaries.append(chunk_summary)
-            
-            # Combine and summarize chunk summaries
-            if len(chunk_summaries) > 1:
-                if self.debug:
-                    print("Combining chunk summaries...")
-                summary = self._summarize_chunks(chunk_summaries)
-            else:
-                summary = chunk_summaries[0] if chunk_summaries else "No summary available"
-                
-            # Analyze agent outcomes
-            agent_outcomes = self.analyze_agent_outcomes()
-            if self.debug:
-                print(f"Agent outcomes: {agent_outcomes}")
-            
-            # Yield final result
-            final_result = {
-                "summary": summary,
-                "history": history,
-                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
-                "environment_state": self.env.get_state(),
-                "agent_outcomes": agent_outcomes
-            }
-            yield final_result
-            
-        except Exception as e:
-            if self.debug:
-                print(f"Warning: Could not generate summary due to error: {str(e)}")
-            summary = "Summary generation failed. Please refer to the detailed trace file for the simulation results."
-            agent_outcomes = {}
-            yield {
-                "history": history,
-                "summary": summary,
-                "agent_outcomes": agent_outcomes,
-                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
-                "environment_state": self.env.get_state()
-            }
+        # Generate final summary using the new method
+        final_result = self._generate_final_summary(history)
+        final_result["failed_agents"] = list(failed_agents)
+        yield final_result
 
     def setup_from_config(self, config) -> None:
         """
@@ -616,3 +606,174 @@ class Simulation:
         
         if self.debug:
             print(f"Successfully set up simulation '{config['name']}' with {len(self.agents)} agents")
+
+    def run_manual(self, steps: int = 5, time_scale: str = None) -> Generator[Dict, None, None]:
+        """
+        Run the simulation for a given number of steps without orchestrator setup.
+        Assumes agents, environment, and connectivity are already configured.
+        
+        Args:
+            steps: Number of steps to run
+            time_scale: Optional time scale for TimescaleAwareAgents ("years", "months", "weeks", "days", "hours")
+        """
+        if not self.agents:
+            raise ValueError("No agents configured. Use manual setup before calling run_manual.")
+        if self.env is None:
+            raise ValueError("Environment not configured. Use manual setup before calling run_manual.")
+        if self.graph is None:
+            raise ValueError("Connectivity graph not configured. Use manual setup before calling run_manual.")
+
+        # Run simulation steps
+        history = []
+        for step in range(steps):
+            if self.debug:
+                print(f"\nRunning step {step + 1}/{steps}...")
+            step_actions = []
+            
+            # Each agent takes their turn
+            for agent_id, agent in self.agents.items():
+                # Get visible environment state for this agent
+                visible_state = self.env.snapshot_for_agent(agent_id, self.graph)
+                
+                # Get messages from neighbors using the dedicated function
+                messages_with_senders = self._get_messages_for_agent(agent_id)
+                
+                # Agent decides on action - pass time information for TimescaleAwareAgents
+                if hasattr(agent, 'time_scale'):  # Check if it's a TimescaleAwareAgent
+                    action = agent.act(
+                        visible_state, 
+                        messages_with_senders, 
+                        current_step=step + 1, 
+                        total_steps=steps, 
+                        time_scale=time_scale
+                    )
+                else:
+                    action = agent.act(visible_state, messages_with_senders)
+                    
+                step_actions.append({
+                    "agent": agent_id,
+                    "identity": agent.identity,
+                    "visible_state": visible_state,
+                    "received_messages": messages_with_senders,
+                    "action": action
+                })
+                
+                # Update environment with action
+                self.env.update(action)
+            
+            # Record step results
+            step_result = {
+                "step": step + 1,
+                "actions": step_actions,
+                "environment": self.env.get_state(),
+                "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()}
+            }
+            history.append(step_result)
+            
+            # Yield step result
+            yield step_result
+
+        # Generate final summary using the new method
+        final_result = self._generate_final_summary(history)
+        yield final_result
+
+    @classmethod
+    def batch_process_agents(cls, agents_data, llm=None, debug=False):
+        """
+        Class method to process a batch of agents across multiple simulations.
+        
+        Args:
+            agents_data: List of dicts with agent, context, and simulation info
+            llm: Orchestrator instance for LLM calls
+            debug: Debug flag
+        
+        Returns:
+            List of results in same order as input
+        """
+        if llm is None:
+            # Get LLM from the first agent
+            llm = agents_data[0]["agent"].llm
+        
+        if not agents_data:
+            return []
+        
+        # Extract prompts for batch call
+        prompts = []
+        for agent_data in agents_data:
+            agent = agent_data["agent"]
+            
+            # Generate prompt based on agent type
+            if hasattr(agent, 'time_scale'):  # TimescaleAwareAgent
+                prompt = agent.generate_prompt(
+                    agent_data["visible_state"], 
+                    agent_data["messages_with_senders"], 
+                    current_step=agent_data["step"], 
+                    total_steps=agent_data["total_steps"], 
+                    time_scale=agent_data.get("time_scale")
+                )
+            else:  # Regular Agent
+                prompt = agent.generate_prompt(
+                    agent_data["visible_state"], 
+                    agent_data["messages_with_senders"]
+                )
+            
+            prompts.append(prompt)
+        
+        # Make batch LLM call
+        try:
+            if debug:
+                print(f"Making batch LLM call for {len(prompts)} agents across simulations...")
+            
+            batch_responses = llm.batch(prompts)
+            
+        except Exception as e:
+            if debug:
+                print(f"Batch LLM call failed: {str(e)}")
+            # Return all failures
+            return [
+                {
+                    "agent_id": agent_data["agent_id"],
+                    "simulation_index": agent_data["simulation_index"],
+                    "response": None,
+                    "success": False,
+                    "error": f"Batch call failed: {str(e)}"
+                }
+                for agent_data in agents_data
+            ]
+        
+        # Process responses
+        results = []
+        for i, (agent_data, response) in enumerate(zip(agents_data, batch_responses)):
+            try:
+                # Check if response indicates an error
+                if response is None or (isinstance(response, dict) and response.get('error')):
+                    error_msg = response.get('error', 'No response received') if isinstance(response, dict) else 'No response received'
+                    results.append({
+                        "agent_id": agent_data["agent_id"],
+                        "simulation_index": agent_data["simulation_index"],
+                        "response": None,
+                        "success": False,
+                        "error": error_msg
+                    })
+                    continue
+                
+                results.append({
+                    "agent_id": agent_data["agent_id"],
+                    "simulation_index": agent_data["simulation_index"],
+                    "response": response,
+                    "success": True,
+                    "error": None
+                })
+                
+            except Exception as e:
+                if debug:
+                    print(f"Error processing response for agent {agent_data['agent_id']}: {str(e)}")
+                results.append({
+                    "agent_id": agent_data["agent_id"],
+                    "simulation_index": agent_data["simulation_index"],
+                    "response": None,
+                    "success": False,
+                    "error": str(e)
+                })
+        
+        return results

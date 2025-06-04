@@ -7,10 +7,11 @@ class TimescaleAwareAgent(Agent):
         self.current_step = None
         self.total_steps = None
 
-    def act(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
+    def generate_prompt(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
         """
-        Decide on an action with time scale awareness
+        Generate the prompt that would be used for acting, without actually calling the LLM
         """
+        # Set time context
         self.time_scale = time_scale
         self.current_step = current_step
         self.total_steps = total_steps
@@ -37,6 +38,13 @@ class TimescaleAwareAgent(Agent):
         What action do you take? Respond with a single sentence describing your action.
         """
         
+        return prompt
+
+    def act(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
+        """
+        Decide on an action with time scale awareness
+        """
+        prompt = self.generate_prompt(visible_state, messages, current_step, total_steps, time_scale)
         action = self.llm.generate(prompt)
         self.last_message = action
         self.memory.append(action)

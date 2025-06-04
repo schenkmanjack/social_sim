@@ -110,7 +110,7 @@ def main() -> None:
     config = sim.config
     
     # Create experiment
-    experiment = Experiment([sim], name=config["name"])
+    experiment = Experiment([sim], name=config["name"], debug=False)
     
     # # Add outcomes if specified
     # for outcome in config.get("outcomes", []):
@@ -124,7 +124,12 @@ def main() -> None:
     print(f"Running manual experiment '{config['name']}' for {config['steps']} steps…")
     runs = []
     
-    for progress, data in experiment.run_manual(
+    # for progress, data in experiment.run_manual(
+    #     steps=config["steps"], 
+    #     time_scale=config.get("time_scale"),
+    #     use_batched=True
+    # ):
+    for progress, data in experiment.run_manual_batch(
         steps=config["steps"], 
         time_scale=config.get("time_scale")
     ):

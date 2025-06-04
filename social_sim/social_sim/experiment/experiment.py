@@ -179,7 +179,6 @@ class Experiment:
             Tuple of (progress, data) for each step
         """
         total_simulations = len(self.simulations)
-        all_results = []
         simulation_histories = []  # Store complete histories for each simulation
         
         for sim_idx, simulation in enumerate(self.simulations, 1):
@@ -210,48 +209,14 @@ class Experiment:
                 # Yield progress and current data
                 yield progress, result
             
-            # After simulation completes, analyze its outcome
-            if sim_results:
-                if self.debug:
-                    print(f"\nAnalyzing simulation {sim_idx} results:")
-                    print(f"Number of steps: {len(sim_results)}")
-                    print(f"Final step result: {json.dumps(sim_results[-1], indent=2)}")
-                
-                outcome = self.analyze_outcome(sim_history)
-                if self.debug:
-                    print(f"Simulation {sim_idx} outcome: {outcome}")
-                
-                # Create a complete simulation result
-                sim_result = {
-                    "steps": sim_history,
-                    "outcome_analysis": outcome,
-                    "environment": sim_results[-1].get("environment_state", []),
-                    "agent_states": sim_results[-1].get("agent_states", {}),
-                    "actions": [step.get("actions", []) for step in sim_results if "actions" in step],
-                    "agent_outcomes": sim_results[-1].get("agent_outcomes", {})
-                }
-                
-                all_results.append(sim_result)
-                simulation_histories.append(sim_history)
-            else:
-                if self.debug:
-                    print(f"Warning: No results for simulation {sim_idx}")
+            # Store simulation history
+            simulation_histories.append(sim_history)
         
-        # After all simulations complete, calculate final statistics
-        if all_results:
-            if self.debug:
-                print("\nCalculating final statistics...")
-            statistics = self._calculate_statistics([r['outcome_analysis'] for r in all_results])
-            final_result = {
-                "runs": all_results,
-                "statistics": statistics,
-                "histories": simulation_histories
-            }
+        # Generate final results using extracted method
+        final_result = self._generate_experiment_results(simulation_histories)
+        if final_result:
             self.experiment_results = final_result
             yield {'percentage': 100}, final_result
-        else:
-            if self.debug:
-                print("Warning: No results were generated from the experiment")
 
     def _process_results(self, results):
         """Process and analyze the results"""
@@ -509,81 +474,280 @@ class Experiment:
         probability = outcome_indicators / total_steps if total_steps > 0 else 0.0
         return probability 
 
-    def run_manual(self, steps: int = 5, time_scale: str = None) -> Generator[Tuple[Dict, Dict], None, None]:
+    def run_manual(self, steps: int = 5, time_scale: str = None, use_batched: bool = False) -> Generator[Tuple[Dict, Dict], None, None]:
         """
-        Run the experiment with manually configured simulations (no orchestrator setup).
+        Run the experiment manually with optional batching.
         
         Args:
             steps: Number of steps per simulation
             time_scale: Optional time scale for TimescaleAwareAgents
+            use_batched: Whether to use batched processing within each simulation
             
         Yields:
             Tuple of (progress, data) for each step
         """
         total_simulations = len(self.simulations)
-        all_results = []
         simulation_histories = []
         
         for sim_idx, simulation in enumerate(self.simulations, 1):
             if self.debug:
                 print(f"\nRunning simulation {sim_idx}/{total_simulations}")
+            
             sim_results = []
             sim_history = []
             
-            # Use the simulation's run_manual method
-            step_count = 0
-            for result in simulation.run_manual(steps, time_scale):
-                step_count += 1
-                
-                # Calculate progress
+            # Choose the appropriate run method
+            run_method = simulation.run_manual_batching if use_batched else simulation.run_manual
+            
+            # Run the simulation
+            for step_idx, result in enumerate(run_method(steps, time_scale), 1):
                 progress = {
                     'current_sim': sim_idx,
                     'total_sims': total_simulations,
-                    'current_sim_step': step_count,
-                    'total_steps': steps + 1,  # +1 for final summary
-                    'percentage': ((sim_idx - 1) * (steps + 1) + step_count) / (total_simulations * (steps + 1)) * 100
+                    'current_sim_step': step_idx,
+                    'total_steps': steps,
+                    'percentage': ((sim_idx - 1) * steps + step_idx) / (total_simulations * steps) * 100
                 }
                 
                 # Store the result and history
                 sim_results.append(result)
-                if "actions" in result:  # This is a step result
-                    sim_history.append(result)
-                    if self.debug:
-                        print(f"Step {step_count} actions: {result['actions']}")
+                sim_history.append(result)
                 
                 # Yield progress and current data
                 yield progress, result
+            
+            # Store simulation history
+            simulation_histories.append(sim_history)
+        
+        # Generate final results using extracted method
+        final_result = self._generate_experiment_results(simulation_histories)
+        if final_result:
+            self.experiment_results = final_result
+            yield {'percentage': 100}, final_result
 
-            # Analyze outcomes for this simulation
-            if sim_results:
-                outcome = self.analyze_outcome(sim_history)
-                if self.debug:
-                    print(f"Simulation {sim_idx} outcome: {outcome}")
-                
-                # Get agent outcomes from the final result
-                final_result = sim_results[-1] if sim_results else {}
-                agent_outcomes = final_result.get("agent_outcomes", {})
-                
-                sim_result = {
-                    "steps": sim_history,
-                    "outcome_analysis": outcome,
-                    "environment": final_result.get("environment_state", []),
-                    "agent_states": final_result.get("agent_states", {}),
-                    "actions": [step.get("actions", []) for step in sim_results if "actions" in step],
-                    "agent_outcomes": agent_outcomes
-                }
-                
-                all_results.append(sim_result)
-                simulation_histories.append(sim_history)
+    def _build_simulation_result(self, simulation, sim_history, sim_index):
+        """
+        Build result dict for a single simulation.
+        
+        Args:
+            simulation: Simulation instance
+            sim_history: List of simulation step results
+            sim_index: Index of the simulation
+            
+        Returns:
+            Dict containing simulation result
+        """
+        if sim_history:
+            # Use existing _generate_final_summary method
+            final_result = simulation._generate_final_summary(sim_history)
+            outcome = self.analyze_outcome(sim_history)
+            
+            if self.debug:
+                print(f"Simulation {sim_index + 1} outcome: {outcome}")
+            
+            sim_result = {
+                "steps": sim_history,
+                "outcome_analysis": outcome,
+                "environment": final_result.get("environment_state", []),
+                "agent_states": final_result.get("agent_states", {}),
+                "actions": [step.get("actions", []) for step in sim_history],
+                "agent_outcomes": final_result.get("agent_outcomes", {}),
+                "summary": final_result.get("summary", "")
+            }
+        else:
+            # Empty result for failed simulations
+            if self.debug:
+                print(f"Warning: Simulation {sim_index + 1} had no successful steps")
+            sim_result = {
+                "steps": [],
+                "outcome_analysis": {},
+                "environment": [],
+                "agent_states": {},
+                "actions": [],
+                "agent_outcomes": {},
+                "summary": "Simulation failed - no steps completed"
+            }
+        
+        return sim_result
 
-        # Calculate final statistics
+    def _generate_experiment_results(self, simulation_histories):
+        """
+        Generate final results for all simulations.
+        
+        Args:
+            simulation_histories: List of simulation histories
+            
+        Returns:
+            Dict containing experiment results with runs, statistics, and histories
+        """
+        all_results = []
+        
+        # Build results for each simulation
+        for sim_index in range(len(self.simulations)):
+            simulation = self.simulations[sim_index]
+            sim_history = simulation_histories[sim_index]
+            
+            sim_result = self._build_simulation_result(simulation, sim_history, sim_index)
+            all_results.append(sim_result)
+        
+        # Calculate final statistics and assemble results
         if all_results:
+            if self.debug:
+                print("\nCalculating final statistics...")
             statistics = self._calculate_statistics([r['outcome_analysis'] for r in all_results])
             final_result = {
                 "runs": all_results,
                 "statistics": statistics,
                 "histories": simulation_histories
             }
+            return final_result
+        else:
+            if self.debug:
+                print("Warning: No results were generated from the experiment")
+            return None
+
+    def run_manual_batch(self, steps: int = 5, time_scale: str = None) -> Generator[Tuple[Dict, Dict], None, None]:
+        """
+        Run the experiment with cross-simulation batching for better performance.
+        All simulations run simultaneously with agents batched together.
+        """
+        total_simulations = len(self.simulations)
+        if total_simulations == 0:
+            return
+        
+        # Initialize simulation histories
+        simulation_histories = [[] for _ in range(total_simulations)]
+        active_simulations = set(range(total_simulations))
+        
+        # Run all steps across all simulations simultaneously
+        for step in range(steps):
+            if self.debug:
+                print(f"\nRunning step {step + 1}/{steps} across {len(active_simulations)} active simulations...")
+            
+            if not active_simulations:
+                break
+            
+            # Collect all agents from all active simulations for batching
+            agents_data = []
+            result_mapping = {}  # Maps result index to (sim_index, agent_id, agent_context)
+            
+            for sim_index in active_simulations:
+                simulation = self.simulations[sim_index]
+                
+                # Get failed agents from previous steps
+                failed_agents = set()
+                if simulation_histories[sim_index]:
+                    last_step = simulation_histories[sim_index][-1]
+                    failed_agents = set(last_step.get("failed_agents", []))
+                
+                # Get active agents
+                active_agents = {aid: agent for aid, agent in simulation.agents.items() 
+                               if aid not in failed_agents}
+                
+                if not active_agents:
+                    active_simulations.discard(sim_index)
+                    continue
+                
+                # Prepare agent data using existing simulation logic
+                for agent_id in active_agents.keys():
+                    # Reuse existing methods from simulation
+                    visible_state = simulation.env.snapshot_for_agent(agent_id, simulation.graph)
+                    messages_with_senders = simulation._get_messages_for_agent(agent_id)
+                    
+                    agent_data = {
+                        "agent": simulation.agents[agent_id],
+                        "agent_id": agent_id,
+                        "simulation_index": sim_index,
+                        "visible_state": visible_state,
+                        "messages_with_senders": messages_with_senders,
+                        "step": step + 1,
+                        "total_steps": steps
+                    }
+                    
+                    if time_scale:
+                        agent_data["time_scale"] = time_scale
+                    
+                    agents_data.append(agent_data)
+                    
+                    # Store context for _process_batch_responses
+                    agent_context = {
+                        "agent_id": agent_id,
+                        "visible_state": visible_state,
+                        "messages_with_senders": messages_with_senders
+                    }
+                    
+                    result_mapping[len(agents_data) - 1] = (sim_index, agent_id, agent_context)
+            
+            if not agents_data:
+                break
+            
+            # Use the class method to batch process all agents
+            from social_sim.simulation.simulation import Simulation
+            batch_results = Simulation.batch_process_agents(agents_data, debug=self.debug)
+            
+            # Group results by simulation and use existing _process_batch_responses
+            simulation_results = {}
+            for result_index, result in enumerate(batch_results):
+                sim_index, agent_id, agent_context = result_mapping[result_index]
+                
+                if sim_index not in simulation_results:
+                    simulation_results[sim_index] = {
+                        'agent_ids': [],
+                        'batch_responses': [],
+                        'agent_contexts': []
+                    }
+                
+                simulation_results[sim_index]['agent_ids'].append(agent_id)
+                simulation_results[sim_index]['batch_responses'].append(result)
+                simulation_results[sim_index]['agent_contexts'].append(agent_context)
+            
+            # Process each simulation's results using existing method
+            step_data = {}
+            for sim_index in simulation_results:
+                simulation = self.simulations[sim_index]
+                sim_data = simulation_results[sim_index]
+                
+                # Leverage existing _process_batch_responses method
+                step_actions, step_failed_agents = simulation._process_batch_responses(
+                    sim_data['agent_ids'],
+                    sim_data['batch_responses'], 
+                    sim_data['agent_contexts'],
+                    step
+                )
+                
+                # If any agents failed, remove this simulation
+                if step_failed_agents:
+                    active_simulations.discard(sim_index)
+                    if self.debug:
+                        print(f"Simulation {sim_index + 1} removed due to failed agents: {step_failed_agents}")
+                    continue
+                
+                # Create step result using same format as existing methods
+                step_result = {
+                    "step": step + 1,
+                    "actions": step_actions,
+                    "environment": simulation.env.get_state(),
+                    "agent_states": {aid: agent.state for aid, agent in simulation.agents.items()},
+                    "failed_agents": step_failed_agents
+                }
+                
+                simulation_histories[sim_index].append(step_result)
+                step_data[sim_index] = step_result
+            
+            # Yield progress
+            progress = {
+                'current_step': step + 1,
+                'total_steps': steps,
+                'active_simulations': len(active_simulations),
+                'total_simulations': total_simulations,
+                'percentage': ((step + 1) / steps) * 100
+            }
+            
+            yield progress, {'step': step + 1, 'simulation_results': step_data}
+        
+        # Generate final results using extracted method
+        final_result = self._generate_experiment_results(simulation_histories)
+        if final_result:
             self.experiment_results = final_result
             yield {'percentage': 100}, final_result
         else:

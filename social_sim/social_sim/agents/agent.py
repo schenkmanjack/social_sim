@@ -14,9 +14,9 @@ class Agent:
         self.memory = []  # Initialize empty memory
         self.state = {}  # Generic state dictionary
 
-    def act(self, visible_state, messages):
+    def generate_prompt(self, visible_state, messages):
         """
-        Decide on an action based on visible state and messages
+        Generate the prompt that would be used for acting, without actually calling the LLM
         """
         # Format messages with sender information if available
         messages_text = self._format_messages(messages)
@@ -36,6 +36,13 @@ class Agent:
         What action do you take? Respond with a clear description of your action.
         """
         
+        return prompt
+
+    def act(self, visible_state, messages):
+        """
+        Decide on an action based on visible state and messages
+        """
+        prompt = self.generate_prompt(visible_state, messages)
         action = self.llm.generate(prompt)
         self.last_message = action
         self.memory.append(action)
