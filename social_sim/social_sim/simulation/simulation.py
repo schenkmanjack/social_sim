@@ -21,7 +21,8 @@ class Simulation:
         self.graph = None
         self.agent_type = agent_type
         self.chunk_size = chunk_size
-        self.agent_outcome_definitions = agent_outcome_definitions or []
+        self.agent_outcome_definitions = agent_outcome_definitions or {}
+        self.agent_outcomes = {}  # Initialize to prevent AttributeError
         self.debug = debug
 
     def _summarize_chunk(self, chunk):
@@ -777,3 +778,193 @@ class Simulation:
                 })
         
         return results
+
+    @classmethod
+    def batch_process_summaries(cls, histories_data, llm=None, debug=False):
+        """Process summaries for multiple simulations in batch."""
+        if not histories_data:
+            return []
+
+        # Infer expected steps from the first history
+        expected_steps = len(histories_data[0]) if histories_data[0] else 0
+        if debug:
+            print(f"Inferred expected_steps = {expected_steps} from simulation_histories structure")
+
+        # Filter valid histories - they should all have the expected length with non-None entries
+        valid_histories = []
+        history_mapping = {}  # Maps result index back to original index
+        
+        for idx, history in enumerate(histories_data):
+            # Check for valid history - proper length with no failed agents in any step
+            is_valid = (
+                history and 
+                len(history) == expected_steps and 
+                all(step is not None for step in history) and  # No None steps
+                not any(step.get("failed_agents") for step in history if step)  # No failed agents
+            )
+            
+            if is_valid:
+                valid_histories.append(history)
+                history_mapping[len(valid_histories)-1] = idx
+
+        # Only process valid histories
+        batch_responses = []
+        batch_outcomes = []
+        if valid_histories:
+            try:
+                # First get summaries
+                batch_responses = llm.batch([
+                    f"S:{json.dumps(history, separators=(',', ':'))}"
+                    for history in valid_histories
+                ])
+                
+                # Note: batch_outcomes will be empty since we can't analyze outcomes without simulation objects
+                batch_outcomes = [None] * len(valid_histories)
+                
+            except Exception as e:
+                if debug:
+                    print(f"Batch summary processing failed: {e}")
+                return [{"success": False, "error": str(e), "summary": None}] * len(histories_data)
+
+        # Build results array with failure info for invalid/failed histories
+        results = [{"success": False, "error": "Invalid or failed simulation", "summary": None}] * len(histories_data)
+        for valid_idx, response in enumerate(batch_responses):
+            orig_idx = history_mapping[valid_idx]
+            if response is None or (isinstance(response, dict) and response.get('error')):
+                results[orig_idx] = {
+                    "success": False,
+                    "error": response.get('error', 'No response received') if isinstance(response, dict) else 'No response received',
+                    "summary": None,
+                    "agent_outcomes": None
+                }
+            else:
+                results[orig_idx] = {
+                    "success": True,
+                    "error": None,
+                    "summary": response,
+                    "agent_outcomes": batch_outcomes[valid_idx] if valid_idx < len(batch_outcomes) else None
+                }
+
+        return results
+
+    @classmethod
+    def batch_analyze_agent_outcomes(cls, simulations, histories, llm=None, debug=False):
+        """
+        Batch analyze agent outcomes for multiple simulations.
+        
+        Args:
+            simulations: List of Simulation instances
+            histories: List of simulation histories
+            llm: LLM interface to use (will use first simulation's if None)
+            debug: Whether to print debug info
+        
+        Returns:
+            List of agent outcomes dictionaries
+        """
+        if not simulations or not histories:
+            return []
+        
+        if llm is None:
+            llm = simulations[0].orchestrator.llm
+        
+        # Prepare batch of prompts for outcome analysis
+        prompts = []
+        valid_indices = []
+        
+        for idx, (simulation, history) in enumerate(zip(simulations, histories)):
+            if not history or not simulation.agent_outcome_definitions:
+                continue
+            
+            # For each simulation, create one combined prompt for all outcomes
+            agents_memory = {
+                agent_id: agent.memory 
+                for agent_id, agent in simulation.agents.items()
+            }
+            
+            prompt = f"""
+            Analyze if these agents match specific outcome conditions.
+            
+            Agents Memory:
+            {json.dumps(agents_memory, indent=2)}
+            
+            Outcome Definitions:
+            {json.dumps(simulation.agent_outcome_definitions, indent=2)}
+            
+            For each agent and each outcome definition, provide detailed analysis of whether and why the agent matches.
+            Return a JSON object with the following structure:
+            {{
+                "outcome_matches": {{
+                    "outcome_name_1": ["agent_1", "agent_2"],
+                    "outcome_name_2": ["agent_3"]
+                }},
+                "detailed_analysis": {{
+                    "agent_1": {{
+                        "outcome_name_1": "Agent matches because they achieved X and Y",
+                        "outcome_name_2": "Agent does not match because they failed to achieve Z"
+                    }},
+                    "agent_2": {{
+                        "outcome_name_1": "Agent matches because they demonstrated behavior A",
+                        "outcome_name_2": "Agent does not match because they lacked element B"
+                    }}
+                }}
+            }}
+            """
+            prompts.append(prompt)
+            valid_indices.append(idx)
+        
+        if not prompts:
+            return [None] * len(simulations)
+        
+        # Make batch LLM call
+        try:
+            if debug:
+                print(f"Making batch LLM call for {len(prompts)} outcome analyses...")
+            
+            batch_responses = llm.batch(prompts)
+            
+            # Process responses and map back to all simulations
+            results = [None] * len(simulations)
+            
+            for i, response in enumerate(batch_responses):
+                orig_idx = valid_indices[i]
+                try:
+                    outcomes = json.loads(response)
+                    simulation = simulations[orig_idx]
+                    
+                    # Store results in simulation
+                    simulation.agent_outcomes = outcomes["outcome_matches"]
+                    
+                    # Also populate individual agent outcomes to match behavior of analyze_agent_outcomes
+                    # Initialize agent_outcomes for each agent
+                    for agent in simulation.agents.values():
+                        if not hasattr(agent, 'agent_outcomes'):
+                            agent.agent_outcomes = {}
+                    
+                    # Set detailed analysis for each agent using the LLM's detailed analysis
+                    detailed_analysis = outcomes.get("detailed_analysis", {})
+                    for agent_id, agent in simulation.agents.items():
+                        agent_analysis = detailed_analysis.get(agent_id, {})
+                        for outcome_name in simulation.agent_outcome_definitions.keys():
+                            # Use the detailed analysis from LLM, or fallback if not available
+                            if outcome_name in agent_analysis:
+                                agent.agent_outcomes[outcome_name] = agent_analysis[outcome_name]
+                            else:
+                                # Fallback to simple message if detailed analysis not available
+                                matching_agent_ids = outcomes["outcome_matches"].get(outcome_name, [])
+                                if agent_id in matching_agent_ids:
+                                    agent.agent_outcomes[outcome_name] = f"Agent matches {outcome_name} outcome"
+                                else:
+                                    agent.agent_outcomes[outcome_name] = f"Agent does not match {outcome_name} outcome"
+                    
+                    results[orig_idx] = outcomes["outcome_matches"]
+                except Exception as e:
+                    if debug:
+                        print(f"Error processing outcome analysis for simulation {orig_idx}: {e}")
+                    results[orig_idx] = None
+                
+            return results
+        
+        except Exception as e:
+            if debug:
+                print(f"Batch outcome analysis failed: {e}")
+            return [None] * len(simulations)

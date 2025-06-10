@@ -4,6 +4,7 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
+  - pytorch-cpu
   - pip
   - pip:
     - matplotlib
@@ -13,7 +14,23 @@ dependencies:
     - openai
     - anthropic
     - python-dotenv
-    - -e "git+ssh://git@github.com/schenkmanjack/NeuroEvo.git@mongodb#egg=genetic-algorithm&subdirectory=genetic_algorithm"
+    - streamlit
+    - pandas
+    - plotly
+    - pymongo
+    # torch will be installed separately to ensure CPU-only version
+    # - torch --index-url https://download.pytorch.org/whl/cpu
+    # - -e "git+ssh://git@github.com/schenkmanjack/NeuroEvo.git@mongodb#egg=genetic-algorithm&subdirectory=genetic_algorithm"
     - -e "git+ssh://git@github.com/schenkmanjack/social_sim.git@main#egg=social_sim&subdirectory=social_sim"
+    - -e "git+https://github.com/schenkmanjack/ga.git@main#egg=genetic-algorithm&subdirectory=genetic_algorithm"
+    # Optional packages (uncomment if needed and space allows):
+    # - matplotlib
+    # - wordcloud
+    # - flask
+    # - torchvision --index-url https://download.pytorch.org/whl/cpu
+    # - torchaudio --index-url https://download.pytorch.org/whl/cpu
+    # - -e "git+https://github.com/schenkmanjack/NeuroEvo.git@mongodb#egg=genetic-algorithm&subdirectory=genetic_algorithm"
+    # - -e "git+https://github.com/schenkmanjack/social_sim.git@main#egg=social_sim&subdirectory=social_sim"
+    # - -e "git+https://github.com/schenkmanjack/ga.git@main#egg=genetic-algorithm&subdirectory=genetic_algorithm"
 
    

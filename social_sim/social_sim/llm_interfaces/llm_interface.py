@@ -126,7 +126,6 @@ class AnthropicBackend(LLMWrapper):
             
             ordered_results[index] = content
         
-        print(ordered_results)
         return ordered_results
 
 class MockLLM(LLMWrapper):

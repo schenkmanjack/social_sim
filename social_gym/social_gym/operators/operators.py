@@ -80,7 +80,8 @@ class LLMTextMutation(MutationOperator):
         self.temperature = temperature
         
 
-    def _mutate_via_llm(self, prompt_text: str) -> str:
+    @classmethod
+    def _mutate_via_llm(cls, llm_wrapper, prompt_text: str) -> str:
         prompt = (
             "You are a creative but precise prompt-rewriter.\n"
             "Given a prompt, produce a *variation* that:\n"
@@ -90,12 +91,12 @@ class LLMTextMutation(MutationOperator):
             "Return ONLY the mutated prompt.\n\n"
             f"Here is the original prompt:\n{prompt_text}"
         )
-        return self.llm.generate(prompt)
+        return llm_wrapper.generate(prompt)
 
     # ----------------------------------------------------------------------
 
     def apply(self, individual: Individual) -> None:
-        new_text          = self._mutate_via_llm(individual.dofs)
+        new_text          = LLMTextMutation._mutate_via_llm(self.llm, individual.dofs)
         individual.dofs = new_text
 
     def schedule(self, gen: int, n_generations: int):

@@ -6,7 +6,8 @@ from genetic_algorithm.operators.selection import TournamentSelection, NSGA2Sele
 from social_gym.operators import LLMTextCrossover, LLMTextMutation
 from genetic_algorithm.individual import IndividualString
 from social_gym.evaluators import RedBlueEvaluator
-from social_sim.llm_interfaces import OpenAIBackend
+from social_sim.simulation import Simulation
+from social_sim.llm_interfaces import OpenAIBackend, AnthropicBackend
 import os
 
 """Here is a program for training a genetic algorithm to optimize a neural network to classify MNIST digits."""
@@ -27,18 +28,21 @@ class CrossoverRateScheduler:
 
 def main():
     # Set up LLM backend
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        raise EnvironmentError("Set the OPENAI_API_KEY environment variable first")
-    llm = OpenAIBackend(api_key=api_key)
+        raise EnvironmentError("Set the ANTHROPIC_API_KEY environment variable first")
+    llm = AnthropicBackend(api_key=api_key, model="claude-3-haiku-20240307")
 
     # RedBlue evaluator configuration
     evaluator_config = dict(
         llm_wrapper=llm,
-        num_agents=7,
-        steps=5,
-        connectivity=[[0,1], [2,3], [4,5]],
-        initial_prompt="You are an agent who identifies as red or blue. Each step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue."
+        num_agents=20,
+        steps=3,
+        connectivity=None, #[[0,1], [2,3], [4,5]],
+        connectivity_pattern='adjacent',
+        use_batched_evaluation=True,
+        initial_prompt="You are an agent who identifies as red or blue. Each step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.",
+        results_file="evaluation_results.json"
     )
     
     # Create evaluator with LLM wrapper
@@ -51,13 +55,13 @@ def main():
     individual_template = IndividualString(evaluator)
     
     # Genetic algorithm parameters
-    population_size = 8
+    population_size = 4
     n_generations = 30
     initial_mutation_rate = 0.84
     initial_crossover_rate = 0.2
-    initial_tournament_size = 3
+    initial_tournament_size = 2
     log_freq = 1
-    save_freq = 100
+    save_freq = 1#100
     plot_freq = 1
     reseed_freq = 50
     
@@ -84,7 +88,7 @@ def main():
         mongo_uri=mongo_uri,
         experiment_id=experiment_id,
         load_experiment=False,
-        log_mongodb=False,
+        log_mongodb=True,
         load_experiment_id="test_redblue",  # Changed to match experiment_id
         mutation_rate_scheduler=MutationRateScheduler,
         crossover_rate_scheduler=CrossoverRateScheduler

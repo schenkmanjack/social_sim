@@ -1,0 +1,586 @@
+{
+  "metadata": {
+    "created": "2025-06-07T19:02:40.069586",
+    "num_agents": 20,
+    "steps": 3,
+    "connectivity_pattern": "adjacent"
+  },
+  "evaluations": [
+    {
+      "timestamp": "2025-06-07T19:07:58.322842",
+      "batch_index": 0,
+      "prompt": "You are participating in a coordinated color-selection exercise. As an individual agent, you must choose to identify as either red or blue, while communicating with adjacent agents. The objective is to achieve an equal distribution between red and blue identities across all agents by the end of the process. Each round involves simultaneous decisions. When the simulation concludes, clearly state your final color choice - you must select either red or blue, with no other options permitted. Consider observing your neighbors' tendencies before making your final decision.",
+      "objectives": [
+        0.5,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.5,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:07:58.322842",
+      "batch_index": 1,
+      "prompt": "As an individual in a coordinated simulation, you must choose to identify as either red or blue. You interact with adjacent participants, and all decisions occur at the same time in rounds. The objective is to achieve an equal split between red and blue identities across all agents when the simulation concludes. Upon completion, you must explicitly declare your final color choice - either red or blue, no other options.\n\nHelpful hint: Consider the responses from your most recent interactions with neighbors when making your color decision.",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:07:58.322842",
+      "batch_index": 2,
+      "prompt": "You are participating in a coordination game where you must choose to be either red or blue. You interact with adjacent agents who are making their choices at the same time. The objective is to achieve an equal balance between red and blue agents by the end of the exercise. When the simulation concludes, clearly state your final color choice - you must pick exactly one color (red or blue). Hint: Consider what your neighbors might choose when making your decision.",
+      "objectives": [
+        0.2,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.2,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:07:58.322842",
+      "batch_index": 3,
+      "prompt": "You are participating in a coordination game with other agents. Your task is to choose between identifying as either red or blue, with the collective goal being an equal 50-50 split between the two colors across all agents. You may communicate with adjacent agents during each synchronized decision round. When the simulation concludes, you must definitively declare your chosen color - either red or blue, no other options. Helpful hint: Consider both your neighbors' signals and the desired balance when making your choice.",
+      "objectives": [
+        0.6,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.6,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:14:08.770484",
+      "batch_index": 0,
+      "prompt": "You are an agent in a binary color selection game, tasked with declaring yourself as either red or blue. Your goal, together with adjacent participants who choose simultaneously, is to create a balanced proportion of both colors across the group. Before finalizing your selection, it may be strategic to analyze the probable decisions of neighboring agents. Remember: examining position-based patterns (like alternating colors) can be insightful. At the end, you must explicitly state your single color choice - only \"red\" or \"blue\" are valid responses.",
+      "objectives": [
+        0.7,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.7,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:14:08.770484",
+      "batch_index": 1,
+      "prompt": "You are playing a synchronous decision-making game with neighboring agents where you must choose between exactly two colors: red or blue. Your goal is to help create a balanced 50-50 split of both colors across the entire agent population. Other responses besides \"red\" or \"blue\" are not allowed. Before committing to your final color selection, try to anticipate what your adjacent agents might choose to inform your decision. HINT: If you notice most neighbors leaning toward one color, consider choosing the opposite to help achieve equilibrium. At the end, clearly declare your chosen color.",
+      "objectives": [
+        0.2,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.2,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:14:08.770484",
+      "batch_index": 2,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        0.1,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.1,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:14:08.770484",
+      "batch_index": 3,
+      "prompt": "You are participating in a coordination game where you must choose to identify as either red or blue. Through synchronized rounds, you may communicate with adjacent agents to achieve the collective goal: an equal 50-50 split between red and blue across all agents. When the simulation ends, you must definitively declare your final choice - only red or blue are permitted. Consider both your neighbors' signals and the desired population balance when deciding. State your final color choice clearly.",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:20:14.215156",
+      "batch_index": 0,
+      "prompt": "In this two-color coordination challenge, you must decide between identifying as red or blue. Working in parallel with your neighbors, the collective aim is to achieve an even distribution of both colors. Consider analyzing the likely choices of adjacent players before making your final decision. Tip: Beyond simple alternating patterns, factor in whether your position is odd or even-numbered in the sequence. Your response must conclude with a definitive selection of either \"red\" or \"blue\" - no other answers will be accepted.",
+      "objectives": [
+        0.35,
+        0.15
+      ],
+      "constraints": [],
+      "metrics": [
+        0.35,
+        0.15
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:20:14.215156",
+      "batch_index": 1,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        0.5,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.5,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:20:14.215156",
+      "batch_index": 2,
+      "prompt": "In this coordination game, your task is to choose between blue or red as your identifier. Through scheduled interaction periods, you may share information with participants next to you. The group's goal is to reach a balanced split where half select red and half select blue. During the final decision phase, you must pick exactly one color. Let your selection be guided by both your local exchanges and the overall need for equilibrium. [Hint: To enhance coordination, track shifting patterns in your neighbors' preferences over time.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:20:14.215156",
+      "batch_index": 3,
+      "prompt": "In this coordination exercise, your task is to choose either blue or red as your identifier. You'll have designated periods to share information with neighboring participants. The group's goal is to reach a balanced split where half select red and half select blue. During communication windows, exchange insights with those adjacent to you. Your final selection must be a firm commitment to one color only. Make your decision by weighing both direct conversations with neighbors and the overall aim of equal distribution. [Hint: Starting with a preliminary preference and updating it based on neighbors' responses can help the group converge more efficiently.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:26:07.755706",
+      "batch_index": 0,
+      "prompt": "For a group coordination exercise, you must choose between two colors: red or blue. The collective goal is to reach a balanced split with half the participants selecting each color. During designated interaction windows, you may share information with those next to you. Your final selection should be influenced by these local exchanges while keeping the overall 50-50 target in mind. You'll need to definitively pick either red or blue when asked for your ultimate choice. [Hint: Pay attention to the evolving color preferences expressed by your immediate neighbors to identify potential imbalances.]",
+      "objectives": [
+        0.9,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.9,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:26:07.755706",
+      "batch_index": 1,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        0.7,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.7,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:26:07.755706",
+      "batch_index": 2,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        0.6,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.6,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:26:07.755706",
+      "batch_index": 3,
+      "prompt": "For a group coordination exercise, you must choose between two colors: red or blue. Your goal, shared with other participants, is to help reach an even split where half select red and half select blue. During designated interaction periods, you may share information with those next to you. You'll need to make a firm, final choice of either red or blue when asked. Factor in both your local conversations and the overall aim of achieving balance across all participants. [Hint: Pay attention to how many neighbors seem to be leaning toward each color before finalizing your decision.]",
+      "objectives": [
+        0.8,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.8,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:32:10.920889",
+      "batch_index": 0,
+      "prompt": "In this coordination exercise, choose between two available colors: blue or red. Your goal, shared with other participants, is to reach a balanced split where half select each color. During designated discussion periods, you may share information with those next to you. The collective target is perfect equilibrium (50-50 distribution). You'll need to make a firm color commitment when asked, drawing on both your local interactions and the overall balancing objective. [Hint: Pay attention to any shifting patterns in your neighbors' preferences over multiple communication rounds.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:32:10.920889",
+      "batch_index": 1,
+      "prompt": "During timed interaction periods, communicate with neighboring participants to jointly tackle a coordination puzzle. Your task is to commit to either blue or red as your final identifier. Success depends on the entire group reaching a balanced split - exactly half choosing each color. While exchanging information locally, keep in mind the ultimate goal of system-wide equilibrium. Your final selection must be definitive: blue or red, with no middle ground. [Hint: Share both your current preference and your confidence level to enable more effective group adaptation.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:32:10.920889",
+      "batch_index": 2,
+      "prompt": "In a group coordination exercise, your task is to choose between blue or red as your identifier. During scheduled interaction windows, you may share information with neighboring participants. The group's goal is to reach a balanced split, with half selecting red and half selecting blue. You must lock in either red or blue as your final answer when asked. Make your selection by weighing both direct conversations with adjacent members and the overall aim of achieving equilibrium. [Hint: Sharing your preliminary preference early in discussions can help the group dynamically self-organize.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:32:10.920889",
+      "batch_index": 3,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        0.3,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.3,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:38:18.409894",
+      "batch_index": 0,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        0.2,
+        0.1
+      ],
+      "constraints": [],
+      "metrics": [
+        0.2,
+        0.1
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:38:18.409894",
+      "batch_index": 1,
+      "prompt": "For a group coordination exercise, you must choose between two markers: blue or red. During scheduled discussion windows, you may share information with participants next to you. The collective goal is to reach a balanced split where half select red and half select blue. Your final commitment must be a single definitive choice between the two options. Make your selection by weighing both your local interactions and the need for overall balance across all participants. [Hint: Pay attention to any patterns emerging in your immediate vicinity, as they may indicate which color is becoming over-represented.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:38:18.409894",
+      "batch_index": 2,
+      "prompt": "In this coordination exercise, choose between two available colors: blue or red. Your goal, shared with other participants, is to reach a balanced split where half select each color. During designated discussion periods, you may share information with those next to you. The collective target is perfect equilibrium (50-50 distribution). You'll need to make a firm color commitment when asked, drawing on both your local interactions and the overall balancing objective. [Hint: Pay attention to any shifting patterns in your neighbors' preferences over multiple communication rounds.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:38:18.409894",
+      "batch_index": 3,
+      "prompt": "In a group coordination exercise, your task is to choose between blue or red as your identifier. During scheduled interaction windows, you may share information with neighboring participants. The group's goal is to reach a balanced split, with half selecting red and half selecting blue. You must lock in either red or blue as your final answer when asked. Make your selection by weighing both direct conversations with adjacent members and the overall aim of achieving equilibrium. [Hint: Sharing your preliminary preference early in discussions can help the group dynamically self-organize.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:44:16.696617",
+      "batch_index": 0,
+      "prompt": "Your role in this collaborative challenge is to select either red or blue as your personal marker. You'll have designated periods to exchange information with participants positioned next to you. The collective objective is to achieve an even 50-50 distribution between red and blue choices across all members. When prompted for your decision, you must commit to either red or blue definitively. Base your choice on both the local feedback from your immediate neighbors and the broader mission of reaching balance. [Hint: Consider not just stating your current preference, but also how strongly you lean toward it - this flexibility can help others adjust their choices accordingly.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:44:16.696617",
+      "batch_index": 1,
+      "prompt": "Work with fellow participants to achieve an equal distribution between red and blue, with your shared objective being a precise 50-50 split. When prompted, you must definitively choose one of these two colors. During specific communication windows, exchange insights with adjacent participants to inform your decision. Success depends on thoughtfully weighing both your local discussions and the overarching goal of perfect balance across the group. [Hint: Consider declaring your initial color preference early to give neighbors time to adjust their strategies accordingly.]",
+      "objectives": [
+        0.2,
+        0.1
+      ],
+      "constraints": [],
+      "metrics": [
+        0.2,
+        0.1
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:44:16.696617",
+      "batch_index": 2,
+      "prompt": "For a group coordination exercise, choose either blue or red as your identifier. Your goal, shared with all participants, is to help reach a balanced split where half select red and half select blue. During designated discussion periods, you may share information with those next to you. While you can discuss freely in these windows, your ultimate selection must be a firm red or blue - no other options. Make your final choice by weighing both your local conversations and the overall need for equilibrium across all participants. [Hint: In early discussions, sharing your preliminary preference, even if uncertain, allows others to adapt their strategies more effectively.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:44:16.696617",
+      "batch_index": 3,
+      "prompt": "You're participating in a group coordination challenge with a simple choice: red or blue. The shared objective is achieving an even 50-50 distribution between the two colors across all participants. You'll interact with adjacent members during specific discussion windows, exchanging information to help reach this balance. When prompted, you must lock in your color selection, considering both your local conversations and the collective goal of perfect equilibrium. Make strategic use of both the direct feedback from your neighbors and the broader target of equal color representation. [Hint: Consider announcing tentative preferences early to give others time to adjust their choices accordingly.]",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:50:56.433629",
+      "batch_index": 0,
+      "prompt": "As part of a collective synchronization challenge, you need to select one of two identifiers: red or blue. You can exchange information with adjacent participants during timed communication phases. The shared objective is to achieve an equal distribution (50% red, 50% blue) among all participants. When prompted for your final decision, you must commit to either red or blue exclusively. Base your choice on both local communications and the global equilibrium target. [Hint: Consider announcing your tentative leaning early to help neighbors adjust accordingly.]",
+      "objectives": [
+        1.0,
+        1.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        1.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:50:56.433629",
+      "batch_index": 1,
+      "prompt": "For a team balancing activity, select red or blue as your marker color. The collective objective is achieving an even distribution, with 50% of participants choosing each color. You can exchange information with adjacent team members during specified communication phases. Although discussions are open during these intervals, you must commit to either red or blue - no alternatives permitted. Base your final decision on both the insights gained from neighboring conversations and the broader goal of reaching equilibrium among all players. [Hint: Consider expressing your tentative leanings as percentages (e.g. \"I'm 70% leaning blue\") to help others gauge the group's direction more precisely.]",
+      "objectives": [
+        1.0,
+        1.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        1.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:50:56.433629",
+      "batch_index": 2,
+      "prompt": "For a coordination experiment, you must choose between two markers: blue or red. Your goal, shared with other participants, is to help reach an even split where half select red and half select blue. During designated discussion periods, you may share information with those next to you. Your final selection needs to be definitive - either red or blue - and should factor in both your local interactions and the overall aim of balanced distribution. [Hint: Track any shifts in your neighbors' preferences over time to better anticipate the final distribution.]",
+      "objectives": [
+        1.0,
+        1.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        1.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-07T19:50:56.433629",
+      "batch_index": 3,
+      "prompt": "For a group coordination exercise, choose either blue or red as your identifier. Your goal, shared with all participants, is to help reach a balanced split where half select red and half select blue. During designated discussion periods, you may share information with those next to you. While you can discuss freely in these windows, your ultimate selection must be a firm red or blue - no other options. Make your final choice by weighing both your local conversations and the overall need for equilibrium across all participants. [Hint: In early discussions, sharing your preliminary preference, even if uncertain, allows others to adapt their strategies more effectively.]",
+      "objectives": [
+        1.0,
+        1.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        1.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    }
+  ]
+}

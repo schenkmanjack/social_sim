@@ -124,15 +124,15 @@ def main() -> None:
     print(f"Running manual experiment '{config['name']}' for {config['steps']} steps…")
     runs = []
     
-    for progress, data in experiment.run_manual(
-        steps=config["steps"], 
-        time_scale=config.get("time_scale"),
-        use_batched=True
-    ):
-    # for progress, data in experiment.run_manual_batch(
+    # for progress, data in experiment.run_manual(
     #     steps=config["steps"], 
-    #     time_scale=config.get("time_scale")
+    #     time_scale=config.get("time_scale"),
+    #     use_batched=True
     # ):
+    for progress, data in experiment.run_manual_batch(
+        steps=config["steps"], 
+        time_scale=config.get("time_scale")
+    ):
         if progress.get("percentage") == 100 and "runs" in data:
             runs = data["runs"]
             break
