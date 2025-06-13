@@ -5,7 +5,7 @@ from typing import Generator, Dict, List
 import json
 
 class Simulation:
-    def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000, agent_outcome_definitions=None, debug=False):
+    def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000, agent_outcome_definitions=None, debug=False, disable_summary=False):
         """
         Initialize the simulation with an LLM wrapper
         Args:
@@ -14,6 +14,7 @@ class Simulation:
             chunk_size: Number of steps to include in each summary chunk
             agent_outcome_definitions: Definitions for agent-specific outcomes
             debug: Whether to print debug statements (default: False)
+            disable_summary: Whether to disable summary generation (default: False)
         """
         self.orchestrator = Orchestrator(llm_wrapper)
         self.agents = {}
@@ -24,6 +25,7 @@ class Simulation:
         self.agent_outcome_definitions = agent_outcome_definitions or {}
         self.agent_outcomes = {}  # Initialize to prevent AttributeError
         self.debug = debug
+        self.disable_summary = disable_summary
 
     def _summarize_chunk(self, chunk):
         """Summarize a chunk of simulation steps"""
@@ -76,6 +78,21 @@ class Simulation:
             Dict containing summary, agent_outcomes, agent_states, and environment_state
         """
         try:
+            # Skip summarization if disabled
+            if self.disable_summary:
+                if self.debug:
+                    print("Summary generation disabled - skipping...")
+                
+                agent_outcomes = self.analyze_agent_outcomes()
+                
+                return {
+                    "summary": "Summary generation disabled for performance",
+                    "history": history,
+                    "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
+                    "environment_state": self.env.get_state(),
+                    "agent_outcomes": agent_outcomes
+                }
+            
             # Split history into chunks
             chunks = []
             for i in range(0, len(history), self.chunk_size):

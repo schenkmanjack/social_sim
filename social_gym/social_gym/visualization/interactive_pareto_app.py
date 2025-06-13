@@ -32,8 +32,8 @@ class InteractiveParetoApp:
         try:
             self.mongo_client = MongoClient(mongo_uri)
             self.db = self.mongo_client[db_name]
-            # Test connection
-            self.db.admin.command('ping')
+            # Test connection - use the client's admin database to ping
+            self.mongo_client.admin.command('ping')
             return True
         except Exception as e:
             st.error(f"Failed to connect to MongoDB: {str(e)}")
@@ -41,7 +41,7 @@ class InteractiveParetoApp:
     
     def list_experiments(self) -> List[Dict]:
         """List available experiments from MongoDB"""
-        if not self.db:
+        if self.db is None:
             return []
         
         try:
@@ -65,7 +65,7 @@ class InteractiveParetoApp:
     
     def load_mongodb_data(self, experiment_id: str) -> bool:
         """Load GA data from MongoDB using the exact structure from genetic_algorithm_base.py"""
-        if not self.db:
+        if self.db is None:
             st.error("Not connected to MongoDB")
             return False
         
@@ -80,53 +80,117 @@ class InteractiveParetoApp:
                 st.error(f"No history data found for experiment: {experiment_id}")
                 return False
             
-            # Load elite chunks (matches GA's _save_state structure)
-            elite_chunks = list(self.db.experiments.find({
+            # Debug info
+            st.info(f"Found history document for experiment: {experiment_id}")
+            current_generation = history_doc.get('current_generation', 0)
+            st.info(f"Current generation: {current_generation}")
+            
+            # Check what keys are in the history document
+            history_keys = list(history_doc.keys())
+            st.info(f"History document keys: {history_keys}")
+            
+            # Load elite chunks from CURRENT generation only (for current Pareto front)
+            current_gen_chunks = list(self.db.experiments.find({
                 "experiment_id": experiment_id,
-                "type": "chunk"
+                "type": "chunk",
+                "generation": current_generation - 1  # GA saves generation-1 as current
             }).sort("chunk_index", 1))
             
-            if not elite_chunks:
-                st.error(f"No elite chunk data found for experiment: {experiment_id}")
-                return False
+            st.info(f"Found {len(current_gen_chunks)} chunks for current generation ({current_generation - 1})")
             
-            # Reconstruct elite individuals from chunks (current generation)
+            # Reconstruct current elite individuals from chunks
             elite_data = []
             elite_id = 0
             
-            for chunk in elite_chunks:
+            for chunk_idx, chunk in enumerate(current_gen_chunks):
                 if 'elites' in chunk:
+                    st.info(f"Chunk {chunk_idx} has {len(chunk['elites'])} elites")
                     for elite_dict in chunk['elites']:
+                        # DOFs are strings (LLM prompts), keep them as strings
+                        dofs = elite_dict['dofs']
+                        if isinstance(dofs, list) and len(dofs) == 1:
+                            dofs = dofs[0]  # Handle case where DOF is wrapped in array
+                        
                         elite_data.append({
                             'id': elite_id,
                             'is_elite': True,
                             'objectives': np.array(elite_dict['objectives']),
-                            'dofs': np.array(elite_dict['dofs']),
+                            'dofs': dofs,  # Keep as string
                             'metrics': np.array(elite_dict.get('metrics', elite_dict['objectives'])),
                             'constraints': elite_dict.get('constraints', []),
+                            'generation': chunk.get('generation', current_generation - 1)
                         })
                         elite_id += 1
+                else:
+                    st.info(f"Chunk {chunk_idx} has no elites")
             
-            # Extract evolution data from elite_history
+            st.info(f"Reconstructed {len(elite_data)} elite individuals")
+            
+            # Load ALL generation chunks for evolution data
+            all_chunks = list(self.db.experiments.find({
+                "experiment_id": experiment_id,
+                "type": "chunk"
+            }).sort([("generation", 1), ("chunk_index", 1)]))
+            
+            st.info(f"Found {len(all_chunks)} total chunks across all generations")
+            
+            # Organize chunks by generation
+            chunks_by_generation = {}
+            for chunk in all_chunks:
+                gen = chunk.get('generation', 0)
+                if gen not in chunks_by_generation:
+                    chunks_by_generation[gen] = []
+                chunks_by_generation[gen].append(chunk)
+            
+            st.info(f"Chunks organized by generation: {list(chunks_by_generation.keys())}")
+            
+            # Extract evolution data with actual DOFs from chunks
             self.evolution_data = []
             if 'elite_history' in history_doc and history_doc['elite_history']:
+                st.info(f"Elite history has {len(history_doc['elite_history'])} generations")
                 for gen_idx, elite_objectives in enumerate(history_doc['elite_history']):
                     generation_elites = []
+                    
+                    # Get chunks for this generation
+                    gen_chunks = chunks_by_generation.get(gen_idx, [])
+                    st.info(f"Generation {gen_idx}: {len(elite_objectives)} elites in history, {len(gen_chunks)} chunks")
+                    
+                    # Build a mapping from objectives to DOFs for this generation
+                    obj_to_dof = {}
+                    for chunk in gen_chunks:
+                        if 'elites' in chunk:
+                            for elite_dict in chunk['elites']:
+                                obj_key = tuple(elite_dict['objectives'])
+                                dofs = elite_dict['dofs']
+                                if isinstance(dofs, list) and len(dofs) == 1:
+                                    dofs = dofs[0]
+                                obj_to_dof[obj_key] = dofs
+                    
+                    # Match objectives from history with DOFs from chunks
                     for obj_idx, objectives in enumerate(elite_objectives):
+                        obj_key = tuple(objectives)
+                        actual_dofs = obj_to_dof.get(obj_key, f"DOF not found for gen {gen_idx}")
+                        
                         generation_elites.append({
                             'id': f"gen{gen_idx}_elite{obj_idx}",
                             'is_elite': True,
                             'objectives': np.array(objectives),
-                            'dofs': np.zeros(len(elite_data[0]['dofs']) if elite_data else 10),  # Placeholder
+                            'dofs': actual_dofs,  # Actual DOF from chunks
                             'metrics': np.array(objectives),  # Use objectives as metrics
                             'constraints': [],
+                            'generation': gen_idx
                         })
+                    
                     self.evolution_data.append(generation_elites)
+            else:
+                st.warning("No elite_history found in history document")
             
-            # For non-elites, use the latest population objectives from history
+            # For non-elites, use latest population objectives from history
+            # Note: DOFs are only stored for elites, so non-elites won't have actual DOFs
             non_elite_data = []
             if 'objectives_history' in history_doc and history_doc['objectives_history']:
                 latest_objectives = history_doc['objectives_history'][-1]
+                st.info(f"Found {len(latest_objectives)} objectives in latest population")
                 
                 # Create non-elite entries (approximations since full population DOFs aren't stored)
                 for i, obj in enumerate(latest_objectives):
@@ -137,17 +201,17 @@ class InteractiveParetoApp:
                     )
                     
                     if not is_likely_elite:
-                        # Create placeholder DOFs for non-elites (since GA doesn't save full population DOFs)
-                        placeholder_dofs = np.zeros(len(elite_data[0]['dofs']) if elite_data else 10)
-                        
                         non_elite_data.append({
                             'id': len(elite_data) + len(non_elite_data),
                             'is_elite': False,
                             'objectives': np.array(obj),
-                            'dofs': placeholder_dofs,
+                            'dofs': f"DOF not saved (non-elite from generation {current_generation-1})",
                             'metrics': np.array(obj),
                             'constraints': [],
+                            'generation': current_generation - 1
                         })
+            else:
+                st.warning("No objectives_history found in history document")
             
             # Store data
             self.data = {
@@ -166,10 +230,15 @@ class InteractiveParetoApp:
             self.objective_labels = history_doc.get('objective_labels', default_obj_labels)
             self.metric_labels = history_doc.get('metric_labels', self.objective_labels)
             
+            st.success(f"✅ Loaded {len(elite_data)} elites and {len(non_elite_data)} non-elites from experiment '{experiment_id}'")
+            st.info(f"Objective labels: {self.objective_labels}")
+            
             return True
             
         except Exception as e:
             st.error(f"Error loading MongoDB data: {str(e)}")
+            import traceback
+            st.error(f"Traceback: {traceback.format_exc()}")
             return False
     
     def load_ga_data(self, ga_instance):
@@ -424,8 +493,7 @@ class InteractiveParetoApp:
                 coloraxis=dict(
                     colorscale='viridis',
                     colorbar=dict(
-                        title="Generation",
-                        titleside="right"
+                        title=dict(text="Generation", side="right")
                     )
                 )
             )
@@ -450,86 +518,330 @@ class InteractiveParetoApp:
         
         st.subheader(f"Individual {individual_id} Details")
         
-        # Elite status
+        # Elite status and generation info
         status = "🏆 Pareto Front Member" if individual['is_elite'] else "👥 Population Member"
+        generation = individual.get('generation', 'Unknown')
         st.markdown(f"**Status:** {status}")
+        st.markdown(f"**Generation:** {generation}")
         
-        # Objectives
-        st.subheader("📊 Objectives")
-        obj_df = pd.DataFrame({
-            'Objective': self.objective_labels,
-            'Value': individual['objectives']
-        })
-        st.dataframe(obj_df, hide_index=True)
+        # MAIN FOCUS: LLM Prompt (DOF)
+        st.subheader("📝 Optimized Prompt")
+        dofs = individual['dofs']
         
-        # Metrics (if different from objectives)
-        if not np.array_equal(individual['metrics'], individual['objectives']):
-            st.subheader("📈 Metrics")
-            metrics_df = pd.DataFrame({
-                'Metric': self.metric_labels,
-                'Value': individual['metrics']
-            })
-            st.dataframe(metrics_df, hide_index=True)
-        
-        # Design of Experiments (DOFs)
-        st.subheader("🔧 Design Variables (DOFs)")
-        n_dofs = len(individual['dofs'])
-        dof_names = [f'DOF_{i+1}' for i in range(n_dofs)]
-        
-        # Check if DOFs are placeholder zeros (for non-elites from MongoDB)
-        if individual['is_elite'] or not np.allclose(individual['dofs'], 0):
-            # Display actual DOFs
-            dof_df = pd.DataFrame({
-                'Variable': dof_names,
-                'Value': individual['dofs']
-            })
-            
-            # Show DOFs in columns if there are many
-            if n_dofs > 10:
-                col1, col2 = st.columns(2)
-                mid_point = n_dofs // 2
-                with col1:
-                    st.dataframe(dof_df.iloc[:mid_point], hide_index=True)
-                with col2:
-                    st.dataframe(dof_df.iloc[mid_point:], hide_index=True)
-            else:
-                st.dataframe(dof_df, hide_index=True)
-            
-            # DOF Statistics
-            st.subheader("📊 DOF Statistics")
-            dof_stats = pd.DataFrame({
-                'Statistic': ['Mean', 'Std Dev', 'Min', 'Max'],
-                'Value': [
-                    np.mean(individual['dofs']),
-                    np.std(individual['dofs']),
-                    np.min(individual['dofs']),
-                    np.max(individual['dofs'])
-                ]
-            })
-            st.dataframe(dof_stats, hide_index=True)
-            
-            # DOF Visualization
-            st.subheader("📊 DOF Distribution")
-            fig_dof = px.bar(
-                x=dof_names,
-                y=individual['dofs'],
-                title="Design Variables Values",
-                labels={'x': 'DOF', 'y': 'Value'}
+        if isinstance(dofs, str) and not dofs.startswith("DOF not") and not dofs.startswith("No prompt"):
+            # This is an actual LLM prompt - show it prominently
+            st.text_area(
+                "Prompt Text:",
+                value=dofs,
+                height=300,  # Larger height for main focus
+                disabled=True,
+                help="This is the LLM prompt that was optimized by the genetic algorithm"
             )
-            fig_dof.update_layout(height=300)
-            st.plotly_chart(fig_dof, use_container_width=True)
-        else:
-            # DOFs are placeholder (non-elite from MongoDB)
-            st.info("DOF details are only available for Pareto front members when loading from MongoDB.")
+            
+            # Prompt statistics in a compact format
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Characters", len(dofs))
+            with col2:
+                st.metric("Words", len(dofs.split()))
+            with col3:
+                st.metric("Lines", len(dofs.split('\n')))
         
-        # Constraints (if any)
-        if individual['constraints']:
-            st.subheader("⚠️ Constraints")
-            const_df = pd.DataFrame({
-                'Constraint': [f'Constraint_{i+1}' for i in range(len(individual['constraints']))],
-                'Value': individual['constraints']
+        elif isinstance(dofs, str):
+            # Placeholder message
+            st.info(dofs)
+        
+        else:
+            # Legacy numeric DOFs - show compact version
+            st.info("Numeric DOF data available (legacy format)")
+        
+        # SECONDARY INFO: Objectives - shown compactly
+        st.subheader("📊 Performance Metrics")
+        
+        # Show objectives in a compact table
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("**Objectives:**")
+            obj_df = pd.DataFrame({
+                'Metric': self.objective_labels,
+                'Value': [f"{val:.4f}" if not np.isinf(val) and not np.isnan(val) else str(val) 
+                         for val in individual['objectives']]
             })
-            st.dataframe(const_df, hide_index=True)
+            st.dataframe(obj_df, hide_index=True, height=150)
+        
+        with col2:
+            # Show metrics only if different from objectives
+            if not np.array_equal(individual['metrics'], individual['objectives']):
+                st.markdown("**Additional Metrics:**")
+                metrics_df = pd.DataFrame({
+                    'Metric': self.metric_labels,
+                    'Value': [f"{val:.4f}" if not np.isinf(val) and not np.isnan(val) else str(val) 
+                             for val in individual['metrics']]
+                })
+                st.dataframe(metrics_df, hide_index=True, height=150)
+            else:
+                st.markdown("**Performance Summary:**")
+                # Show a simple performance indicator
+                obj_vals = individual['objectives']
+                if len(obj_vals) >= 2:
+                    # For RedBlue problem: obj[0] is split deviation, obj[1] is neither fraction
+                    if not np.isinf(obj_vals[0]) and not np.isnan(obj_vals[0]):
+                        if obj_vals[0] == 0.0 and obj_vals[1] == 0.0:
+                            st.success("🎯 Perfect solution! (50-50 split, all classified)")
+                        elif obj_vals[0] <= 0.5:
+                            st.info("✅ Good solution (close to 50-50 split)")
+                        else:
+                            st.warning("⚠️ Suboptimal solution (far from 50-50 split)")
+                    else:
+                        st.error("❌ Failed simulation")
+        
+        # Constraints (if any) - very compact
+        if individual['constraints']:
+            with st.expander("⚠️ Constraints", expanded=False):
+                const_df = pd.DataFrame({
+                    'Constraint': [f'Constraint_{i+1}' for i in range(len(individual['constraints']))],
+                    'Value': individual['constraints']
+                })
+                st.dataframe(const_df, hide_index=True)
+
+    def load_json_state_data(self, json_file) -> bool:
+        """Load data from JSON state saver format"""
+        try:
+            # Read the JSON file
+            if hasattr(json_file, 'read'):
+                # It's a file-like object (from streamlit file uploader)
+                data = json.load(json_file)
+            else:
+                # It's a file path
+                with open(json_file, 'r') as f:
+                    data = json.load(f)
+            
+            # Validate the JSON structure
+            if 'generations' not in data:
+                st.error("Invalid JSON format: missing 'generations' key")
+                return False
+            
+            generations = data['generations']
+            if not generations:
+                st.error("No generation data found in JSON file")
+                return False
+            
+            st.info(f"Found {len(generations)} generations in JSON file")
+            
+            # Extract all elite individuals from all generations
+            all_elites = []
+            elite_id = 0
+            
+            for gen_data in generations:
+                generation = gen_data['generation']
+                individuals = gen_data.get('individuals', [])
+                
+                # Filter only elite individuals
+                gen_elites = [ind for ind in individuals if ind.get('is_elite', False)]
+                st.info(f"Generation {generation}: {len(gen_elites)} elites out of {len(individuals)} individuals")
+                
+                for individual in gen_elites:
+                    # Handle objectives with special values
+                    objectives = individual.get('objectives', [0, 0])
+                    
+                    # Convert string representations back to float values for plotting
+                    def convert_special_values(obj_list):
+                        converted = []
+                        for val in obj_list:
+                            if val == "Infinity":
+                                converted.append(float('inf'))
+                            elif val == "-Infinity":
+                                converted.append(float('-inf'))
+                            elif val == "NaN":
+                                converted.append(float('nan'))
+                            else:
+                                converted.append(float(val))
+                        return converted
+                    
+                    objectives = convert_special_values(objectives)
+                    metrics = convert_special_values(individual.get('metrics', objectives))
+                    constraints = individual.get('constraints', [])
+                    
+                    elite_data = {
+                        'id': elite_id,
+                        'is_elite': True,
+                        'objectives': np.array(objectives),
+                        'dofs': individual.get('prompt', 'No prompt available'),  # Use prompt as DOF
+                        'metrics': np.array(metrics),
+                        'constraints': constraints,
+                        'generation': generation,
+                        'individual_id': individual.get('individual_id', elite_id)
+                    }
+                    all_elites.append(elite_data)
+                    elite_id += 1
+            
+            # Store the data (only elites, no non-elites for JSON format)
+            self.data = {
+                'elites': all_elites,
+                'non_elites': [],  # Empty for JSON format since we only show elites
+                'all_individuals': all_elites
+            }
+            
+            # Set up evolution data for plotting
+            self.evolution_data = []
+            for gen_data in generations:
+                generation = gen_data['generation']
+                individuals = gen_data.get('individuals', [])
+                gen_elites = [ind for ind in individuals if ind.get('is_elite', False)]
+                
+                generation_elites = []
+                for individual in gen_elites:
+                    objectives = convert_special_values(individual.get('objectives', [0, 0]))
+                    metrics = convert_special_values(individual.get('metrics', objectives))
+                    
+                    generation_elites.append({
+                        'id': f"gen{generation}_elite{individual.get('individual_id', 0)}",
+                        'is_elite': True,
+                        'objectives': np.array(objectives),
+                        'dofs': individual.get('prompt', 'No prompt available'),
+                        'metrics': np.array(metrics),
+                        'constraints': individual.get('constraints', []),
+                        'generation': generation
+                    })
+                
+                self.evolution_data.append(generation_elites)
+            
+            # Extract metadata for labels
+            metadata = data.get('metadata', {})
+            
+            # Determine number of objectives from first elite
+            if all_elites:
+                n_objectives = len(all_elites[0]['objectives'])
+                # Use default labels for now (could be enhanced later)
+                default_labels = [f'Objective {i+1}' for i in range(n_objectives)]
+            else:
+                default_labels = ['Objective 1', 'Objective 2']
+            
+            self.objective_labels = default_labels
+            self.metric_labels = default_labels
+            
+            st.success(f"✅ Loaded {len(all_elites)} elite individuals from {len(generations)} generations")
+            st.info(f"Metadata: {metadata}")
+            
+            return True
+            
+        except Exception as e:
+            st.error(f"Error loading JSON data: {str(e)}")
+            import traceback
+            st.error(f"Traceback: {traceback.format_exc()}")
+            return False
+
+    def plot_pareto_front(self):
+        """Create interactive Pareto front visualization showing all elites across generations"""
+        if not self.data:
+            st.warning("No data available. Please load data first.")
+            return None
+        
+        all_individuals = self.data['all_individuals']
+        
+        if not all_individuals:
+            st.warning("No elite individuals found in the dataset.")
+            return None
+        
+        # For JSON data, we only have elites from all generations
+        # Filter to only elites (though for JSON format, all should be elites)
+        elites = [ind for ind in all_individuals if ind.get('is_elite', False)]
+        
+        if not elites:
+            st.warning("No elite individuals found.")
+            return None
+        
+        # Prepare data for plotting
+        plot_data = []
+        for individual in elites:
+            objectives = individual['objectives']
+            generation = individual.get('generation', 0)
+            
+            # Skip infinite or NaN values for plotting
+            if np.any(np.isinf(objectives)) or np.any(np.isnan(objectives)):
+                continue
+                
+            plot_data.append({
+                'id': individual['id'],
+                'obj1': objectives[0],
+                'obj2': objectives[1] if len(objectives) > 1 else 0,
+                'generation': generation,
+                'prompt': individual['dofs'][:100] + "..." if len(str(individual['dofs'])) > 100 else str(individual['dofs'])
+            })
+        
+        if not plot_data:
+            st.warning("No valid elite individuals to plot (all have infinite/NaN objectives).")
+            return None
+        
+        df = pd.DataFrame(plot_data)
+        
+        # Create generation color mapping
+        unique_generations = sorted(df['generation'].unique())
+        n_generations = len(unique_generations)
+        
+        # Use a color palette that works well for multiple generations
+        if n_generations <= 10:
+            colors = px.colors.qualitative.Set3[:n_generations]
+        else:
+            # For many generations, use a continuous color scale
+            colors = px.colors.sample_colorscale('viridis', n_generations)
+        
+        generation_colors = {gen: colors[i] for i, gen in enumerate(unique_generations)}
+        
+        # Add color column to dataframe
+        df['color'] = df['generation'].map(generation_colors)
+        
+        # Create the scatter plot
+        fig = px.scatter(
+            df,
+            x='obj1',
+            y='obj2',
+            color='generation',
+            hover_data=['id', 'prompt'],
+            title="Pareto Front Evolution - All Elite Solutions",
+            labels={
+                'obj1': self.objective_labels[0] if len(self.objective_labels) > 0 else 'Objective 1',
+                'obj2': self.objective_labels[1] if len(self.objective_labels) > 1 else 'Objective 2',
+                'generation': 'Generation'
+            },
+            color_continuous_scale='viridis' if n_generations > 10 else None
+        )
+        
+        # Update layout for better appearance
+        fig.update_traces(
+            marker=dict(
+                size=12,
+                opacity=0.8,
+                line=dict(width=1, color='white')
+            )
+        )
+        
+        fig.update_layout(
+            height=600,
+            showlegend=True,
+            legend=dict(
+                title="Generation",
+                orientation="v",
+                yanchor="top",
+                y=1,
+                xanchor="left",
+                x=1.02
+            ),
+            margin=dict(r=150)  # Make room for legend
+        )
+        
+        # Add custom hover template
+        fig.update_traces(
+            hovertemplate="<b>Individual %{customdata[0]}</b><br>" +
+                         f"{self.objective_labels[0] if len(self.objective_labels) > 0 else 'Objective 1'}: %{{x:.4f}}<br>" +
+                         f"{self.objective_labels[1] if len(self.objective_labels) > 1 else 'Objective 2'}: %{{y:.4f}}<br>" +
+                         "Generation: %{marker.color}<br>" +
+                         "Prompt: %{customdata[1]}<extra></extra>",
+            customdata=df[['id', 'prompt']].values
+        )
+        
+        return fig
 
 def main():
     st.title("🎯 Interactive Pareto Front Explorer")
@@ -543,11 +855,27 @@ def main():
     # Data loading options
     data_source = st.sidebar.selectbox(
         "Data Source",
-        ["Load from MongoDB", "Sample Data", "Load from GA Instance"],
+        ["Load from JSON", "Load from MongoDB", "Sample Data", "Load from GA Instance"],
         help="Choose data source for the Pareto front visualization"
     )
     
-    if data_source == "Sample Data":
+    if data_source == "Load from JSON":
+        st.sidebar.subheader("📁 JSON File Upload")
+        json_file = st.sidebar.file_uploader(
+            "Upload JSON state file",
+            type="json",
+            help="Upload a JSON file generated by the RedBlueStateSaver (e.g., *_generation_state.json)"
+        )
+        
+        if json_file:
+            if app.load_json_state_data(json_file):
+                st.sidebar.success("✅ Data loaded successfully from JSON file!")
+            else:
+                st.sidebar.error("❌ Failed to load data from JSON file")
+        else:
+            st.sidebar.info("Please upload a JSON file to visualize the Pareto front evolution")
+    
+    elif data_source == "Sample Data":
         if st.sidebar.button("Load Sample Data"):
             app.load_sample_data()
             st.sidebar.success("Sample data loaded!")
@@ -587,10 +915,30 @@ def main():
                 st.session_state.mongodb_connected = False
         
         # List experiments if connected
-        if app.db:
+        if app.db is not None:
             experiments = app.list_experiments()
+            
+            # Always show manual experiment input option
+            st.sidebar.subheader("🔍 Manual Experiment Load")
+            manual_exp_id = st.sidebar.text_input(
+                "Enter Experiment ID:",
+                value="",
+                help="Enter the exact experiment ID to load manually"
+            )
+            
+            if st.sidebar.button("Load Manual Experiment"):
+                if manual_exp_id.strip():
+                    if app.load_mongodb_data(manual_exp_id.strip()):
+                        st.sidebar.success(f"Loaded data for experiment: {manual_exp_id}")
+                        st.session_state.auto_loaded = True
+                    else:
+                        st.sidebar.error(f"Failed to load experiment: {manual_exp_id}")
+                else:
+                    st.sidebar.error("Please enter an experiment ID")
+            
             if experiments:
                 st.sidebar.subheader("📊 Available Experiments")
+                st.sidebar.info(f"Found {len(experiments)} experiments in database")
                 
                 experiment_options = [
                     f"{exp['experiment_id']} (Gen: {exp['current_generation']})"
@@ -612,7 +960,7 @@ def main():
                     else:
                         st.sidebar.error("Failed to auto-load experiment data")
                 
-                if st.sidebar.button("Load Experiment Data"):
+                if st.sidebar.button("Load Selected Experiment"):
                     # Extract experiment ID from selection
                     exp_id = selected_exp.split(" (Gen:")[0]
                     if app.load_mongodb_data(exp_id):
@@ -622,9 +970,21 @@ def main():
                         st.sidebar.error("Failed to load experiment data")
             else:
                 st.sidebar.info("No experiments found in database")
+                # Always load sample data when no experiments found
                 if not app.data:
                     st.sidebar.info("Loading sample data instead...")
-                    app.load_sample_data()
+                    if app.load_sample_data():
+                        st.sidebar.success("Sample data loaded successfully!")
+                    else:
+                        st.sidebar.error("Failed to load sample data")
+        else:
+            # MongoDB connection failed, load sample data
+            if not app.data:
+                st.sidebar.info("MongoDB not connected. Loading sample data...")
+                if app.load_sample_data():
+                    st.sidebar.success("Sample data loaded successfully!")
+                else:
+                    st.sidebar.error("Failed to load sample data")
     
     else:  # Load from GA Instance
         st.sidebar.markdown("**Note:** To load from GA instance, use the `load_ga_data(ga_instance)` method")
@@ -749,4 +1109,35 @@ def launch_interactive_pareto_explorer(ga_instance=None):
     return app
 
 if __name__ == "__main__":
-    main() 
+    import sys
+    import subprocess
+    import os
+    
+    # Check if running in Streamlit context by looking for Streamlit-specific environment
+    # This avoids calling Streamlit functions that cause warnings
+    is_streamlit_context = (
+        'streamlit' in sys.modules or 
+        os.environ.get('STREAMLIT_SERVER_PORT') is not None or
+        any('streamlit' in arg.lower() for arg in sys.argv)
+    )
+    
+    if is_streamlit_context:
+        # We're in Streamlit context, run the main app
+        main()
+    else:
+        # We're not in Streamlit context, so launch with streamlit run
+        print("🎯 Interactive Pareto Front Explorer")
+        print("=" * 50)
+        print("This is a Streamlit application that needs to be run with:")
+        print(f"  streamlit run {sys.argv[0]}")
+        print("\nStarting Streamlit server automatically...")
+        print("=" * 50)
+        
+        try:
+            # Try to run with streamlit
+            subprocess.run([sys.executable, "-m", "streamlit", "run"] + sys.argv)
+        except KeyboardInterrupt:
+            print("\nStreamlit server stopped.")
+        except Exception as e:
+            print(f"\nError starting Streamlit: {e}")
+            print(f"Please run manually: streamlit run {sys.argv[0]}") 

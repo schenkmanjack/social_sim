@@ -581,6 +581,440 @@
         "batch_size": 4,
         "use_batched_evaluation": true
       }
-    }
-  ]
-}
+    },
+    {
+      "timestamp": "2025-06-10T17:44:22.148133",
+      "batch_index": 0,
+      "prompt": "Here is a variation of the prompt:\n\nYou are a covert operative tasked with blending in with a group of individuals. Each turn represents a coordinated choice round. You must liaise with your peers. The objective is for the population to be evenly divided between two opposing factions by the simulation's conclusion. When the simulation ends, declare your affiliation as either red or blue.\n\nHint: Consider the strategic advantages and drawbacks of aligning with each faction as you decide how to proceed.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:44:22.148133",
+      "batch_index": 1,
+      "prompt": "Here is a variation of the prompt:\n\nYou are an operative who represents either the red or blue faction. Each turn encompasses a concurrent decision phase. You exchange information with your peers. The objective is for the population to be evenly split between the two colors by the simulation's conclusion. At the end, you must declare your affiliation - either red or blue.\n\nHint: Consider how the actions and decisions of the individual agents can influence the overall group balance.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:44:22.148133",
+      "batch_index": 2,
+      "prompt": "You are an agent who aligns as either red or blue. Each turn represents a concurrent decision phase. You exchange information with your neighbors. The objective is for the population to reach an even split of red and blue agents by the simulation's conclusion. Upon completion, you must declare your chosen color - either red or blue.\n\nHint: Consider the overall balance of red and blue agents when making each decision.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:44:22.148133",
+      "batch_index": 3,
+      "prompt": "Here is a variation of the prompt:\n\nYou are a covert operative who must choose to align with either the red or blue faction. Each iteration of the simulation represents a concurrent decision round. Communicate strategically with your peers to achieve a balanced final distribution - with half of all agents identifying as red and the other half as blue. When the simulation concludes, you must state your chosen allegiance, declaring yourself as either a red or blue operative.\n\nHint: Consider how your decisions and communications with neighboring agents could impact the overall faction balance.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:51:21.728600",
+      "batch_index": 0,
+      "prompt": "Here is a variation of the prompt:\n\nYou are an undercover operative who aligns as either red or blue. Each turn signifies a concurrent decision round. You liaise with your peers. The objective is for the agents to divide evenly into red and blue teams by the simulation's conclusion. At the end, you must declare your allegiance - state that you are either red or blue.\n\nHint: Consider the potential impact of your decisions on the overall team balance.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:51:21.728600",
+      "batch_index": 1,
+      "prompt": "You are a covert operative tasked with establishing a balanced color distribution. Each round represents a concurrent decision phase where you coordinate with adjacent agents. The objective is to have an equal number of red and blue operatives by the end of the simulation. Conclude the exercise by declaring your affiliation as either red or blue.\n\nHint: Consider how your color choice may influence your neighbors' decisions.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:51:21.728600",
+      "batch_index": 2,
+      "prompt": "You are a covert operative, either identifying as crimson or azure. Each round represents a concurrent choice phase. You exchange information with your peers. The aim is for equal distribution of crimson and azure agents by the simulation's conclusion. Upon completion, you must disclose your allegiance - state whether you are crimson or azure.\n\nHint: Consider the strategic implications of your color choice and how it may impact the overall balance.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:51:21.728600",
+      "batch_index": 3,
+      "prompt": "You are a covert operative with a color-based identity, either red or blue. Each round consists of concurrent decision-making steps. You will liaise with your peers. The objective is to achieve a 50/50 red-blue agent ratio by the simulation's conclusion. When the simulation ends, you must disclose your color affiliation. State your designated color, either red or blue.\n\nHint: Consider the dynamics between your individual choice and the overall team balance to achieve the target outcome.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:56:44.156392",
+      "batch_index": 0,
+      "prompt": "You are a covert operative with a color-based identity, either red or blue. Each round consists of concurrent decision-making steps. You will liaise with your peers. The objective is to achieve a 50/50 red-blue agent ratio by the simulation's conclusion. When the simulation ends, you must disclose your color affiliation. State your designated color, either red or blue.\n\nHint: Consider the dynamics between your individual choice and the overall team balance to achieve the target outcome.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:56:44.156392",
+      "batch_index": 1,
+      "prompt": "Here is a variation of the original prompt:\n\nYou are a secret agent operating under a chromatic alias, either scarlet or azure. The simulation unfolds in a series of synchronous decision-making stages. You will coordinate with your fellow operatives. The goal is to reach a balanced 50/50 ratio of red and blue agents by the simulation's end. When the simulation concludes, reveal your color allegiance.\n\nHint: Weigh your personal choice against the team's collective equilibrium to accomplish the target objective.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:56:44.156392",
+      "batch_index": 2,
+      "prompt": "Here is a variation of the original prompt:\n\n<bound method IndividualString.copy_parameter_values of <genetic_algorithm.individual.individual_string.IndividualString object at 0x7f25e8b38d90>>\n\nHelpful hint: The term \"copy_dofs\" refers to copying the degrees of freedom (DOFs) of the individual. A more precise and descriptive term would be \"copy_parameter_values\" to indicate that the parameter values of the individual are being copied.",
+      "objectives": [
+        0.9,
+        0.9
+      ],
+      "constraints": [],
+      "metrics": [
+        0.9,
+        0.9
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T17:56:44.156392",
+      "batch_index": 3,
+      "prompt": "Here is a variation of the given prompt:\n\nYou are an undercover agent, either aligned with the crimson or azure faction. Each round represents a simultaneous decision-making phase. You communicate with your fellow operatives, with the goal of achieving an even split between crimson and azure agents by the end of the simulation. Upon completion, you must reveal your true allegiance - whether you are crimson or azure.\n\nHint: Reflect on the strategic significance of your color choice and how it may affect the overall balance.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:09:43.238649",
+      "batch_index": 0,
+      "prompt": "You are a participant in a color-coordination game where you must choose to be either red or blue. You will make your decision at the same time as other participants, and you can interact with adjacent players. The objective is to achieve an equal balance between red and blue identities across all players when the game concludes. When the simulation ends, clearly state your final color choice - you must pick exactly one color between red and blue. Remember: effective communication with your neighbors can help reach the 50-50 split goal. What is your color?",
+      "objectives": [
+        0.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:09:43.238649",
+      "batch_index": 1,
+      "prompt": "You're participating in a coordination game where agents must choose between being red or blue. During each round, all agents make their color choice simultaneously while communicating with adjacent agents. The ultimate objective is to achieve an equal balance - 50% red and 50% blue agents. When the simulation concludes, clearly state your final color selection by saying either \"red\" or \"blue\" (choose only one). Helpful hint: Consider what your neighbors are signaling before making your final choice.",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:09:43.238649",
+      "batch_index": 2,
+      "prompt": "You're participating in a color coordination game where you must choose to be either red or blue. Each round happens at the same time as other players make their choices. You can interact with adjacent players to help reach the target: an equal split between red and blue across all agents. When the simulation concludes, clearly state which single color you've selected - red or blue only. Remember that effective communication with neighbors can help achieve the balanced outcome. What is your final color choice?",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:09:43.238649",
+      "batch_index": 3,
+      "prompt": "You are participating in a coordination game where agents must choose between being red or blue. Each round happens at the same time and you can interact with adjacent agents. The objective is to achieve an equal balance - 50% red and 50% blue agents - by the simulation's end. When concluding, you must definitively declare yourself as either red or blue (no other options). Make your final color choice and state it clearly. Hint: Consider what choices your neighbors are likely to make when deciding your color.",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:14:56.622617",
+      "batch_index": 0,
+      "prompt": "I notice the original prompt appears to be a technical error or code output rather than an actual prompt to rewrite. It shows a Python bound method reference for an IndividualString object.\n\nCould you provide an actual prompt that you'd like me to rewrite? I'll be happy to create a variation that maintains the core task while using fresh language and potentially adding a helpful hint.",
+      "objectives": [
+        1.0,
+        1.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        1.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:14:56.622617",
+      "batch_index": 1,
+      "prompt": "You are a participant in a color-coordination game where you must choose to be either red or blue. You will make your decision at the same time as other participants, and you can interact with adjacent players. The objective is to achieve an equal balance between red and blue identities across all players when the game concludes. When the simulation ends, clearly state your final color choice - you must pick exactly one color between red and blue. Remember: effective communication with your neighbors can help reach the 50-50 split goal. What is your color?",
+      "objectives": [
+        0.5,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.5,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:14:56.622617",
+      "batch_index": 2,
+      "prompt": "As a player in a color-balancing challenge, you must select exactly one color - either red or blue. Your choice will be made at the same time as other contestants, and you may communicate with players next to you. Success means achieving an even distribution between red and blue across the entire group. Before declaring your final decision, consider coordinating with adjacent participants to help reach the target balance. Helpful hint: Share your initial color preference early to allow time for adjustments. What color do you choose - red or blue?",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:14:56.622617",
+      "batch_index": 3,
+      "prompt": "You are a participant in a color-coordination game where you must choose to be either red or blue. You will make your decision simultaneously with other participants and can interact with adjacent players. The goal is to achieve an equal balance between red and blue identities across all players. When concluding, clearly state your final choice of exactly one color (red or blue). Remember: effective communication with neighbors helps reach the 50-50 split goal. What is your color?",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:53:36.070497",
+      "batch_index": 0,
+      "prompt": "As a network participant, you must choose between identifying as either red or blue. All agents make their color choices simultaneously in each round after communicating with adjacent participants. The ultimate objective is to achieve an equal 50-50 split between red and blue identities across the entire group. When the simulation concludes, clearly state your final color choice - you must commit to exactly one color. Simply respond with either \"red\" or \"blue\".\n\nHint: Consider what your neighbors have signaled when making your choice to help reach the balanced outcome.",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:53:36.070497",
+      "batch_index": 1,
+      "prompt": "As a network participant, you must choose to be either red or blue. Each round occurs simultaneously as you interact with adjacent agents. Your collective objective is to achieve an equal balance - 50% red and 50% blue - across all agents by the simulation's conclusion. When the simulation ends, clearly state your single chosen color (either red or blue). To help coordinate: consider what your neighbors are signaling before making your final choice.",
+      "objectives": [
+        0.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        0.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:53:36.070497",
+      "batch_index": 2,
+      "prompt": "You are an entity that must choose between being red or blue. You interact with adjacent entities in synchronized decision phases. Through communication with neighbors, work towards achieving an even balance where 50% of all entities are red and 50% are blue. When the simulation concludes, you must definitively declare either \"red\" or \"blue\" as your final identity - no other options are permitted. HINT: Consider what your neighbors chose in previous rounds when making your decision.",
+      "objectives": [
+        1.0,
+        0.0
+      ],
+      "constraints": [],
+      "metrics": [
+        1.0,
+        0.0
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T18:53:36.070497",
+      "batch_index": 3,
+      "prompt": "As a participant in a network, you must choose to be either red or blue. You'll coordinate with adjacent participants, making decisions simultaneously in rounds. The ultimate objective is achieving an equal balance - 50% red and 50% blue - across all agents. When the simulation concludes, clearly state your final color choice by responding with exactly \"red\" or \"blue\". Hint: Consider what your neighbors have signaled in previous rounds when making your choice.",
+      "objectives": [
+        Infinity,
+        Infinity
+      ],
+      "constraints": [],
+      "metrics": [
+        Infinity,
+        Infinity
+      ],
+      "additional_info": {
+        "batch_size": 4,
+        "use_batched_evaluation": true
+      }
+    },
+    {
+      "timestamp": "2025-06-10T19:00:31.732779",
+      "batch_index": 0,
+      "prompt": 

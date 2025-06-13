@@ -81,7 +81,6 @@ class AnthropicBackend(LLMWrapper):
         # Create batch requests
         requests = []
         for i, prompt in enumerate(prompts):
-            prompt = prompt + str(i)
             new_request = Request(
                 custom_id=f"agent-request-{i}",
                 params=MessageCreateParamsNonStreaming(

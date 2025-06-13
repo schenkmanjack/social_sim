@@ -16,6 +16,7 @@ dependencies:
     - python-dotenv
     - streamlit
     - pandas
+    - networkx
     - plotly
     - pymongo
     # torch will be installed separately to ensure CPU-only version
