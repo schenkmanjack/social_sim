@@ -1,53 +1,77 @@
 from .agent import Agent
 
 class TimescaleAwareAgent(Agent):
-    def __init__(self, agent_id, identity, llm):
-        super().__init__(agent_id, identity, llm)
+    def __init__(self, agent_id, identity, llm, use_full_agent_memory=True):
+        super().__init__(agent_id, identity, llm, use_full_agent_memory)
         self.time_scale = None
         self.current_step = None
         self.total_steps = None
 
-    def generate_prompt(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
+    def generate_prompts(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
         """
-        Generate the prompt that would be used for acting, without actually calling the LLM
+        Generate separate system and user prompts for timescale-aware agent (compact version)
+        Returns: (system_prompt, user_prompt)
         """
-        # Set time context
+        # Set context
         self.time_scale = time_scale
         self.current_step = current_step
         self.total_steps = total_steps
 
+        # System prompt
+        system_prompt = self.identity
+
+        # --- Compact time context ---------------------------------------
         time_context = self._build_time_context()
-        action_guidance = self._get_action_guidance()
-        
-        # Format messages with sender information if available
+
+        # Messages
         messages_text = self._format_messages(messages)
-        
-        prompt = f"""
-        You are {self.identity}
-        
-        {time_context}
-        
-        {action_guidance}
-        
-        Current environment state:
-        {visible_state}
-        
-        Messages from others:
-        {messages_text}
-        
-        What action do you take? Respond with a single sentence describing your action.
+        messages_block = f"Msgs:\n{messages_text}" if messages_text else ""
+
+        # Memory (full or last)
+        if self.use_full_agent_memory:
+            mem_block = f"Memory:{self.memory}"
+        else:
+            mem_block = f"Prev:{self.last_message}" if self.last_message else "Prev:None"
+
+        # Build user prompt (no unnecessary headers)
+        user_prompt_parts = []
+        if time_context:
+            user_prompt_parts.append(time_context)
+        if messages_block:
+            user_prompt_parts.append(messages_block)
+        if mem_block:
+            user_prompt_parts.append(mem_block)
+        user_prompt_parts.append("Next action (one sentence):")
+
+        user_prompt = "\n".join(user_prompt_parts)
+
+        return system_prompt, user_prompt
+
+    def generate_prompt(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
         """
+        Generate the prompt that would be used for acting, without actually calling the LLM
+        (Kept for backward compatibility)
+        """
+        system_prompt, user_prompt = self.generate_prompts(visible_state, messages, current_step, total_steps, time_scale)
         
-        return prompt
+        # If no system prompt, return just user prompt
+        if not system_prompt:
+            return user_prompt
+        
+        # Otherwise combine them for backward compatibility
+        return f"System: {system_prompt}\n\nUser: {user_prompt}"
 
     def act(self, visible_state, messages, current_step=None, total_steps=None, time_scale=None):
-        """
-        Decide on an action with time scale awareness
-        """
-        prompt = self.generate_prompt(visible_state, messages, current_step, total_steps, time_scale)
-        action = self.llm.generate(prompt)
+        """Generate an action given the visible state, messages, and time context"""
+        system_prompt, user_prompt = self.generate_prompts(visible_state, messages, current_step, total_steps, time_scale)
+        
+        # Call LLM with system and user prompts
+        action = self.llm.generate(user_prompt, system_prompt)
+        
+        # Update memory and last message
         self.last_message = action
         self.memory.append(action)
+        
         return action
 
     def _format_messages(self, messages):

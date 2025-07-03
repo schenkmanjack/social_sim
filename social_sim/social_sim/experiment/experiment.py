@@ -10,7 +10,7 @@ from social_sim.simulation.simulation import Simulation
 
 
 class Experiment:
-    def __init__(self, simulations: List['Simulation'], name: str = None, debug: bool = False):
+    def __init__(self, simulations: List['Simulation'], name: str = None, debug: bool = False, disable_batch_summaries: bool = False):
         """
         Initialize an experiment with multiple simulations.
         
@@ -18,12 +18,14 @@ class Experiment:
             simulations: List of Simulation objects to run
             name: Optional name for the experiment
             debug: Whether to print debug information during execution
+            disable_batch_summaries: Whether to disable expensive batch summary processing
         """
         self.simulations = simulations
         self.name = name or f"experiment_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         self.results = None
         self.outcome_definitions = {}
         self.debug = debug
+        self.disable_batch_summaries = disable_batch_summaries
         
     def define_outcome(self, name: str, condition: str, description: str):
         """
@@ -414,6 +416,19 @@ class Experiment:
         with open(summary_path, "w") as f:
             f.write(f"Experiment: {self.name}\n")
             f.write(f"Number of simulations: {len(results)}\n\n")
+            
+            # Add LLM usage statistics
+            if hasattr(self, 'experiment_results') and 'llm_usage' in self.experiment_results:
+                llm_stats = self.experiment_results['llm_usage']
+                f.write("LLM Usage Statistics:\n")
+                f.write(f"  Total Input Characters: {llm_stats['total_input_characters']:,}\n")
+                f.write(f"  Total Output Characters: {llm_stats['total_output_characters']:,}\n")
+                f.write(f"  Total Characters: {llm_stats['total_characters']:,}\n")
+                f.write(f"  Total LLM Calls: {llm_stats['total_call_count']}\n")
+                f.write(f"  Average Input per Simulation: {llm_stats['avg_input_per_simulation']:.1f}\n")
+                f.write(f"  Average Output per Simulation: {llm_stats['avg_output_per_simulation']:.1f}\n")
+                f.write(f"  Average Calls per Simulation: {llm_stats['avg_calls_per_simulation']:.1f}\n\n")
+            
             f.write("Outcome Statistics:\n")
             for outcome_name, stats in self.experiment_results["statistics"].items():
                 f.write(f"\n{outcome_name}:\n")
@@ -529,19 +544,29 @@ class Experiment:
             self.experiment_results = final_result
             yield {'percentage': 100}, final_result
 
-    def _build_simulation_result(self, simulation, sim_history, sim_index, batched_summary=None, expected_steps=None):
+    def _build_simulation_result(self, simulation, sim_history, sim_index, batched_summary=None, batched_agent_outcomes=None, expected_steps=None):
         """Build result dict for a single simulation."""
-        # Check for valid history - only validate step count if expected_steps is provided
+        # Helper: decide if a single step indicates a failed simulation (placeholders or explicit failures)
+        def _is_failed_step(step):
+            """Return True if the step is a placeholder (None) or a dict with failed_agents."""
+            return (step is None) or (isinstance(step, dict) and step.get("failed_agents"))
+
+        # ------------------------------------------------------------
+        # Determine whether the simulation history represents a valid
+        # (i.e. non-failed) simulation.  Treat placeholder `None` steps
+        # inserted by `run_manual_batch` as failures so that they do not
+        # trigger AttributeError further below.
+        # ------------------------------------------------------------
         if expected_steps is not None:
             is_valid = (
-                sim_history and 
-                len(sim_history) == expected_steps and 
-                not any(step.get("failed_agents") for step in sim_history)
+                sim_history and
+                len(sim_history) == expected_steps and
+                not any(_is_failed_step(step) for step in sim_history)
             )
         else:
             is_valid = (
-                sim_history and 
-                not any(step.get("failed_agents") for step in sim_history)
+                sim_history and
+                not any(_is_failed_step(step) for step in sim_history)
             )
         
         if not is_valid:
@@ -569,14 +594,19 @@ class Experiment:
 
         # Process successful simulation
         if batched_summary and batched_summary.get("success"):
+            # Use batched agent outcomes if available, otherwise fall back to simulation's outcomes
+            agent_outcomes = batched_agent_outcomes if batched_agent_outcomes is not None else simulation.agent_outcomes
             final_result = {
                 "summary": batched_summary["summary"],
                 "environment_state": simulation.env.get_state(),
                 "agent_states": {aid: agent.state for aid, agent in simulation.agents.items()},
-                "agent_outcomes": simulation.agent_outcomes
+                "agent_outcomes": agent_outcomes
             }
         else:
             final_result = simulation._generate_final_summary(sim_history)
+            # If we have batched agent outcomes, use them instead of the ones from final summary
+            if batched_agent_outcomes is not None:
+                final_result["agent_outcomes"] = batched_agent_outcomes
 
         outcome = self.analyze_outcome(sim_history)
         return {
@@ -584,7 +614,10 @@ class Experiment:
             "outcome_analysis": outcome,
             "environment": final_result.get("environment_state", []),
             "agent_states": final_result.get("agent_states", {}),
-            "actions": [step.get("actions", []) for step in sim_history],
+            "actions": [
+                step.get("actions", []) if isinstance(step, dict) else []
+                for step in sim_history
+            ],
             "agent_outcomes": final_result.get("agent_outcomes", {}),
             "summary": final_result.get("summary", ""),
             "failed": False
@@ -598,14 +631,25 @@ class Experiment:
             simulation_histories: List of simulation histories
             expected_steps: Expected number of steps per simulation
         """
-        # Use Simulation's batch summary processing
-        summaries = Simulation.batch_process_summaries(
-            simulation_histories,
-            llm=self.simulations[0].orchestrator.llm if self.simulations else None,
-            debug=self.debug
-        )
+        # Use Simulation's batch summary processing only if not disabled
+        summaries = []
+        if not self.disable_batch_summaries:
+            summaries = Simulation.batch_process_summaries(
+                simulation_histories,
+                llm=self.simulations[0].orchestrator.llm if self.simulations else None,
+                debug=self.debug
+            )
+            if self.debug:
+                print(f"Generated {len(summaries)} batch summaries")
+        else:
+            if self.debug:
+                print("Batch summary processing disabled - skipping expensive LLM calls")
+            # Create dummy summaries to maintain compatibility
+            summaries = [{"success": False, "summary": "Batch summaries disabled", "error": None} 
+                        for _ in simulation_histories]
         
         # Batch analyze agent outcomes for all simulations
+        outcome_results = []
         if self.simulations:
             try:
                 outcome_results = Simulation.batch_analyze_agent_outcomes(
@@ -619,7 +663,10 @@ class Experiment:
             except Exception as e:
                 if self.debug:
                     print(f"Failed to batch analyze agent outcomes: {e}")
-                # Results will be None for failed analyses
+                # Create empty results for failed analyses
+                outcome_results = [None] * len(self.simulations)
+        else:
+            outcome_results = []
         
         # Build results for each simulation
         all_results = []
@@ -627,12 +674,14 @@ class Experiment:
             simulation = self.simulations[sim_index]
             sim_history = simulation_histories[sim_index]
             batched_summary = summaries[sim_index] if summaries else None
+            batched_agent_outcomes = outcome_results[sim_index] if sim_index < len(outcome_results) else None
             
             sim_result = self._build_simulation_result(
                 simulation=simulation,
                 sim_history=sim_history,
                 sim_index=sim_index,
                 batched_summary=batched_summary,
+                batched_agent_outcomes=batched_agent_outcomes,
                 expected_steps=expected_steps
             )
             all_results.append(sim_result)
@@ -640,16 +689,61 @@ class Experiment:
         # Calculate final statistics and assemble results
         if all_results:
             statistics = self._calculate_statistics([r['outcome_analysis'] for r in all_results])
+            
+            # Aggregate LLM usage from all simulations
+            llm_usage_stats = self.aggregate_llm_usage()
+            
             final_result = {
                 "runs": all_results,
                 "statistics": statistics,
-                "histories": simulation_histories
+                "histories": simulation_histories,
+                "llm_usage": llm_usage_stats
             }
             return final_result
         else:
             if self.debug:
                 print("Warning: No results were generated from the experiment")
             return None
+
+    def aggregate_llm_usage(self) -> dict:
+        """
+        Aggregate LLM usage statistics from all simulations.
+        
+        Returns:
+            Dict with total usage statistics across all simulations
+        """
+        total_input = 0
+        total_output = 0
+        total_calls = 0
+        individual_stats = []
+        
+        for i, simulation in enumerate(self.simulations):
+            if hasattr(simulation, 'get_llm_usage_stats'):
+                stats = simulation.get_llm_usage_stats()
+                total_input += stats['input_characters']
+                total_output += stats['output_characters']
+                total_calls += stats['call_count']
+                
+                individual_stats.append({
+                    "simulation_index": i,
+                    "simulation_id": getattr(simulation, 'simulation_id', f'sim_{i}'),
+                    "input_characters": stats['input_characters'],
+                    "output_characters": stats['output_characters'],
+                    "total_characters": stats['total_characters'],
+                    "call_count": stats['call_count']
+                })
+        
+        return {
+            "total_input_characters": total_input,
+            "total_output_characters": total_output,
+            "total_characters": total_input + total_output,
+            "total_call_count": total_calls,
+            "simulations_count": len(self.simulations),
+            "avg_input_per_simulation": total_input / len(self.simulations) if self.simulations else 0,
+            "avg_output_per_simulation": total_output / len(self.simulations) if self.simulations else 0,
+            "avg_calls_per_simulation": total_calls / len(self.simulations) if self.simulations else 0,
+            "individual_simulations": individual_stats
+        }
 
     def run_manual_batch(self, steps: int = 5, time_scale: str = None) -> Generator[Tuple[Dict, Dict], None, None]:
         """
@@ -676,8 +770,10 @@ class Experiment:
                     simulation_histories[sim_index].append(None)
             
             if not active_simulations:
-                # All simulations failed, just continue filling with None
-                continue
+                # All simulations failed, break out early to avoid unnecessary looping
+                if self.debug:
+                    print("All simulations have failed – ending run_manual_batch early.")
+                break
             
             # Collect all agents from all active simulations for batching
             agents_data = []

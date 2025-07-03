@@ -210,7 +210,19 @@ if uploaded_file is not None:
                 
                 # Skip infinite/NaN values for plotting
                 if not (np.any(np.isinf(objectives)) or np.any(np.isnan(objectives))):
-                    prompt = individual.get('prompt', 'No prompt available')
+                    # Extract prompt safely - handle both string and dictionary formats
+                    raw_prompt = individual.get('prompt', 'No prompt available')
+                    
+                    # Handle different prompt formats
+                    if isinstance(raw_prompt, dict):
+                        # Dictionary format: {"prompt": "actual text", "connectivity": [...]}
+                        prompt = raw_prompt.get("prompt", "No prompt available")
+                    elif isinstance(raw_prompt, str):
+                        # String format: "actual prompt text"
+                        prompt = raw_prompt
+                    else:
+                        # Fallback
+                        prompt = str(raw_prompt) if raw_prompt is not None else 'No prompt available'
                     
                     # Safely handle prompt for preview - ensure it's a string
                     if prompt is None:
@@ -361,45 +373,34 @@ if uploaded_file is not None:
             st.write(f"Showing {len(all_elites)} elite solutions across {len(generation_stats)} generations")
             st.write("💡 **Click on any point** to view its details on the right →")
             
-            # Create the scatter plot - manual color assignment approach
-            # Get unique generations and assign colors manually
-            unique_gens = sorted(df['generation'].unique())
-            n_gens = len(unique_gens)
-            
-            # Create color mapping
-            colors = pc.sample_colorscale('viridis', [i/(n_gens-1) for i in range(n_gens)]) if n_gens > 1 else ['#440154']
-            color_map = {gen: colors[i] for i, gen in enumerate(unique_gens)}
-            
-            # Add color column
-            df['color'] = df['generation'].map(color_map)
-            
+            # Create the scatter plot - use continuous color scale
             fig = go.Figure()
             
-            # Add scatter plot with manual colors
-            for gen in unique_gens:
-                gen_data = df[df['generation'] == gen].copy()
-                
-                fig.add_trace(go.Scatter(
-                    x=gen_data[x_col],
-                    y=gen_data[y_col],
-                    mode='markers',
-                    marker=dict(
-                        color=color_map[gen],
-                        size=8,
-                        opacity=0.7,
-                        line=dict(width=1, color='white')
-                    ),
-                    name=f'Generation {gen}',
-                    text=gen_data['prompt_preview'],
-                    customdata=gen_data[['generation', 'individual_id']],
-                    hovertemplate=
-                        '<b>Generation %{customdata[0]}</b><br>' +
-                        'Individual ID: %{customdata[1]}<br>' +
-                        f'{x_label}: %{{x:.4f}}<br>' +
-                        f'{y_label}: %{{y:.4f}}<br>' +
-                        'Prompt: %{text}<br>' +
-                        '<extra></extra>'
-                ))
+            # Single scatter plot with continuous color scale
+            fig.add_trace(go.Scatter(
+                x=df[x_col],
+                y=df[y_col],
+                mode='markers',
+                marker=dict(
+                    color=df['generation'],
+                    colorscale='viridis',
+                    size=8,
+                    opacity=0.7,
+                    line=dict(width=1, color='white'),
+                    colorbar=dict(title="Generation")
+                ),
+                text=df['prompt_preview'],
+                customdata=df[['generation', 'individual_id']],
+                hovertemplate=
+                    '<b>Generation %{customdata[0]}</b><br>' +
+                    'Individual ID: %{customdata[1]}<br>' +
+                    f'{x_label}: %{{x:.4f}}<br>' +
+                    f'{y_label}: %{{y:.4f}}<br>' +
+                    'Prompt: %{text}<br>' +
+                    '<extra></extra>',
+                name='Elite Solutions',
+                showlegend=False
+            ))
             
             fig.update_layout(
                 title="Elite Solutions Across Generations",

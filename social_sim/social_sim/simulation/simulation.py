@@ -3,6 +3,8 @@ from social_sim.interactions import Environment, ConnectivityGraph
 from social_sim.agents import Agent, TimescaleAwareAgent
 from typing import Generator, Dict, List
 import json
+import time
+import random
 
 class Simulation:
     def __init__(self, llm_wrapper, agent_type="regular", chunk_size=1000, agent_outcome_definitions=None, debug=False, disable_summary=False):
@@ -85,12 +87,16 @@ class Simulation:
                 
                 agent_outcomes = self.analyze_agent_outcomes()
                 
+                # Calculate LLM usage from trace (no summary)
+                llm_usage = self.calculate_llm_usage_from_trace(history, None)
+                
                 return {
                     "summary": "Summary generation disabled for performance",
                     "history": history,
                     "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
                     "environment_state": self.env.get_state(),
-                    "agent_outcomes": agent_outcomes
+                    "agent_outcomes": agent_outcomes,
+                    "llm_usage": llm_usage
                 }
             
             # Split history into chunks
@@ -119,23 +125,36 @@ class Simulation:
             if self.debug:
                 print(f"Agent outcomes: {agent_outcomes}")
             
-            return {
+            # Calculate LLM usage from trace
+            llm_usage = self.calculate_llm_usage_from_trace(history, summary)
+            
+            final_result = {
                 "summary": summary,
                 "history": history,
                 "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
                 "environment_state": self.env.get_state(),
-                "agent_outcomes": agent_outcomes
+                "agent_outcomes": agent_outcomes,
+                "llm_usage": llm_usage
             }
+            
+            # Store for later access
+            self._last_final_result = final_result
+            return final_result
             
         except Exception as e:
             if self.debug:
                 print(f"Warning: Could not generate summary due to error: {str(e)}")
+            
+            # Calculate LLM usage even in error case
+            llm_usage = self.calculate_llm_usage_from_trace(history, None)
+            
             return {
                 "history": history,
                 "summary": "Summary generation failed. Please refer to the detailed trace file for the simulation results.",
                 "agent_outcomes": {},
                 "agent_states": {agent_id: agent.state for agent_id, agent in self.agents.items()},
-                "environment_state": self.env.get_state()
+                "environment_state": self.env.get_state(),
+                "llm_usage": llm_usage
             }
 
     def run(self, query: str, steps: int = 5) -> Generator[Dict, None, None]:
@@ -162,13 +181,15 @@ class Simulation:
                 self.agents[agent_id] = TimescaleAwareAgent(
                     agent_id=agent_id,
                     identity=agent_data["identity"],
-                    llm=self.orchestrator.llm
+                    llm=self.orchestrator.llm,
+                    use_full_agent_memory=True  # Default to True for backward compatibility
                 )
             else:
                 self.agents[agent_id] = Agent(
                     agent_id=agent_id,
                     identity=agent_data["identity"],
-                    llm=self.orchestrator.llm
+                    llm=self.orchestrator.llm,
+                    use_full_agent_memory=True  # Default to True for backward compatibility
                 )
 
         # Run simulation steps
@@ -260,13 +281,15 @@ class Simulation:
                 self.agents[agent_id] = TimescaleAwareAgent(
                     agent_id=agent_id,
                     identity=agent_data["identity"],
-                    llm=self.orchestrator.llm
+                    llm=self.orchestrator.llm,
+                    use_full_agent_memory=True  # Default to True for backward compatibility
                 )
             else:
                 self.agents[agent_id] = Agent(
                     agent_id=agent_id,
                     identity=agent_data["identity"],
-                    llm=self.orchestrator.llm
+                    llm=self.orchestrator.llm,
+                    use_full_agent_memory=True  # Default to True for backward compatibility
                 )
 
         # Run simulation steps
@@ -327,7 +350,7 @@ class Simulation:
 
     def analyze_agent_outcomes(self) -> Dict[str, List[str]]:
         """
-        Analyze which agents match each agent-specific outcome based on their final states.
+        Analyze which agents match each agent-specific outcome based on their final actions.
         Updates each agent's agent_outcomes property with a dict mapping outcome conditions to analysis results.
         
         Returns:
@@ -348,37 +371,52 @@ class Simulation:
         for agent_id, agent in self.agents.items():
             # Process each outcome definition for this agent
             for outcome_name, outcome_definition in self.agent_outcome_definitions.items():
+                # Use final piece of agent memory instead of just last_message to match outcome definitions
+                if hasattr(agent, 'memory') and agent.memory:
+                    # Use the last few entries of memory for context
+                    recent_memory = agent.memory[-3:] if len(agent.memory) >= 3 else agent.memory
+                    final_memory_text = '\n'.join([str(msg) for msg in recent_memory])
+                elif agent.last_message:
+                    final_memory_text = agent.last_message
+                else:
+                    final_memory_text = "No action taken"
+                
                 # Create a prompt for the LLM
                 prompt = f"""
-                Analyze if this agent matches this specific outcome condition.
+                Analyze if this agent matches this specific outcome condition based on their final memory.
                 
                 Agent ID: {agent_id}
-                Agent Memory: {agent.memory}
+                Agent Final Memory: {final_memory_text}
                 
                 Outcome Name: {outcome_name}
                 Outcome Definition: {json.dumps(outcome_definition, indent=2)}
                 
-                Provide a detailed analysis of whether and why this agent matches this outcome.
-                Return a JSON string containing the analysis.
-                Example format:
-                "Agent matches because they achieved X and Y"
-                or
-                "Agent does not match because they failed to achieve Z"
-                """
+                Does this agent match the outcome condition based on their final memory?
+                
+                RESPOND WITH ONLY ONE WORD: either "true" or "false"
+                
+                Your response:"""
                 
                 try:
                     # Get the LLM's analysis for this agent and outcome
                     analysis = self.orchestrator._call_llm_with_retry(prompt)
-                    analysis_result = json.loads(analysis)["analysis"]
-                    if self.debug:
-                        print(f"Agent {agent_id} Analysis result: {analysis_result}")
+                    analysis_clean = analysis.strip().lower()
                     
-                    # Update agent's agent_outcomes with their analysis for this outcome
-                    agent.agent_outcomes[outcome_name] = analysis_result
+                    # Check if response contains "true"
+                    matches = "true" in analysis_clean
+                    
+                    if self.debug:
+                        print(f"Agent {agent_id} {outcome_name}: response='{analysis.strip()}', matches={matches}")
+                    
+                    # Update agent's agent_outcomes with the raw response for reference
+                    agent.agent_outcomes[outcome_name] = f"Response: {analysis.strip()}, Matches: {matches}"
                     
                     # If agent matches this outcome, add them to the overall results
-                    if "matches" in analysis_result.lower():
+                    if matches:
                         agent_outcomes[outcome_name].append(agent_id)
+                    
+                    # Small delay to prevent overwhelming the API
+                    time.sleep(0.1)
                 
                 except Exception as e:
                     if self.debug:
@@ -603,6 +641,9 @@ class Simulation:
         # Set up connectivity graph
         self.graph = ConnectivityGraph(config["connectivity"])
         
+        # Get use_full_agent_memory parameter from config (default: True)
+        use_full_agent_memory = config.get("use_full_agent_memory", True)
+        
         # Create and add agents
         for agent_def in config["agents"]:
             agent_id = agent_def["id"]
@@ -611,19 +652,22 @@ class Simulation:
                 agent = TimescaleAwareAgent(
                     agent_id=agent_id,
                     identity=agent_def["prompt"],
-                    llm=self.orchestrator.llm
+                    llm=self.orchestrator.llm,
+                    use_full_agent_memory=use_full_agent_memory
                 )
             else:
                 agent = Agent(
                     agent_id=agent_id,
                     identity=agent_def["prompt"],
-                    llm=self.orchestrator.llm
+                    llm=self.orchestrator.llm,
+                    use_full_agent_memory=use_full_agent_memory
                 )
             
             self.agents[agent_id] = agent
         
         if self.debug:
             print(f"Successfully set up simulation '{config['name']}' with {len(self.agents)} agents")
+            print(f"use_full_agent_memory: {use_full_agent_memory}")
 
     def run_manual(self, steps: int = 5, time_scale: str = None) -> Generator[Dict, None, None]:
         """
@@ -737,27 +781,56 @@ class Simulation:
             
             prompts.append(prompt)
         
-        # Make batch LLM call
-        try:
-            if debug:
-                print(f"Making batch LLM call for {len(prompts)} agents across simulations...")
-            
-            batch_responses = llm.batch(prompts)
-            
-        except Exception as e:
-            if debug:
-                print(f"Batch LLM call failed: {str(e)}")
-            # Return all failures
-            return [
-                {
-                    "agent_id": agent_data["agent_id"],
-                    "simulation_index": agent_data["simulation_index"],
-                    "response": None,
-                    "success": False,
-                    "error": f"Batch call failed: {str(e)}"
-                }
-                for agent_data in agents_data
-            ]
+        # Make batch LLM call with retry logic and rate limiting
+        max_retries = 3
+        base_delay = 2.0  # Start with 2 second delay
+        
+        for attempt in range(max_retries):
+            try:
+                if debug:
+                    print(f"Making batch LLM call for {len(prompts)} agents across simulations (attempt {attempt + 1}/{max_retries})...")
+                
+                # Add a small delay before the request to help with rate limiting
+                if attempt > 0:
+                    delay = base_delay * (2 ** attempt) + random.uniform(0, 1)  # Exponential backoff with jitter
+                    if debug:
+                        print(f"Waiting {delay:.1f}s before retry...")
+                    time.sleep(delay)
+                
+                batch_responses = llm.batch(prompts)
+                break  # Success, exit retry loop
+                
+            except Exception as e:
+                error_str = str(e).lower()
+                if debug:
+                    print(f"Batch LLM call failed (attempt {attempt + 1}): {str(e)}")
+                
+                # Check if this is a rate limiting / overload error
+                is_rate_limit_error = any(keyword in error_str for keyword in [
+                    'overload', 'rate limit', '429', '529', 'too many requests', 
+                    'service unavailable', 'timeout'
+                ])
+                
+                if is_rate_limit_error and attempt < max_retries - 1:
+                    # This is a rate limiting error and we have retries left
+                    if debug:
+                        print(f"Rate limiting detected, will retry after delay...")
+                    continue
+                else:
+                    # Either not a rate limit error, or we're out of retries
+                    if debug:
+                        print(f"Batch LLM call failed permanently: {str(e)}")
+                    # Return all failures
+                    return [
+                        {
+                            "agent_id": agent_data["agent_id"],
+                            "simulation_index": agent_data["simulation_index"],
+                            "response": None,
+                            "success": False,
+                            "error": f"Batch call failed: {str(e)}"
+                        }
+                        for agent_data in agents_data
+                    ]
         
         # Process responses
         results = []
@@ -892,39 +965,47 @@ class Simulation:
             if not history or not simulation.agent_outcome_definitions:
                 continue
             
-            # For each simulation, create one combined prompt for all outcomes
-            agents_memory = {
-                agent_id: agent.memory 
-                for agent_id, agent in simulation.agents.items()
-            }
+            # For each simulation, create one combined prompt for all outcomes using FINAL MEMORY instead of just final actions
+            agents_final_memory = {}
+            for agent_id, agent in simulation.agents.items():
+                if hasattr(agent, 'memory') and agent.memory:
+                    # Use the last few entries of memory for context
+                    recent_memory = agent.memory[-3:] if len(agent.memory) >= 3 else agent.memory
+                    final_memory_text = '\n'.join([str(msg) for msg in recent_memory])
+                elif agent.last_message:
+                    final_memory_text = agent.last_message
+                else:
+                    final_memory_text = "No action taken"
+                agents_final_memory[agent_id] = final_memory_text
             
             prompt = f"""
-            Analyze if these agents match specific outcome conditions.
+            Analyze if these agents match specific outcome conditions based on their final memory.
             
-            Agents Memory:
-            {json.dumps(agents_memory, indent=2)}
+            Agents Final Memory:
+            {json.dumps(agents_final_memory, indent=2)}
             
             Outcome Definitions:
             {json.dumps(simulation.agent_outcome_definitions, indent=2)}
             
-            For each agent and each outcome definition, provide detailed analysis of whether and why the agent matches.
-            Return a JSON object with the following structure:
+            For each agent and each outcome, determine if the agent matches the outcome based on their final memory.
+            
+            RESPOND WITH A SIMPLE JSON FORMAT:
             {{
-                "outcome_matches": {{
-                    "outcome_name_1": ["agent_1", "agent_2"],
-                    "outcome_name_2": ["agent_3"]
+                "agent_0": {{
+                    "outcome_1": "true",
+                    "outcome_2": "false"
                 }},
-                "detailed_analysis": {{
-                    "agent_1": {{
-                        "outcome_name_1": "Agent matches because they achieved X and Y",
-                        "outcome_name_2": "Agent does not match because they failed to achieve Z"
-                    }},
-                    "agent_2": {{
-                        "outcome_name_1": "Agent matches because they demonstrated behavior A",
-                        "outcome_name_2": "Agent does not match because they lacked element B"
-                    }}
+                "agent_1": {{
+                    "outcome_1": "false", 
+                    "outcome_2": "true"
                 }}
             }}
+            
+            IMPORTANT: 
+            1. Use exactly "true" or "false" as string values
+            2. Include ALL agents and ALL outcomes
+            3. Base decisions on the outcome definitions provided
+            4. Use the exact outcome names from the definitions
             """
             prompts.append(prompt)
             valid_indices.append(idx)
@@ -932,56 +1013,259 @@ class Simulation:
         if not prompts:
             return [None] * len(simulations)
         
-        # Make batch LLM call
-        try:
-            if debug:
-                print(f"Making batch LLM call for {len(prompts)} outcome analyses...")
-            
-            batch_responses = llm.batch(prompts)
-            
-            # Process responses and map back to all simulations
-            results = [None] * len(simulations)
-            
-            for i, response in enumerate(batch_responses):
-                orig_idx = valid_indices[i]
-                try:
-                    outcomes = json.loads(response)
-                    simulation = simulations[orig_idx]
-                    
-                    # Store results in simulation
-                    simulation.agent_outcomes = outcomes["outcome_matches"]
-                    
-                    # Also populate individual agent outcomes to match behavior of analyze_agent_outcomes
-                    # Initialize agent_outcomes for each agent
-                    for agent in simulation.agents.values():
+        # Make batch LLM call with retry logic
+        max_retries = 3
+        base_delay = 2.0  # Start with 2 second delay
+        
+        for attempt in range(max_retries):
+            try:
+                if debug:
+                    print(f"Making batch LLM call for {len(prompts)} outcome analyses (attempt {attempt + 1}/{max_retries})...")
+                
+                # Add a small delay before the request to help with rate limiting
+                if attempt > 0:
+                    delay = base_delay * (2 ** attempt) + random.uniform(0, 1)  # Exponential backoff with jitter
+                    if debug:
+                        print(f"Waiting {delay:.1f}s before retry...")
+                    time.sleep(delay)
+                
+                batch_responses = llm.batch(prompts)
+                break  # Success, exit retry loop
+                
+            except Exception as e:
+                error_str = str(e).lower()
+                if debug:
+                    print(f"Batch outcome analysis failed (attempt {attempt + 1}): {str(e)}")
+                
+                # Check if this is a rate limiting / overload error
+                is_rate_limit_error = any(keyword in error_str for keyword in [
+                    'overload', 'rate limit', '429', '529', 'too many requests', 
+                    'service unavailable', 'timeout'
+                ])
+                
+                if is_rate_limit_error and attempt < max_retries - 1:
+                    # This is a rate limiting error and we have retries left
+                    if debug:
+                        print(f"Rate limiting detected, will retry after delay...")
+                    continue
+                else:
+                    # Either not a rate limit error, or we're out of retries
+                    if debug:
+                        print(f"Batch outcome analysis failed permanently: {str(e)}")
+                    return [None] * len(simulations)
+        
+        # Process responses and map back to all simulations
+        results = [None] * len(simulations)
+        
+        for i, response in enumerate(batch_responses):
+            orig_idx = valid_indices[i]
+            try:
+                outcomes = json.loads(response)
+                simulation = simulations[orig_idx]
+                
+                # Process the simplified response format
+                agent_outcomes = {name: [] for name in simulation.agent_outcome_definitions}
+                
+                # Parse responses for each agent
+                for agent_id, agent_results in outcomes.items():
+                    if agent_id in simulation.agents:
+                        agent = simulation.agents[agent_id]
                         if not hasattr(agent, 'agent_outcomes'):
                             agent.agent_outcomes = {}
-                    
-                    # Set detailed analysis for each agent using the LLM's detailed analysis
-                    detailed_analysis = outcomes.get("detailed_analysis", {})
-                    for agent_id, agent in simulation.agents.items():
-                        agent_analysis = detailed_analysis.get(agent_id, {})
+                        
+                        # Check each outcome for this agent
                         for outcome_name in simulation.agent_outcome_definitions.keys():
-                            # Use the detailed analysis from LLM, or fallback if not available
-                            if outcome_name in agent_analysis:
-                                agent.agent_outcomes[outcome_name] = agent_analysis[outcome_name]
+                            if outcome_name in agent_results:
+                                response_value = str(agent_results[outcome_name]).strip().lower()
+                                matches = "true" in response_value
+                                
+                                # Store the response for debugging
+                                agent.agent_outcomes[outcome_name] = f"Response: {agent_results[outcome_name]}, Matches: {matches}"
+                                
+                                # Add to outcome list if matches
+                                if matches:
+                                    agent_outcomes[outcome_name].append(agent_id)
                             else:
-                                # Fallback to simple message if detailed analysis not available
-                                matching_agent_ids = outcomes["outcome_matches"].get(outcome_name, [])
-                                if agent_id in matching_agent_ids:
-                                    agent.agent_outcomes[outcome_name] = f"Agent matches {outcome_name} outcome"
-                                else:
-                                    agent.agent_outcomes[outcome_name] = f"Agent does not match {outcome_name} outcome"
-                    
-                    results[orig_idx] = outcomes["outcome_matches"]
-                except Exception as e:
-                    if debug:
-                        print(f"Error processing outcome analysis for simulation {orig_idx}: {e}")
-                    results[orig_idx] = None
+                                # Fallback if outcome not found in response
+                                agent.agent_outcomes[outcome_name] = "No response for this outcome"
                 
-            return results
+                # Store results in simulation
+                simulation.agent_outcomes = agent_outcomes
+                results[orig_idx] = agent_outcomes
+                
+            except Exception as e:
+                if debug:
+                    print(f"Error processing outcome analysis for simulation {orig_idx}: {e}")
+                    print(f"Raw response: {response}")
+                results[orig_idx] = None
+            
+        return results
+
+    def calculate_llm_usage_from_trace(self, history: List[Dict], final_summary: str = None) -> dict:
+        """
+        Calculate LLM character usage post-hoc from simulation trace.
+        Reconstructs all prompts and responses to count characters.
         
-        except Exception as e:
-            if debug:
-                print(f"Batch outcome analysis failed: {e}")
-            return [None] * len(simulations)
+        Args:
+            history: Complete simulation history from trace
+            final_summary: Final summary text if available
+            
+        Returns:
+            Dict with input_characters, output_characters, total_characters, call_count
+        """
+        total_input_chars = 0
+        total_output_chars = 0
+        total_calls = 0
+        
+        if self.debug:
+            print("Calculating LLM usage from simulation trace...")
+        
+        # 1. Calculate agent action LLM calls
+        for step_data in history:
+            if "actions" not in step_data:
+                continue
+                
+            step_num = step_data.get("step", 0)
+            
+            for action_data in step_data["actions"]:
+                agent_id = action_data["agent"]
+                agent = self.agents.get(agent_id)
+                
+                if not agent:
+                    continue
+                
+                # Reconstruct the exact prompt that was sent to LLM
+                visible_state = action_data["visible_state"]
+                received_messages = action_data["received_messages"]
+                agent_response = action_data["action"]
+                
+                # Generate the same prompt the agent would have used
+                if hasattr(agent, 'time_scale') and hasattr(self, 'config'):
+                    # TimescaleAwareAgent with time context
+                    total_steps = self.config.get("steps", 5) if hasattr(self, 'config') else 5
+                    time_scale = getattr(self, 'time_scale', None)
+                    
+                    system_prompt, user_prompt = agent.generate_prompts(
+                        visible_state, 
+                        received_messages,
+                        current_step=step_num,
+                        total_steps=total_steps,
+                        time_scale=time_scale
+                    )
+                else:
+                    # Regular Agent
+                    system_prompt, user_prompt = agent.generate_prompts(
+                        visible_state, 
+                        received_messages
+                    )
+                
+                # Count input characters (system + user prompt)
+                input_chars = len(user_prompt)
+                if system_prompt:
+                    input_chars += len(system_prompt)
+                
+                # Count output characters (agent response)
+                output_chars = len(str(agent_response)) if agent_response else 0
+                
+                total_input_chars += input_chars
+                total_output_chars += output_chars
+                total_calls += 1
+                
+                if self.debug:
+                    print(f"  Step {step_num}, Agent {agent_id}: {input_chars} input, {output_chars} output chars")
+        
+        # 2. Calculate summary generation LLM calls (if not disabled)
+        if not self.disable_summary and history:
+            # Chunk summaries
+            chunks = []
+            for i in range(0, len(history), self.chunk_size):
+                chunks.append(history[i:i + self.chunk_size])
+            
+            # Each chunk summary call
+            for chunk in chunks:
+                chunk_str = json.dumps(chunk, separators=(',', ':'))
+                total_input_chars += len(chunk_str)
+                total_calls += 1
+                
+                # Estimate chunk summary output (we don't have exact text, use reasonable estimate)
+                estimated_chunk_summary_chars = min(len(chunk_str) // 4, 500)  # Rough estimate
+                total_output_chars += estimated_chunk_summary_chars
+            
+            # Final summary combination (if multiple chunks)
+            if len(chunks) > 1:
+                # Estimate combined summary input
+                estimated_combined_input = len(chunks) * 200  # Rough estimate of chunk summary length
+                total_input_chars += estimated_combined_input
+                total_calls += 1
+                
+                # Use actual final summary length if provided
+                if final_summary:
+                    total_output_chars += len(final_summary)
+                else:
+                    total_output_chars += 300  # Rough estimate
+        
+        # 3. Calculate agent outcome analysis LLM calls
+        if self.agent_outcome_definitions:
+            for agent_id, agent in self.agents.items():
+                # Construct final_memory_text for this agent
+                if hasattr(agent, 'memory') and agent.memory:
+                    # Use the last few entries of memory for context
+                    recent_memory = agent.memory[-3:] if len(agent.memory) >= 3 else agent.memory
+                    final_memory_text = '\n'.join([str(msg) for msg in recent_memory])
+                elif agent.last_message:
+                    final_memory_text = agent.last_message
+                else:
+                    final_memory_text = "No action taken"
+                
+                for outcome_name, outcome_definition in self.agent_outcome_definitions.items():
+                    # Reconstruct outcome analysis prompt
+                    prompt = f"""
+                    Analyze if this agent matches this specific outcome condition based on their final memory.
+                    
+                    Agent ID: {agent_id}
+                    Agent Final Memory: {final_memory_text}
+                    
+                    Outcome Name: {outcome_name}
+                    Outcome Definition: {json.dumps(outcome_definition, indent=2)}
+                    
+                    Does this agent match the outcome condition based on their final memory?
+                    
+                    RESPOND WITH ONLY ONE WORD: either "true" or "false"
+                    
+                    Your response:"""
+                    
+                    total_input_chars += len(prompt)
+                    total_calls += 1
+                    
+                    # Estimate outcome analysis response length
+                    estimated_analysis_chars = 150  # Typical analysis response length
+                    total_output_chars += estimated_analysis_chars
+        
+        usage_stats = {
+            "input_characters": total_input_chars,
+            "output_characters": total_output_chars,
+            "total_characters": total_input_chars + total_output_chars,
+            "call_count": total_calls
+        }
+        
+        if self.debug:
+            print(f"Total LLM usage: {usage_stats}")
+        
+        return usage_stats
+
+    def get_llm_usage_stats(self) -> dict:
+        """
+        Get LLM usage statistics for this simulation.
+        This method looks for usage stats in the last final result.
+        """
+        # Try to get from last final result if available
+        if hasattr(self, '_last_final_result') and 'llm_usage' in self._last_final_result:
+            return self._last_final_result['llm_usage']
+        
+        # Fallback: return empty stats
+        return {
+            "input_characters": 0,
+            "output_characters": 0,
+            "total_characters": 0,
+            "call_count": 0
+        }

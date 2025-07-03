@@ -133,6 +133,10 @@ class RedBlueStateSaver(StateSaver):
                 }
                 print(f"[DEBUG] JSON structure reinitialized")
             
+            # Filter elites to get only new ones BEFORE creating generation entry
+            new_elites = self._filter_new_elites(elites)
+            print(f"[DEBUG] Processing {len(new_elites)} new elite individuals out of {len(population)} total...")
+            
             # Create generation entry
             generation_timestamp = datetime.now().isoformat()
             print(f"[DEBUG] Creating generation entry for generation {generation} at {generation_timestamp}")
@@ -147,9 +151,6 @@ class RedBlueStateSaver(StateSaver):
             }
             
             # Save only elite individuals in population
-            new_elites = self._filter_new_elites(elites)
-            print(f"[DEBUG] Processing {len(new_elites)} new elite individuals out of {len(population)} total...")
-            
             for i, individual in enumerate(new_elites):
                 print(f"[DEBUG] Processing elite individual {i}")
                 print(f"[DEBUG] Individual has attributes: {list(vars(individual).keys())}")

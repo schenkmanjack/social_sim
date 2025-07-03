@@ -4,6 +4,7 @@ import tempfile
 from datetime import datetime
 import numpy as np
 import random
+import time
 
 from social_sim.agents.agent import Agent
 from social_sim.interactions.connectivity import ConnectivityGraph
@@ -20,12 +21,16 @@ class RedBlueEvaluator:
         self.use_batched_evaluation = evaluator_config.get('use_batched_evaluation', False)
         self.n_eval_duplicates = evaluator_config.get('n_eval_duplicates', 1)  # Number of duplicate evaluations per individual
         self.debug = evaluator_config.get('debug', False)  # Debug flag for print statements
+        self.disable_batch_summaries = evaluator_config.get('disable_batch_summaries', False)  # NEW: Control batch summary processing
+        
+        # Agent memory configuration
+        self.use_full_agent_memory = evaluator_config.get('use_full_agent_memory', True)
         
         # Objective selection configuration
-        self.use_objectives = evaluator_config.get('use_objectives', [True, True, True, True, True])  # Default: use all 5 objectives
-        if len(self.use_objectives) != 5:
-            raise ValueError("use_objectives must be a boolean array of length 5")
-        self.objective_names = ["split_deviation", "neither_fraction", "prompt_length", "connection_count", "failure_count"]
+        self.use_objectives = evaluator_config.get('use_objectives', [True, True, True, True, True, True])  # Default: use all 6 objectives
+        if len(self.use_objectives) != 6:
+            raise ValueError("use_objectives must be a boolean array of length 6")
+        self.objective_names = ["split_deviation", "neither_fraction", "prompt_length", "connection_count", "failure_count", "llm_usage"]
         self.selected_objectives = [name for i, name in enumerate(self.objective_names) if self.use_objectives[i]]
         print(f"Using objectives: {self.selected_objectives}")
         
@@ -46,6 +51,7 @@ class RedBlueEvaluator:
             
             print(f"Connectivity pairs: {self.connectivity_pairs}")
             print(f"RedBlueEvaluator initialized with {self.num_agents} agents, {self.steps} steps, {self.n_eval_duplicates} duplicates per individual")
+            print(f"use_full_agent_memory: {self.use_full_agent_memory}")
         
         # Initialize JSON file for saving results
         self.results_file = evaluator_config.get('results_file', 'evaluation_results.json')
@@ -141,7 +147,7 @@ class RedBlueEvaluator:
         """Initialize with a default prompt and connectivity from evaluator_config"""
         initial_prompt = self.evaluator_config.get('initial_prompt', 
             "You are an agent who identifies as red or blue. Each step represents a simultaneous decision round. You communicate with your neighbors. The goal is for half of the agents to be red and half to be blue at the end of the simulation. At the end of the simulation you must say what color you are. You must identify as one color and state the color. Provide any answer of either red or blue.")
-        initial_prompt = LLMTextMutation._mutate_via_llm(self.llm, initial_prompt)
+        # initial_prompt = LLMTextMutation._mutate_via_llm(self.llm, initial_prompt)
         
         # Create connectivity_pairs if it doesn't exist by checking config
         if not hasattr(self, 'connectivity_pairs') or self.connectivity_pairs is None:
@@ -216,9 +222,10 @@ class RedBlueEvaluator:
             "connectivity": connectivity,
             "outcomes": [],
             "agent_outcome_definitions": {
-                "red": "Only consider the final piece of the agents memory. The agent has to make a choice. It cannot be two colors. Does the agent choose red? For the agent to be red, it must state it unambiguously.",
-                "blue": "Only consider the final piece of the agents memory. The agent has to make a choice. It cannot be two colors. Does the agent choose blue? For the agent to be blue, it must state it unambiguously."
-            }
+                "red": "Does the agent choose red? For the agent to be red, it must state it unambiguously.",
+                "blue": "Does the agent choose blue? For the agent to be blue, it must state it unambiguously."
+            },
+            "use_full_agent_memory": self.use_full_agent_memory
         }
         
         return config
@@ -240,7 +247,7 @@ class RedBlueEvaluator:
         config = sim.config
         
         # Create experiment
-        experiment = Experiment([sim], name=config["name"])
+        experiment = Experiment([sim], name=config["name"], disable_batch_summaries=self.disable_batch_summaries)
         
         # Run experiment
         runs = []
@@ -390,6 +397,28 @@ class RedBlueEvaluator:
         
         return connection_count
 
+    def calculate_llm_usage_objective(self, simulation_or_run):
+        """Calculate LLM character usage as normalized objective"""
+        # Handle both Simulation objects and run dictionaries for backward compatibility
+        if hasattr(simulation_or_run, 'get_llm_usage_stats'):
+            # It's a Simulation object - use the proper method
+            usage_stats = simulation_or_run.get_llm_usage_stats()
+        elif isinstance(simulation_or_run, dict) and 'llm_usage' in simulation_or_run:
+            # It's a run dictionary - use the llm_usage key
+            usage_stats = simulation_or_run['llm_usage']
+        else:
+            # No usage tracking available
+            return 0
+        
+        if usage_stats and 'total_characters' in usage_stats:
+            total_chars = usage_stats['total_characters']
+            # Normalize by reasonable maximum (e.g., 50,000 characters for a typical simulation)
+            max_reasonable_chars = 50000
+            normalized_usage = total_chars / max_reasonable_chars
+            return normalized_usage
+        else:
+            return 0  # No usage tracking available
+
     def evaluate(self, dofs):
         """Evaluate a single individual with DOF as prompt string or dictionary"""
         try:
@@ -423,8 +452,11 @@ class RedBlueEvaluator:
             # Add failure count as fifth objective (always 0 for single evaluation)
             failure_count_objective = 0  # Single evaluation: either completely fails or succeeds
             
+            # Add LLM usage as sixth objective
+            llm_usage_objective = self.calculate_llm_usage_objective(self.experiment.simulations[0])
+            
             # Combine all objectives
-            all_objectives = sim_objectives + [prompt_length_objective, connectivity_objective, failure_count_objective]
+            all_objectives = sim_objectives + [prompt_length_objective, connectivity_objective, failure_count_objective, llm_usage_objective]
             
             # Filter objectives based on use_objectives configuration
             objectives = self._filter_objectives(all_objectives)
@@ -440,7 +472,7 @@ class RedBlueEvaluator:
         except Exception as e:
             print(f"Error in evaluate: {str(e)}")
             # Return penalty for errors - filter the penalty objectives too
-            penalty_all_objectives = [1e4, 1e4, 1e4, 1e4, 1e4]
+            penalty_all_objectives = [1e4, 1e4, 1e4, 1e4, 1e4, 1e4]
             penalty_objectives = self._filter_objectives(penalty_all_objectives)
             return np.array(penalty_objectives), np.array([]), np.array(penalty_objectives), {"red": [], "blue": []}  # Return penalty for errors
     
@@ -450,6 +482,9 @@ class RedBlueEvaluator:
             return [], [], [], []
 
         try:
+            # Add delay to space out API calls between evaluations
+            time.sleep(1.0)  # 1 second delay to help with rate limiting
+            
             # Create multiple simulations for each individual (duplicates)
             simulations = []
             individual_indices = []  # Track which individual each simulation belongs to
@@ -473,25 +508,46 @@ class RedBlueEvaluator:
             print(f"Created {len(simulations)} total simulations ({len(individuals)} individuals × {self.n_eval_duplicates} duplicates)")
 
             # Create experiment with all simulations (including duplicates)
-            experiment = Experiment(simulations, name=f"batch_eval_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+            experiment = Experiment(simulations, name=f"batch_eval_{datetime.now().strftime('%Y%m%d_%H%M%S')}", disable_batch_summaries=self.disable_batch_summaries)
             
-            # Run experiment and collect results
+            # Run experiment and collect results with error handling
             print(f"Starting experiment execution (batched={self.use_batched_evaluation})...")
             runs = []
-            if self.use_batched_evaluation:
-                print("Using batched evaluation...")
-                for progress, data in experiment.run_manual_batch(steps=self.steps):
-                    print(f"Batch progress: {progress}")
-                    if progress.get("percentage") == 100 and "runs" in data:
-                        runs = data["runs"]
-                        break
-            else:
-                print("Using non-batched evaluation...")
-                for progress, data in experiment.run_manual(steps=self.steps, use_batched=False):
-                    print(f"Manual progress: {progress}")
-                    if progress.get("percentage") == 100 and "runs" in data:
-                        runs = data["runs"]
-                        break
+            
+            try:
+                if self.use_batched_evaluation:
+                    print("Using batched evaluation...")
+                    for progress, data in experiment.run_manual_batch(steps=self.steps):
+                        print(f"Batch progress: {progress}")
+                        if progress.get("percentage") == 100 and "runs" in data:
+                            runs = data["runs"]
+                            break
+                else:
+                    print("Using non-batched evaluation...")
+                    for progress, data in experiment.run_manual(steps=self.steps, use_batched=False):
+                        print(f"Manual progress: {progress}")
+                        if progress.get("percentage") == 100 and "runs" in data:
+                            runs = data["runs"]
+                            break
+            except Exception as e:
+                error_str = str(e).lower()
+                print(f"Experiment execution failed: {str(e)}")
+                
+                # Check if this is an API overload error
+                if any(keyword in error_str for keyword in ['overload', 'rate limit', '429', '529', 'too many requests']):
+                    print("API overload detected, returning penalty objectives for all individuals")
+                    # Return penalty objectives for all individuals
+                    full_penalty_objectives = [1e4] * 6
+                    filtered_penalty_objectives = self._filter_objectives(full_penalty_objectives)
+                    return (
+                        np.array([filtered_penalty_objectives for _ in range(len(individuals))]),
+                        np.array([[] for _ in range(len(individuals))]),
+                        np.array([filtered_penalty_objectives for _ in range(len(individuals))]),
+                        [{"red": [], "blue": []} for _ in range(len(individuals))]
+                    )
+                else:
+                    # Re-raise non-API errors
+                    raise
 
             print(f"Experiment completed with {len(runs)} runs")
             self.experiment = experiment
@@ -575,28 +631,26 @@ class RedBlueEvaluator:
                             num_blue = len(blue_agents)
                             total_agents = self.num_agents
                             
-                            # Calculate objectives
-                            red_deviation = abs(num_red - total_agents / 2.0) / (total_agents / 2.0)
-                            blue_deviation = abs(num_blue - total_agents / 2.0) / (total_agents / 2.0)
-                            
-                            num_classified = num_red + num_blue
-                            num_neither = total_agents - num_classified
-                            neither_fraction = num_neither / total_agents
-                            
-                            # Calculate first two objectives 
+                            # Calculate all 6 objectives
+                            red_fraction = num_red / total_agents if total_agents > 0 else 0
+                            target_split = total_agents / 2.0
+                            red_deviation = abs(num_red - target_split) / target_split if target_split > 0 else 0
+                            blue_deviation = abs(num_blue - target_split) / target_split if target_split > 0 else 0
                             split_deviation = (red_deviation + blue_deviation) / 2.0
                             
-                            # Add prompt length as third objective
-                            prompt_length_objective = self.calculate_prompt_length_objective(individual.dofs)
+                            num_classified = num_red + num_blue
+                            neither_count = total_agents - num_classified
+                            neither_fraction = neither_count / total_agents if total_agents > 0 else 0
+                            prompt_length_objective = len(individual.dofs["prompt"]) / 1000.0  # Normalize by 1000 chars
+                            connectivity_objective = len(individual.dofs["connectivity"]) / 10.0  # Normalize by 10 connections
+                            failure_count_objective = 0  # No failures for successful runs
                             
-                            # Add connection count as fourth objective
-                            connectivity_objective = self.calculate_connectivity_objective(individual.dofs)
+                            # NEW: LLM usage objective
+                            llm_usage_objective = self.calculate_llm_usage_objective(self.experiment.simulations[0])
                             
-                            # Failure count will be calculated after processing all duplicates
-                            failure_count_objective = 0  # Placeholder for successful runs
-                            
-                            # Combine all objectives
-                            all_objectives = [split_deviation, neither_fraction, prompt_length_objective, connectivity_objective, failure_count_objective]
+                            # Create full objectives array (6 objectives)
+                            all_objectives = [split_deviation, neither_fraction, prompt_length_objective, 
+                                            connectivity_objective, failure_count_objective, llm_usage_objective]
                             
                             # Filter objectives based on use_objectives configuration
                             objectives = self._filter_objectives(all_objectives)
@@ -606,7 +660,7 @@ class RedBlueEvaluator:
                             print(f"    Split deviation: {split_deviation:.3f}, Neither fraction: {neither_fraction:.3f}, Prompt length: {len(str(individual.dofs))} chars (normalized: {prompt_length_objective:.3f}), Connection count: {connectivity_objective}")
                         else:
                             # Manual extraction also failed
-                            penalty_all_objectives = [1e4] * 5
+                            penalty_all_objectives = [1e4] * 6
                             objectives = self._filter_objectives(penalty_all_objectives)
                             constraints = []
                             metrics = objectives.copy()
@@ -623,28 +677,26 @@ class RedBlueEvaluator:
                         num_blue = len(blue_agents)
                         total_agents = self.num_agents
                         
-                        # Calculate objectives
-                        red_deviation = abs(num_red - total_agents / 2.0) / (total_agents / 2.0)
-                        blue_deviation = abs(num_blue - total_agents / 2.0) / (total_agents / 2.0)
-                        
-                        num_classified = num_red + num_blue
-                        num_neither = total_agents - num_classified
-                        neither_fraction = num_neither / total_agents
-                        
-                        # Calculate first two objectives 
+                        # Calculate all 6 objectives
+                        red_fraction = num_red / total_agents if total_agents > 0 else 0
+                        target_split = total_agents / 2.0
+                        red_deviation = abs(num_red - target_split) / target_split if target_split > 0 else 0
+                        blue_deviation = abs(num_blue - target_split) / target_split if target_split > 0 else 0
                         split_deviation = (red_deviation + blue_deviation) / 2.0
                         
-                        # Add prompt length as third objective
-                        prompt_length_objective = self.calculate_prompt_length_objective(individual.dofs)
+                        num_classified = num_red + num_blue
+                        neither_count = total_agents - num_classified
+                        neither_fraction = neither_count / total_agents if total_agents > 0 else 0
+                        prompt_length_objective = len(individual.dofs["prompt"]) / 1000.0  # Normalize by 1000 chars
+                        connectivity_objective = len(individual.dofs["connectivity"]) / 10.0  # Normalize by 10 connections
+                        failure_count_objective = 0  # No failures for successful runs
                         
-                        # Add connection count as fourth objective
-                        connectivity_objective = self.calculate_connectivity_objective(individual.dofs)
+                        # NEW: LLM usage objective
+                        llm_usage_objective = self.calculate_llm_usage_objective(self.experiment.simulations[0])
                         
-                        # Failure count will be calculated after processing all duplicates
-                        failure_count_objective = 0  # Placeholder for successful runs
-                        
-                        # Combine all objectives
-                        all_objectives = [split_deviation, neither_fraction, prompt_length_objective, connectivity_objective, failure_count_objective]
+                        # Create full objectives array (6 objectives)
+                        all_objectives = [split_deviation, neither_fraction, prompt_length_objective, 
+                                        connectivity_objective, failure_count_objective, llm_usage_objective]
                         
                         # Filter objectives based on use_objectives configuration
                         objectives = self._filter_objectives(all_objectives)
@@ -667,20 +719,19 @@ class RedBlueEvaluator:
                 valid_agent_outcomes = [ao for i, ao in enumerate(individual_agent_outcomes) if not any(np.array(individual_objectives[i]) >= 1e4)]
                 
                 if valid_objectives:
-                    # For filtered objectives, we need to handle failure count specially
-                    # First, expand back to full 5-objective format to calculate failure count
-                    # Then filter again including the failure count
-                    
-                    # Get the unfiltered valid objectives by expanding each filtered objective back
+                    # Reconstruct full 6-objective arrays from filtered objectives
                     expanded_objectives = []
                     for filtered_obj in valid_objectives:
-                        # Create full 5-objective array and fill in the filtered values
-                        full_obj = [0] * 5  # Initialize with zeros
+                        # Create full 6-objective array and fill in the filtered values
+                        full_obj = [0] * 6  # Initialize with zeros
                         filtered_idx = 0
-                        for i in range(5):
+                        for i in range(6):
                             if self.use_objectives[i]:
-                                if i == 4:  # failure_count index - always 0 for valid runs before averaging
+                                if i == 4:  # failure_count index - always 0 for valid runs before aggregation
                                     full_obj[i] = 0
+                                elif i == 5:  # llm_usage index - get from simulation
+                                    # For valid runs, calculate LLM usage from the simulation
+                                    full_obj[i] = self.calculate_llm_usage_objective(self.experiment.simulations[0])
                                 else:
                                     full_obj[i] = filtered_obj[filtered_idx]
                                     filtered_idx += 1
@@ -688,14 +739,31 @@ class RedBlueEvaluator:
                                 full_obj[i] = 0  # Unused objectives set to 0
                         expanded_objectives.append(full_obj)
                     
-                    # Average the first 4 objectives (excluding failure count)
-                    avg_first_four_objectives = np.mean([obj[:4] for obj in expanded_objectives], axis=0)
-                    
-                    # Add failure count as 5th objective
-                    full_avg_objectives = np.append(avg_first_four_objectives, failed_duplicates)
+                    # Handle each objective type appropriately
+                    if expanded_objectives:
+                        # Average simulation outcomes that vary between duplicates
+                        avg_split_deviation = np.mean([obj[0] for obj in expanded_objectives])  # split_deviation
+                        avg_neither_fraction = np.mean([obj[1] for obj in expanded_objectives])  # neither_fraction
+                        
+                        # Take deterministic values from first duplicate (same for all duplicates)
+                        prompt_length_objective = expanded_objectives[0][2]  # prompt_length
+                        connection_count_objective = expanded_objectives[0][3]  # connection_count
+                        
+                        # Count failures properly (not averaged)
+                        failure_count_objective = failed_duplicates
+                        
+                        # Average LLM usage across valid duplicates
+                        avg_llm_usage = np.mean([obj[5] for obj in expanded_objectives])  # llm_usage
+                        
+                        # Combine all objectives
+                        full_avg_objectives = [avg_split_deviation, avg_neither_fraction, prompt_length_objective, 
+                                             connection_count_objective, failure_count_objective, avg_llm_usage]
+                    else:
+                        # Fallback in case of no expanded objectives
+                        full_avg_objectives = [1e4, 1e4, 1e4, 1e4, failed_duplicates, 1e4]
                     
                     # Now filter the full averaged objectives
-                    avg_objectives = np.array(self._filter_objectives(full_avg_objectives.tolist()))
+                    avg_objectives = np.array(self._filter_objectives(full_avg_objectives))
                     avg_constraints = np.array([])  # No constraints for this problem
                     avg_metrics = avg_objectives.copy()
                     
@@ -705,7 +773,7 @@ class RedBlueEvaluator:
                     print(f"  Individual {ind_idx} final averaged objectives: {avg_objectives} (from {len(valid_objectives)}/{len(individual_objectives)} valid runs, {failed_duplicates} failures)")
                 else:
                     # All runs failed - create full penalty objectives then filter
-                    full_penalty_objectives = [1e4] * 4 + [total_duplicates]  # All failed, so failure count = total duplicates
+                    full_penalty_objectives = [1e4] * 4 + [total_duplicates, 1e4]  # First 4 objectives get penalty, failure count = total duplicates, max LLM usage penalty
                     avg_objectives = np.array(self._filter_objectives(full_penalty_objectives))
                     avg_constraints = np.array([])
                     avg_metrics = avg_objectives.copy()
@@ -728,10 +796,29 @@ class RedBlueEvaluator:
 
             print(f"Final averaged objectives for all individuals: {all_objectives}")
 
+            # Safety check: Replace any None values with penalty objectives
+            safe_objectives = []
+            safe_constraints = []
+            safe_metrics = []
+            
+            full_penalty_objectives = [1e4] * 6
+            filtered_penalty_objectives = self._filter_objectives(full_penalty_objectives)
+            
+            for i, obj in enumerate(all_objectives):
+                if obj is None or np.any(np.isnan(obj)) or np.any(np.isinf(obj)):
+                    print(f"WARNING: Individual {i} has invalid objectives {obj}, replacing with penalty objectives")
+                    safe_objectives.append(filtered_penalty_objectives)
+                    safe_constraints.append(np.array([]))
+                    safe_metrics.append(filtered_penalty_objectives)
+                else:
+                    safe_objectives.append(obj)
+                    safe_constraints.append(all_constraints[i] if i < len(all_constraints) else np.array([]))
+                    safe_metrics.append(all_metrics[i] if i < len(all_metrics) else obj)
+
             return (
-                np.array(all_objectives) if all_objectives else np.array([]),
-                np.array(all_constraints) if all_constraints else np.array([]),
-                np.array(all_metrics) if all_metrics else np.array([]),
+                np.array(safe_objectives) if safe_objectives else np.array([]),
+                np.array(safe_constraints) if safe_constraints else np.array([]),
+                np.array(safe_metrics) if safe_metrics else np.array([]),
                 all_agent_outcomes
             )
 
@@ -742,7 +829,7 @@ class RedBlueEvaluator:
             num_individuals = len(individuals)
             
             # Create penalty objectives and filter them
-            full_penalty_objectives = [1e4] * 5
+            full_penalty_objectives = [1e4] * 6
             filtered_penalty_objectives = self._filter_objectives(full_penalty_objectives)
             
             return (
@@ -913,8 +1000,8 @@ class RedBlueEvaluator:
 
     def _filter_objectives(self, all_objectives):
         """Filter objectives based on use_objectives boolean array"""
-        if len(all_objectives) != 5:
-            raise ValueError(f"Expected 5 objectives, got {len(all_objectives)}")
+        if len(all_objectives) != 6:
+            raise ValueError(f"Expected 6 objectives, got {len(all_objectives)}")
         
         filtered_objectives = [obj for i, obj in enumerate(all_objectives) if self.use_objectives[i]]
         return filtered_objectives

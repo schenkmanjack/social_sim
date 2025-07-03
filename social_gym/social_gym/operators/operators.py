@@ -4,6 +4,7 @@ from genetic_algorithm.individual import Individual
 from genetic_algorithm.operators import CrossoverOperator, MutationOperator
 
 import random
+import time  # Add time import for delays
 
 class LLMTextCrossover(CrossoverOperator):
     """
@@ -15,16 +16,21 @@ class LLMTextCrossover(CrossoverOperator):
         self,
         llm_wrapper,
         use_scheduling: bool = False,
-        temperature: float = 0.8
+        temperature: float = 0.8,
+        api_delay: float = 3.0  # Add delay parameter
     ):
         self._use_scheduling = use_scheduling
         self.llm = llm_wrapper
         self.temperature = temperature
+        self.api_delay = api_delay  # Store delay setting
 
     # ----- API helpers -----------------------------------------------------
 
-    def _call_llm(self, prompt) -> str:
-        return self.llm.generate(prompt)
+    def _call_llm(self, user_prompt, system_prompt=None) -> str:
+        result = self.llm.generate(user_prompt, system_prompt)
+        # Add delay after API call to prevent rate limiting
+        time.sleep(self.api_delay)
+        return result
 
     # ----- Crossover core logic -------------------------------------------
 
@@ -44,13 +50,16 @@ class LLMTextCrossover(CrossoverOperator):
             prompt1 = parent1.get_prompt() if hasattr(parent1, 'get_prompt') else parent1.dofs.get("prompt", "")
             prompt2 = parent2.get_prompt() if hasattr(parent2, 'get_prompt') else parent2.dofs.get("prompt", "")
             
-            prompt = (
+            system_prompt = (
                 "You are an expert prompt engineer. You will be given two source "
                 "prompts. Produce a NEW prompt that:\n"
                 " • Preserves any hard constraints mentioned in EITHER parent.\n"
                 " • Combines their useful wording and stylistic hints.\n"
                 " • Remains concise (≤ 200 tokens).\n"
-                "Return ONLY the new prompt.\n\n"
+                "Return ONLY the new prompt."
+            )
+            
+            user_prompt = (
                 f"--- Parent A ---\n{prompt1}\n"
                 f"--- Parent B ---\n{prompt2}\n"
                 "--- End ---"
@@ -58,7 +67,7 @@ class LLMTextCrossover(CrossoverOperator):
 
             children = [child1, child2]
             for child in children:
-                new_text = self._call_llm(prompt)
+                new_text = self._call_llm(user_prompt, system_prompt)
                 # Update only the prompt part, keep connectivity unchanged
                 if hasattr(child, 'set_prompt'):
                     child.set_prompt(new_text)
@@ -66,13 +75,16 @@ class LLMTextCrossover(CrossoverOperator):
                     child.dofs["prompt"] = new_text
         else:
             # String DOFs - original behavior
-            prompt = (
+            system_prompt = (
                 "You are an expert prompt engineer. You will be given two source "
                 "prompts. Produce a NEW prompt that:\n"
                 " • Preserves any hard constraints mentioned in EITHER parent.\n"
                 " • Combines their useful wording and stylistic hints.\n"
                 " • Remains concise (≤ 200 tokens).\n"
-                "Return ONLY the new prompt.\n\n"
+                "Return ONLY the new prompt."
+            )
+            
+            user_prompt = (
                 f"--- Parent A ---\n{parent1.dofs}\n"
                 f"--- Parent B ---\n{parent2.dofs}\n"
                 "--- End ---"
@@ -80,7 +92,7 @@ class LLMTextCrossover(CrossoverOperator):
 
             children = [child1, child2]
             for child in children:
-                new_text = self._call_llm(prompt)
+                new_text = self._call_llm(user_prompt, system_prompt)
                 child.dofs = new_text
 
         return children
@@ -105,7 +117,9 @@ class LLMTextMutation(MutationOperator):
         temperature: float = 0.9,
         mutate_connectivity: bool = False,
         connectivity_mutation_rate: float = 0.1,
-        num_agents: int = None
+        num_agents: int = None,
+        mutation_context: str = None,
+        api_delay: float = 1.0  # Add delay parameter
     ):
         self._use_scheduling = use_scheduling
         self.llm = llm_wrapper
@@ -116,79 +130,46 @@ class LLMTextMutation(MutationOperator):
         self.connectivity_mutation_rate = connectivity_mutation_rate
         self._initial_connectivity_mutation_rate = connectivity_mutation_rate
         self.num_agents = num_agents
-        
+        self.mutation_context = mutation_context
+        self.api_delay = api_delay  # Store delay setting
 
-    @classmethod
-    def _mutate_via_llm(cls, llm_wrapper, prompt_text: str) -> str:
-        prompt = (
-            "You are a creative but precise prompt-rewriter.\n"
-            "Given a prompt, produce a *variation* that:\n"
-            " • Keeps the same overall task and constraints.\n"
-            " • Uses different wording, synonyms, or sentence order.\n"
-            " • Optionally adds ONE helpful hint to improve coordination.\n"
-            "Return ONLY the mutated prompt.\n\n"
-            f"Here is the original prompt:\n{prompt_text}"
-        )
-        return llm_wrapper.generate(prompt)
-
-    @classmethod
-    def _mutate_via_llm_batch(cls, llm_wrapper, prompt_texts: List[str]) -> List[str]:
-        """Mutate multiple prompts in a single LLM call for efficiency."""
-        if not prompt_texts:
-            return []
-        
-        if len(prompt_texts) == 1:
-            # Single prompt - use regular method
-            return [cls._mutate_via_llm(llm_wrapper, prompt_texts[0])]
-        
-        # Create batch prompt
-        batch_prompt = (
-            "You are a creative but precise prompt-rewriter.\n"
-            "You will be given multiple prompts to mutate. For each prompt, produce a *variation* that:\n"
-            " • Keeps the same overall task and constraints.\n"
-            " • Uses different wording, synonyms, or sentence order.\n"
-            " • Optionally adds ONE helpful hint to improve coordination.\n"
-            "Format your response as follows:\n"
-            "MUTATION_1: [first mutated prompt]\n"
-            "MUTATION_2: [second mutated prompt]\n"
-            "... and so on.\n\n"
-            "Here are the original prompts:\n"
+    @staticmethod
+    def _mutate_via_llm(llm_wrapper, prompt_text: str) -> str:
+        """Static version for use by evaluators during initialization"""
+        system_prompt = (
+            "You are the mutation operator inside of a genetic algorithm in which a group of LLM agents are coordinating to have some desired emergent behavior.\n"
+            "Each agent has the same prompt (which is what you are trying to mutate). The agents can send messages to each other and act. An agent can only communicate with the agents to which it is connected. \n"
+            "Given a prompt, produce a new prompt that is a mutation of the prompt.\n"
+            "Return ONLY the mutated prompt."
         )
         
-        for i, prompt_text in enumerate(prompt_texts, 1):
-            batch_prompt += f"PROMPT_{i}: {prompt_text}\n\n"
+        user_prompt = f"Here is the original prompt:\n{prompt_text}"
         
-        batch_prompt += "Now provide the mutations:"
+        result = llm_wrapper.generate(user_prompt, system_prompt)
+        # Add delay after static API call as well
+        time.sleep(1.0)  # Default 1 second delay for static calls
+        return result
+
+    def _mutate_via_llm_instance(self, prompt_text: str) -> str:
+        """Instance method with mutation context for use by mutation operator"""
+        system_prompt = (
+            "You are the mutation operator inside of a genetic algorithm in which a group of LLM agents are coordinating to have some desired emergent behavior.\n"
+            "Each agent has the same prompt (which is what you are trying to mutate). The agents can send messages to each other and act. An agent can only communicate with the agents to which it is connected. \n"
+            "Given a prompt, produce a new prompt that is a mutation of the prompt.\n"
+        )
         
-        # Get batch response
-        batch_response = llm_wrapper.generate(batch_prompt)
+        # Add mutation context if provided
+        if self.mutation_context:
+            system_prompt += f"\nAdditional context: {self.mutation_context}\n"
         
-        # Parse the response to extract individual mutations
-        mutations = []
-        lines = batch_response.split('\n')
+        system_prompt += "Return ONLY the mutated prompt."
         
-        for i in range(1, len(prompt_texts) + 1):
-            mutation_found = False
-            mutation_prefix = f"MUTATION_{i}:"
-            
-            for line in lines:
-                if line.strip().startswith(mutation_prefix):
-                    mutation = line.strip()[len(mutation_prefix):].strip()
-                    mutations.append(mutation)
-                    mutation_found = True
-                    break
-            
-            if not mutation_found:
-                # Fallback: use original method for this prompt
-                mutations.append(cls._mutate_via_llm(llm_wrapper, prompt_texts[i-1]))
+        user_prompt = f"Here is the original prompt:\n{prompt_text} \n Your response should only be the mutated prompt. Do not include any descriptions, explanations, or additional text."
         
-        # Ensure we have the right number of mutations
-        while len(mutations) < len(prompt_texts):
-            # Fallback for any missing mutations
-            missing_idx = len(mutations)
-            mutations.append(cls._mutate_via_llm(llm_wrapper, prompt_texts[missing_idx]))
-        
-        return mutations[:len(prompt_texts)]  # Trim to exact length needed
+        result = self.llm.generate(user_prompt, system_prompt)
+        # Add delay after API call to prevent rate limiting
+        time.sleep(self.api_delay)
+        return result
 
     def _generate_valid_connectivity_pairs(self) -> List[List[int]]:
         """Generate a valid set of connectivity pairs for the number of agents."""
@@ -320,7 +301,7 @@ class LLMTextMutation(MutationOperator):
             connectivity = individual.dofs.get("connectivity", [])
             
             # Mutate the prompt text
-            new_text = LLMTextMutation._mutate_via_llm(self.llm, prompt)
+            new_text = self._mutate_via_llm_instance(prompt)
             if hasattr(individual, 'set_prompt'):
                 individual.set_prompt(new_text)
             else:
@@ -335,63 +316,8 @@ class LLMTextMutation(MutationOperator):
                     individual.dofs["connectivity"] = new_connectivity
         else:
             # String DOFs - original behavior
-            new_text = LLMTextMutation._mutate_via_llm(self.llm, individual.dofs)
+            new_text = self._mutate_via_llm_instance(individual.dofs)
             individual.dofs = new_text
-
-    def apply_batch(self, individuals: List[Individual]) -> None:
-        """Apply mutation to multiple individuals simultaneously using batched LLM calls."""
-        if not individuals:
-            return
-        
-        # Separate individuals by DOF type (string vs dict)
-        dict_individuals = []
-        string_individuals = []
-        
-        for individual in individuals:
-            if isinstance(individual.dofs, dict):
-                dict_individuals.append(individual)
-            else:
-                string_individuals.append(individual)
-        
-        # Handle dictionary DOF individuals
-        if dict_individuals:
-            # Extract prompts for batching
-            prompts = []
-            for individual in dict_individuals:
-                prompt = individual.get_prompt() if hasattr(individual, 'get_prompt') else individual.dofs.get("prompt", "")
-                prompts.append(prompt)
-            
-            # Batch mutate prompts
-            mutated_prompts = LLMTextMutation._mutate_via_llm_batch(self.llm, prompts)
-            
-            # Apply mutations to individuals
-            for individual, new_prompt in zip(dict_individuals, mutated_prompts):
-                # Update prompt
-                if hasattr(individual, 'set_prompt'):
-                    individual.set_prompt(new_prompt)
-                else:
-                    individual.dofs["prompt"] = new_prompt
-                
-                # Optionally mutate connectivity
-                if self.mutate_connectivity:
-                    connectivity = individual.dofs.get("connectivity", [])
-                    new_connectivity = self._mutate_connectivity(connectivity)
-                    if hasattr(individual, 'set_connectivity'):
-                        individual.set_connectivity(new_connectivity)
-                    else:
-                        individual.dofs["connectivity"] = new_connectivity
-        
-        # Handle string DOF individuals
-        if string_individuals:
-            # Extract prompt strings for batching
-            prompt_strings = [str(individual.dofs) for individual in string_individuals]
-            
-            # Batch mutate prompts
-            mutated_strings = LLMTextMutation._mutate_via_llm_batch(self.llm, prompt_strings)
-            
-            # Apply mutations to individuals
-            for individual, new_string in zip(string_individuals, mutated_strings):
-                individual.dofs = new_string
 
     def schedule(self, gen: int, n_generations: int):
         """Update mutation rates based on generation if scheduling is enabled."""

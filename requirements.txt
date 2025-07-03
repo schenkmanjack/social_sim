@@ -1,0 +1,33 @@
+# Core ML and Data Science Libraries
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.5.0
+torch>=1.11.0
+networkx>=2.6.0
+
+# Web and Visualization
+streamlit>=1.20.0
+plotly>=5.10.0
+flask>=2.0.0
+
+# LLM APIs
+openai>=1.0.0
+anthropic>=0.7.0
+
+# Database
+pymongo>=4.0.0
+
+# Utilities
+python-dotenv>=0.19.0
+wordcloud>=1.8.0
+
+# Development and Setup
+setuptools>=60.0.0
+
+# Git-based dependencies (commented out - install manually or via environment.yaml)
+# -e git+https://github.com/schenkmanjack/ga.git@main#egg=genetic-algorithm&subdirectory=genetic_algorithm
+# -e git+https://github.com/schenkmanjack/social_sim.git@main#egg=social_sim&subdirectory=social_sim
+
+# Local packages (install with pip install -e .)
+# -e ./social_sim
+# -e ./social_gym 
